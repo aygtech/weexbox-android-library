@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.alibaba.weex.constants.Constants;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -84,18 +83,18 @@ public class HotRefreshManager {
 
     }
 
-    @Override
-    public void onMessage(BufferedSource payload, WebSocket.PayloadType type) throws IOException {
-      if (type == WebSocket.PayloadType.TEXT) {
-        String temp = payload.readUtf8();
-        Log.e(TAG, "into--[onMessage] msg:" + temp);
-        payload.close();
-
-        if (TextUtils.equals("refresh", temp) && mHandler != null) {
-          mHandler.obtainMessage(Constants.HOT_REFRESH_REFRESH, 0, 0, mUrl).sendToTarget();
-        }
-      }
-    }
+//    @Override
+//    public void onMessage(BufferedSource payload, WebSocket.PayloadType type) throws IOException {
+//      if (type == WebSocket.PayloadType.TEXT) {
+//        String temp = payload.readUtf8();
+//        Log.e(TAG, "into--[onMessage] msg:" + temp);
+//        payload.close();
+//
+//        if (TextUtils.equals("refresh", temp) && mHandler != null) {
+//          mHandler.obtainMessage(Constants.HOT_REFRESH_REFRESH, 0, 0, mUrl).sendToTarget();
+//        }
+//      }
+//    }
 
     @Override
     public void onPong(Buffer payload) {

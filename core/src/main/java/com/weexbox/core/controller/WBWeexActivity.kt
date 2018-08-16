@@ -68,6 +68,8 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
 
             mWxAnalyzerDelegate = WXAnalyzerDelegate(this)
             mWxAnalyzerDelegate?.onCreate()
+
+
         }
     }
 

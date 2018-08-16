@@ -52,15 +52,15 @@ object UpdateManager {
     private var completion: Completion? = null
 
     private const val resourceName = "www"
-    private const val oneName = "cornerstone-update-one"
-    private const val twoName = "cornerstone-update-two"
-    private const val workingNameKey = "cornerstone-update-working-key"
-    private const val sharedPreferencesName = "cornerstone-update-sharedPreferences"
+    private const val oneName = "weexbox-update-one"
+    private const val twoName = "weexbox-update-two"
+    private const val workingNameKey = "weexbox-update-working-key"
+    private const val sharedPreferencesName = "weexbox-update-sharedPreferences"
     private val workingName = WeexBoxEngine.application.applicationContext.getSharedPreferences(sharedPreferencesName, 0).getString(workingNameKey, oneName)
     private val cacheName = if (workingName == oneName) twoName else oneName
     private const val zipName = "www.zip"
-    private const val md5Name = "cornerstone-md5.json"
-    private const val configName = "cornerstone-config.json"
+    private const val md5Name = "weexbox-md5.json"
+    private const val configName = "weexbox-config.json"
 
     private const val resourceUrl = resourceName
     private val resourceConfigUrl = resourceUrl + File.separator + configName
