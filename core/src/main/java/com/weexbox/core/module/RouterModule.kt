@@ -17,19 +17,38 @@ class RouteModule : WXModule() {
     val activity = mWXSDKInstance.context as WBWeexActivity
 
     @JSMethod(uiThread = true)
-    fun open(info: Map<String, Any>) {
-        val router = JSON.parseObject(JSON.toJSONString(info), Router::class.java)
-        router.open(activity)
+    fun openWeex(info: Map<String, Any>) {
+        getRouter(info).openWeex(activity)
+    }
+
+    @JSMethod(uiThread = true)
+    fun openWeb(info: Map<String, Any>) {
+        getRouter(info).openWeb(activity)
+    }
+
+    @JSMethod(uiThread = true)
+    fun openNative(info: Map<String, Any>) {
+        getRouter(info).openNative(activity)
+    }
+
+    @JSMethod(uiThread = true)
+    fun openBrowser(info: Map<String, Any>) {
+        getRouter(info).openBrowser(activity)
+    }
+
+    @JSMethod(uiThread = true)
+    fun openPhone(info: Map<String, Any>) {
+        getRouter(info).openPhone(activity)
     }
 
     @JSMethod(uiThread = true)
     fun getParams(): Map<String, Any>? {
-        return activity.router?.params
+        return activity.router!!.params
     }
 
     @JSMethod(uiThread = true)
-    fun back(levels: Int?) {
-
+    fun close(levels: Int?) {
+        activity.router!!.close(activity, levels)
     }
 
     @JSMethod(uiThread = true)
@@ -37,6 +56,8 @@ class RouteModule : WXModule() {
         activity.refreshWeex()
     }
 
-
+    fun getRouter(info: Map<String, Any>): Router {
+        return JSON.parseObject(JSON.toJSONString(info), Router::class.java)
+    }
 
 }
