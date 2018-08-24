@@ -1,4 +1,4 @@
-package com.weexbox.core.module
+package com.weexbox.core.model
 
 internal class UpdateConfig {
 
