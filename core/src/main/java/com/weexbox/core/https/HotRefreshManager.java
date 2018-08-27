@@ -4,17 +4,21 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.taobao.weex.appfram.websocket.WebSocketModule;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okhttp3.ws.WebSocket;
-import okhttp3.ws.WebSocketCall;
-import okhttp3.ws.WebSocketListener;
 
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import javax.annotation.Nullable;
+
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
+import okhttp3.internal.ws.WebSocketProtocol;
 import okio.Buffer;
 import okio.BufferedSource;
 
@@ -48,11 +52,7 @@ public class HotRefreshManager {
 
   public boolean disConnect() {
     if (mWebSocket != null) {
-      try {
-        mWebSocket.close(1000, "activity finish!");
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      mWebSocket.close(1000, "activity finish!");
     }
     return true;
   }
@@ -60,12 +60,14 @@ public class HotRefreshManager {
   public boolean connect(String url) {
     OkHttpClient httpClient = new OkHttpClient();
     Request request = new Request.Builder().url(url).addHeader("sec-websocket-protocol", "echo-protocol").build();
-    WebSocketCall.create(httpClient, request).enqueue(new WXWebSocketListener(url));
+
+//    WebSocketCall.create(httpClient, request).enqueue(new WXWebSocketListener(url));
+    httpClient.newWebSocket(request, new WXWebSocketListener(url));
 
     return true;
   }
 
-  class WXWebSocketListener implements WebSocketListener {
+  class WXWebSocketListener extends WebSocketListener {
 
     private String mUrl;
 
@@ -78,10 +80,10 @@ public class HotRefreshManager {
       mWebSocket = webSocket;
     }
 
-    @Override
-    public void onMessage(ResponseBody message) {
-
-    }
+//    @Override
+//    public void onMessage(ResponseBody message) {
+//
+//    }
 
 //    @Override
 //    public void onMessage(BufferedSource payload, WebSocket.PayloadType type) throws IOException {
@@ -96,19 +98,32 @@ public class HotRefreshManager {
 //      }
 //    }
 
-    @Override
-    public void onPong(Buffer payload) {
+//    @Override
+//    public void onPong(Buffer payload) {
+//
+//    }
 
-    }
 
     @Override
-    public void onClose(int code, String reason) {
+    public void onClosed(WebSocket webSocket, int code, String reason) {
+      super.onClosed(webSocket, code, reason);
       mWebSocket = null;
     }
 
     @Override
-    public void onFailure(IOException e, Response response) {
+    public void onFailure(WebSocket webSocket, Throwable t, @Nullable Response response) {
+      super.onFailure(webSocket, t, response);
       mWebSocket = null;
     }
+
+//    @Override
+//    public void onClose(int code, String reason) {
+//      mWebSocket = null;
+//    }
+
+//    @Override
+//    public void onFailure(IOException e, Response response) {
+//      mWebSocket = null;
+//    }
   }
 }

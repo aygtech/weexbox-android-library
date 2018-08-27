@@ -3,9 +3,9 @@ package com.weexbox.core.update
 import android.content.Context
 import android.os.AsyncTask
 import com.weexbox.core.WeexBoxEngine
-import com.weexbox.core.module.Md5Realm
-import com.weexbox.core.module.UpdateConfig
-import com.weexbox.core.module.UpdateMd5
+import com.weexbox.core.model.Md5Realm
+import com.weexbox.core.model.UpdateConfig
+import com.weexbox.core.model.UpdateMd5
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.litesuits.common.io.FileUtils

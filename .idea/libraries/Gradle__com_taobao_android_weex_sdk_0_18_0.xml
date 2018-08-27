@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.taobao.android:weex_sdk-0.18.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/weex_sdk-0.18.0.aar/1f69d850fb1c1ab5425995e85c2ba9d3/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/weex_sdk-0.18.0.aar/1f69d850fb1c1ab5425995e85c2ba9d3/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/weex_sdk-0.18.0.aar/974878c73a2ced8a0f4bdbaec799bb3a/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/weex_sdk-0.18.0.aar/974878c73a2ced8a0f4bdbaec799bb3a/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

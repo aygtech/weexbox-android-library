@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.alibaba.weex.https;
+package com.weexbox.core.https;
 
 import android.os.Handler;
 import android.os.Message;
