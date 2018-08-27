@@ -20,7 +20,7 @@ object WeexBoxEngine {
 
     lateinit var application: Application
 
-    fun initialize(application: Application) {
+    public fun initialize(application: Application) {
         this.application = application
         Realm.init(application)
         Logger.addLogAdapter(AndroidLogAdapter())
