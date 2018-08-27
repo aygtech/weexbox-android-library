@@ -1,13 +1,15 @@
 package com.weexbox.core
 
 import android.app.Application
+import com.alibaba.android.bindingx.plugin.weex.BindingX
 import com.taobao.weex.InitConfig
 import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.adapter.ImageAdapter
 import io.realm.Realm
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-
+import com.weexbox.core.module.RouteModule
+import com.weexbox.core.module.StorageModule
 
 
 /**
@@ -30,6 +32,8 @@ object WeexBoxEngine {
     private fun initWeex() {
         val config = InitConfig.Builder().setImgAdapter(ImageAdapter()).build()
         WXSDKEngine.initialize(application, config)
-
+        BindingX.register()
+        WXSDKEngine.registerModule("route", RouteModule::class.java)
+        WXSDKEngine.registerModule("storage", StorageModule::class.java)
     }
 }

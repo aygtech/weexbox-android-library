@@ -1,17 +1,20 @@
 package com.weexbox.core.adapter;
 
-import android.net.Uri;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
-import com.taobao.weex.WXEnvironment;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.taobao.weex.WXSDKManager;
 import com.taobao.weex.adapter.IWXImgLoaderAdapter;
 import com.taobao.weex.common.WXImageStrategy;
 import com.taobao.weex.dom.WXImageQuality;
+import com.weexbox.core.util.BitmapUtil;
 
 public class ImageAdapter implements IWXImgLoaderAdapter {
 
@@ -37,36 +40,34 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
           temp = "http:" + url;
         }
 
-        if(!TextUtils.isEmpty(strategy.placeHolder)){
-          Picasso.Builder builder=new Picasso.Builder(WXEnvironment.getApplication());
-          Picasso picasso=builder.build();
-          picasso.load(Uri.parse(strategy.placeHolder)).into(view);
-
-          view.setTag(strategy.placeHolder.hashCode(),picasso);
+        if (!TextUtils.isEmpty(strategy.placeHolder)) {
+          BitmapUtil.displayImage(view, strategy.placeHolder);
         }
+        BlurTransformation transformation = null;
+        if (strategy.blurRadius != 0) {
+          transformation = new BlurTransformation(strategy.blurRadius);
+        }
+        if (strategy.getImageListener() == null) {
+          BitmapUtil.displayImage(view, temp, transformation);
+        } else {
+          BitmapUtil.displayImage(new SimpleTarget<BitmapDrawable>() {
+            @Override
+            public void onResourceReady(@NonNull BitmapDrawable resource, @Nullable Transition transition) {
+              if (strategy.getImageListener() != null) {
+                strategy.getImageListener().onImageFinish(url, view, true, null);
+              }
+              view.setImageDrawable(resource);
+            }
 
-        Picasso.with(WXEnvironment.getApplication())
-                .load(temp)
-                .transform(new BlurTransformation(strategy.blurRadius))
-                .into(view, new Callback() {
-                  @Override
-                  public void onSuccess() {
-                    if(strategy.getImageListener()!=null){
-                      strategy.getImageListener().onImageFinish(url,view,true,null);
-                    }
-
-                    if(!TextUtils.isEmpty(strategy.placeHolder)){
-                      ((Picasso) view.getTag(strategy.placeHolder.hashCode())).cancelRequest(view);
-                    }
-                  }
-
-                  @Override
-                  public void onError() {
-                    if(strategy.getImageListener()!=null){
-                      strategy.getImageListener().onImageFinish(url,view,false,null);
-                    }
-                  }
-                });
+            @Override
+            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+              super.onLoadFailed(errorDrawable);
+              if (strategy.getImageListener() != null) {
+                strategy.getImageListener().onImageFinish(url, view, false, null);
+              }
+            }
+          }, temp, transformation);
+        }
       }
     };
     if(Thread.currentThread() == Looper.getMainLooper().getThread()){
