@@ -32,7 +32,7 @@ import java.io.IOException
  * Time: 2018/8/16 下午4:38
  */
 
-class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRenderListener , WXSDKInstance.NestedInstanceInterceptor {
+open class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRenderListener , WXSDKInstance.NestedInstanceInterceptor {
 
     open lateinit var url: String
     private var mInstance: WXSDKInstance? = null
