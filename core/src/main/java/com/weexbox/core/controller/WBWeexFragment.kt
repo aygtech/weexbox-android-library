@@ -1,16 +1,11 @@
 package com.weexbox.core.controller
 
 import android.app.AlertDialog
-import android.app.Fragment
 import android.content.Intent
-import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.support.annotation.RequiresApi
 import android.text.TextUtils
-import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import com.litesuits.common.io.FileUtils
@@ -21,10 +16,8 @@ import com.taobao.weex.WXSDKInstance
 import com.taobao.weex.common.WXRenderStrategy
 import com.taobao.weex.ui.component.NestedContainer
 import com.weexbox.core.https.HotRefreshManager
-import com.weexbox.core.router.Router
 import com.weexbox.core.update.UpdateManager
 import com.weexbox.core.util.WXAnalyzerDelegate
-import kotlinx.android.synthetic.main.activity_weex.*
 import java.io.IOException
 
 /**
@@ -32,7 +25,7 @@ import java.io.IOException
  * Time: 2018/8/16 下午4:38
  */
 
-open class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRenderListener , WXSDKInstance.NestedInstanceInterceptor {
+open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRenderListener , WXSDKInstance.NestedInstanceInterceptor {
 
     open lateinit var url: String
     private var mInstance: WXSDKInstance? = null
@@ -196,12 +189,18 @@ open class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRenderListene
         if (wrappedView != null) {
             wxView = wrappedView
         }
+
+        onAddWeexView(wxView)
 //        if (wxView.parent == null) {
 //            mContainer.addView(wxView)
 //        }
 //        mContainer.requestLayout()
+        
         Logger.d("renderSuccess")
     }
+
+    abstract fun onAddWeexView(wxView: View?);
+
 
 //    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
 //        return mWxAnalyzerDelegate != null && mWxAnalyzerDelegate!!.onKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
