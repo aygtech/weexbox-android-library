@@ -8,7 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ff46d28b-52a2-4490-9bf4-1ac1746deeba" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBWeexFragment.kt" afterPath="$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBWeexFragment.kt" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBBaseFragment.kt" afterPath="$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBBaseFragment.kt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,11 +41,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="WBWeexFragment.kt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WBWeexFragment.kt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBWeexFragment.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="201" column="0" lean-forward="false" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
+            <state relative-caret-position="292">
+              <caret line="197" column="0" lean-forward="true" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
               <folding>
                 <element signature="e#37#717#0" expanded="true" />
               </folding>
@@ -66,9 +66,21 @@
       <file leaf-file-name="WBBaseActivity.kt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBBaseActivity.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state relative-caret-position="189">
+              <caret line="10" column="37" lean-forward="false" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WBBaseFragment.kt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBBaseFragment.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="10" column="50" lean-forward="true" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
+              <folding>
+                <element signature="e#37#138#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -77,7 +89,7 @@
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBWeexActivity.kt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="453">
-              <caret line="167" column="0" lean-forward="true" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
+              <caret line="167" column="0" lean-forward="false" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -3388,8 +3400,8 @@
         <option value="$PROJECT_DIR$/core/src/main/java/com/weexbox/core/module/RouterModule.kt" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/weexbox/core/router/Router.kt" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBWeexActivity.kt" />
-        <option value="$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBBaseFragment.kt" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBWeexFragment.kt" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBBaseFragment.kt" />
       </list>
     </option>
   </component>
@@ -3443,6 +3455,11 @@
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="core" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="android-library" type="1abcf292:AndroidViewProjectNode" />
+              <item name="core" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
             </path>
             <path>
               <item name="android-library" type="1abcf292:AndroidViewProjectNode" />
@@ -3782,14 +3799,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/support-fragment/27.1.1/94732bda44fba11302c58e459b7c1f47e7521bf9/support-fragment-27.1.1-sources.jar!/android/support/v4/app/FragmentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="67" column="13" lean-forward="false" selection-start-line="67" selection-start-column="13" selection-end-line="67" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://F:/Android/Android/sdk/sources/android-27/android/os/Handler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="259">
@@ -3962,16 +3971,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBBaseFragment.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="6" column="25" lean-forward="false" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="25" />
-          <folding>
-            <element signature="e#37#127#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.taobao.android/weex_sdk/0.18.0/26dbb4a1deb17a02055ad5344d8408f3e379ccf8/weex_sdk-0.18.0-sources.jar!/com/taobao/weex/WXSDKInstance.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="269">
@@ -3980,28 +3979,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBBaseActivity.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBWeexActivity.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="453">
-          <caret line="167" column="0" lean-forward="true" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
+          <caret line="167" column="0" lean-forward="false" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBWeexFragment.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="201" column="0" lean-forward="false" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
+        <state relative-caret-position="292">
+          <caret line="197" column="0" lean-forward="true" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
           <folding>
             <element signature="e#37#717#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/support-fragment/27.1.1/94732bda44fba11302c58e459b7c1f47e7521bf9/support-fragment-27.1.1-sources.jar!/android/support/v4/app/FragmentActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="67" column="13" lean-forward="false" selection-start-line="67" selection-start-column="13" selection-end-line="67" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBBaseActivity.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="10" column="37" lean-forward="false" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/weexbox/core/controller/WBBaseFragment.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="10" column="50" lean-forward="true" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
+          <folding>
+            <element signature="e#37#138#0" expanded="true" />
           </folding>
         </state>
       </provider>
