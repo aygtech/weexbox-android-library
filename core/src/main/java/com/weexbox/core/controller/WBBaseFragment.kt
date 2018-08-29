@@ -1,13 +1,16 @@
 package com.weexbox.core.controller
 
 import android.app.Fragment
+import android.os.Bundle
+import com.weexbox.core.router.Router
 
-/**
- * Author: Mario
- * Time: 2018/8/16 下午4:38
- * Description: This is WBBaseFragment
- */
+open class WBBaseFragment: Fragment() {
 
-class WBBaseFragment: Fragment() {
+    var router: Router? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        router = savedInstanceState?.get("router") as? Router
+    }
 
 }
