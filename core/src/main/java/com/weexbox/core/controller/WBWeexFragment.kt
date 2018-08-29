@@ -140,7 +140,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
                 degradeAlert(errMsg)
                 return
             } else {
-                Toast.makeText(activity.applicationContext, "errCode:$errCode Render ERROR:$msg", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity?.applicationContext, "errCode:$errCode Render ERROR:$msg", Toast.LENGTH_SHORT).show()
             }
         }
     }
