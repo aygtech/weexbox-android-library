@@ -173,16 +173,6 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
 
     }
 
-
-
-
-
-
-
-
-
-
-
     override fun onViewCreated(instance: WXSDKInstance?, view: View?) {
         var wxView = view
         val wrappedView = mWxAnalyzerDelegate?.onWeexViewCreated(instance, view)
@@ -195,11 +185,20 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
 //            mContainer.addView(wxView)
 //        }
 //        mContainer.requestLayout()
-        
+
         Logger.d("renderSuccess")
     }
 
     abstract fun onAddWeexView(wxView: View?);
+
+
+
+
+
+
+
+
+
 
 
 //    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
