@@ -7,6 +7,7 @@ import com.weexbox.core.R
 import com.weexbox.core.controller.WBBaseActivity
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -15,7 +16,7 @@ import java.util.*
  * Description: This is Router
  */
 
-class Router {
+class Router :Serializable{
 
     companion object {
         var routes: Map<String, Class<*>> = TreeMap()
@@ -65,7 +66,7 @@ class Router {
             from.overridePendingTransition(R.anim.present_enter, R.anim.present_exit)
         }
         val intent = Intent(from, to)
-        intent.putExtra(Router.extraName, JSON.toJSONString(this))
+        intent.putExtra(Router.extraName, this)
         from.startActivity(intent)
     }
 
