@@ -17,6 +17,6 @@ open class WBBaseActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        router = intent.extras.get(Router.extraName) as Router?
+        router = intent.getSerializableExtra(Router.extraName) as Router?
     }
 }

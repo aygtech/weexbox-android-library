@@ -10,7 +10,7 @@ open class WBBaseFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        router = savedInstanceState?.get(Router.extraName) as Router?
+        router = savedInstanceState?.getSerializable(Router.extraName) as Router?
     }
 
 }
