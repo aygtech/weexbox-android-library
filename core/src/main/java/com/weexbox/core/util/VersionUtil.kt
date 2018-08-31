@@ -1,6 +1,6 @@
 import android.content.pm.PackageManager
 import android.os.Build
-import com.ayg.cornerstone.CornerstoneEngine
+import com.weexbox.core.WeexBoxEngine
 
 object VersionUtil {
 
@@ -25,9 +25,9 @@ object VersionUtil {
      */
     val appVersionName: String?
         get() {
-            val manager = CornerstoneEngine.application.applicationContext.packageManager
+            val manager = WeexBoxEngine.application.packageManager
             try {
-                val info = manager.getPackageInfo(CornerstoneEngine.application.applicationContext.packageName, 0)
+                val info = manager.getPackageInfo(WeexBoxEngine.application.packageName, 0)
                 val version = info.versionName
                 return version
             } catch (e: PackageManager.NameNotFoundException) {

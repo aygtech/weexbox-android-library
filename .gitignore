@@ -22,3 +22,10 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 .idea/
+.gradle/4.4/taskHistory/taskHistory.lock
+.gradle/4.4/taskHistory/taskHistory.bin
+.gradle/4.4/fileHashes/fileHashes.lock
+.gradle/4.4/fileHashes/fileHashes.bin
+local.properties
+.gradle/buildOutputCleanup/outputFiles.bin
+.gradle/buildOutputCleanup/buildOutputCleanup.lock

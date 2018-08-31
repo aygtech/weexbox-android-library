@@ -19,7 +19,7 @@ class StorageModule : WXModule() {
 
     @JSMethod(uiThread = true)
     fun getData(key: String): String {
-
+        return key;
     }
 
     @JSMethod(uiThread = true)

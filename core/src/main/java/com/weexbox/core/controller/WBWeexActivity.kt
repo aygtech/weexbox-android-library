@@ -46,12 +46,11 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
 
     open lateinit var url: String
     private var mInstance: WXSDKInstance? = null
-    private var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
+    protected var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
     private var mWXHandler: Handler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_weex)
 
         window.setFormat(PixelFormat.TRANSLUCENT)
 
@@ -82,7 +81,7 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
         mInstance?.registerRenderListener(this)
         mInstance?.setNestedInstanceInterceptor(this)
         mInstance?.isTrackComponent = true
-        mContainer.post {
+//        mContainer.post {
             val outRect = Rect()
             window.decorView.getWindowVisibleDisplayFrame(outRect)
             try {
@@ -91,12 +90,12 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
                 } else {
                     val file = UpdateManager.getFullUrl(url)
                     val template = FileUtils.readFileToString(file)
-                    mInstance?.render(null, template, null, null, WXRenderStrategy.APPEND_ASYNC)
+                    mInstance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
                 }
             } catch (e: IOException) {
                 Logger.e(e, "")
             }
-        }
+//        }
     }
 
     open fun refreshWeex() {
@@ -173,10 +172,10 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
         if (wrappedView != null) {
             wxView = wrappedView
         }
-        if (wxView.parent == null) {
-            mContainer.addView(wxView)
-        }
-        mContainer.requestLayout()
+//        if (wxView.parent == null) {
+//            mContainer.addView(wxView)
+//        }
+//        mContainer.requestLayout()
         Logger.d("renderSuccess")
     }
 

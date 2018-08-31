@@ -16,26 +16,31 @@ class RouteModule : WXModule() {
 
     val activity = mWXSDKInstance.context as WBWeexActivity
 
+    //打开weex页面
     @JSMethod(uiThread = true)
     fun openWeex(info: Map<String, Any>) {
         getRouter(info).openWeex(activity)
     }
 
+    //打开web页面
     @JSMethod(uiThread = true)
     fun openWeb(info: Map<String, Any>) {
         getRouter(info).openWeb(activity)
     }
 
+    //打开原生页面
     @JSMethod(uiThread = true)
     fun openNative(info: Map<String, Any>) {
         getRouter(info).openNative(activity)
     }
 
+    //打开浏览器
     @JSMethod(uiThread = true)
     fun openBrowser(info: Map<String, Any>) {
         getRouter(info).openBrowser(activity)
     }
 
+    //打电话
     @JSMethod(uiThread = true)
     fun openPhone(info: Map<String, Any>) {
         getRouter(info).openPhone(activity)
