@@ -7,10 +7,11 @@ import com.weexbox.core.router.Router
 open class WBBaseFragment: Fragment() {
 
     var router: Router? = null
+    val ROUTER_NAME: String = "router"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        router = savedInstanceState?.get("router") as? Router
+        router = savedInstanceState?.get(ROUTER_NAME) as? Router
     }
 
 }

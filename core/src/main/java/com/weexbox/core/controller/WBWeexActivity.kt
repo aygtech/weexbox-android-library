@@ -90,7 +90,7 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
                 } else {
                     val file = UpdateManager.getFullUrl(url)
                     val template = FileUtils.readFileToString(file)
-                    mInstance?.render(null, template, null, null, WXRenderStrategy.APPEND_ASYNC)
+                    mInstance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
                 }
             } catch (e: IOException) {
                 Logger.e(e, "")
