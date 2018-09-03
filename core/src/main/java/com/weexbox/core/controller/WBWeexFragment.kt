@@ -15,6 +15,7 @@ import com.taobao.weex.RenderContainer
 import com.taobao.weex.WXSDKInstance
 import com.taobao.weex.common.WXRenderStrategy
 import com.taobao.weex.ui.component.NestedContainer
+import com.taobao.weex.utils.WXFileUtils
 import com.weexbox.core.https.HotRefreshManager
 import com.weexbox.core.update.UpdateManager
 import com.weexbox.core.util.WXAnalyzerDelegate
@@ -31,6 +32,10 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
     private var mInstance: WXSDKInstance? = null
     protected var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
     private var mWXHandler: Handler? = null
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,9 +87,9 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
                 if (url.startsWith("http")) {
                     // 下载
                 } else {
-                    val file = UpdateManager.getFullUrl(url)
-                    val template = FileUtils.readFileToString(file)
-                    mInstance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
+//                    val file = UpdateManager.getFullUrl(url)
+//                    val template = FileUtils.readFileToString(file)
+                    mInstance?.render(url, WXFileUtils.loadAsset(url, context), null, null, WXRenderStrategy.APPEND_ASYNC)
                 }
             } catch (e: IOException) {
                 Logger.e(e, "")
