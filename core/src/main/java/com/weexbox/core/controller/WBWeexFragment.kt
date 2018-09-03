@@ -35,10 +35,6 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
         val u = router?.url
         if (u == null) {
@@ -82,7 +78,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
         mInstance?.registerRenderListener(this)
         mInstance?.setNestedInstanceInterceptor(this)
         mInstance?.isTrackComponent = true
-//        mContainer.post {
+        view!!.post {
             try {
                 if (url.startsWith("http")) {
                     // 下载
@@ -94,8 +90,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
             } catch (e: IOException) {
                 Logger.e(e, "")
             }
-//        }
-
+        }
     }
 
     override fun onStart() {
