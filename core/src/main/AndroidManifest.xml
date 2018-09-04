@@ -1,2 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.weexbox.core" />
+    package="com.weexbox.core" >
+
+    <uses-permission  android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application>
+        <service
+            android:name=".service.FloatingBtnService"
+            android:enabled="true"
+            android:exported="false"></service>
+    </application>
+
+</manifest>
+
+

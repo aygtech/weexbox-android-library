@@ -1,6 +1,8 @@
 package com.weexbox.core
 
 import android.app.Application
+import android.content.Context
+import android.content.Intent
 import com.alibaba.android.bindingx.plugin.weex.BindingX
 import com.taobao.weex.InitConfig
 import com.taobao.weex.WXSDKEngine
@@ -10,6 +12,11 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.weexbox.core.module.RouteModule
 import com.weexbox.core.module.StorageModule
+import com.weexbox.core.service.FloatingBtnService
+import android.support.v4.content.ContextCompat.startForegroundService
+import android.os.Build
+
+
 
 
 /**
@@ -35,5 +42,21 @@ object WeexBoxEngine {
         BindingX.register()
         WXSDKEngine.registerModule("route", RouteModule::class.java)
         WXSDKEngine.registerModule("storage", StorageModule::class.java)
+
+    }
+
+    /**
+     * 启动全局悬浮按钮service
+     */
+    fun initFloatingBtn(context: Context) {
+        if (FloatingBtnService.STATAG.equals("stop")) {
+            val serviceIntent = Intent(context, FloatingBtnService::class.java)
+
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                context.startForegroundService(serviceIntent)
+//            } else {
+            context.startService(serviceIntent)
+//            }
+        }
     }
 }

@@ -30,15 +30,7 @@ public class MainFragment extends WBWeexFragment {
             mRootView = new FrameLayout(container.getContext());
         }
 
-        Log.i("99999", "onCreateView:" + mRootView.getId());
         return mRootView;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.i("99999", "onActivityCreated:" + getView().getId());
-
     }
 
     @Override

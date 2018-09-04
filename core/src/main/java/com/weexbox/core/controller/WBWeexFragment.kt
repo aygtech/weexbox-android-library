@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.litesuits.common.io.FileUtils
@@ -20,6 +21,7 @@ import com.weexbox.core.https.HotRefreshManager
 import com.weexbox.core.update.UpdateManager
 import com.weexbox.core.util.WXAnalyzerDelegate
 import java.io.IOException
+import kotlin.math.log
 
 /**
  * Author: Mario
@@ -147,7 +149,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
 
     override fun onRenderSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
         mWxAnalyzerDelegate?.onWeexRenderSuccess(instance)
-        Logger.d("Render Finish...")
+        Logger.d("Render Finish...width:" + width + "   ,height="+height)
     }
 
     override fun onCreateNestInstance(instance: WXSDKInstance?, container: NestedContainer?) {

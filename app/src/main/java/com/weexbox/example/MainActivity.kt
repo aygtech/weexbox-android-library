@@ -14,13 +14,6 @@ class MainActivity : WBBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        try {
-            WeexBoxEngine.initialize(this.application)
-        } catch (e: WXException) {
-            e.printStackTrace()
-        }
-
-
         initFragment()
     }
 

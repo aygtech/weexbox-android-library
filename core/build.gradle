@@ -7,8 +7,6 @@ apply plugin: 'realm-android'
 android {
     compileSdkVersion 27
 
-
-
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 27
@@ -16,6 +14,7 @@ android {
         versionName "1.0"
 
         ndk {
+//            abiFilters "armeabi"
             abiFilters "armeabi-v7a"
             abiFilters "x86"
         }
@@ -54,4 +53,7 @@ dependencies {
     implementation('com.alibaba.android:bindingx_weex_plugin:1.0.1') {
         exclude module: 'annotation'
     }
+
+    //二维码
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
 }
