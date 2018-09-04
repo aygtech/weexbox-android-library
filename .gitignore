@@ -29,3 +29,4 @@ hs_err_pid*
 local.properties
 .gradle/buildOutputCleanup/outputFiles.bin
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/
