@@ -54,4 +54,5 @@ dependencies {
     implementation('com.alibaba.android:bindingx_weex_plugin:1.0.1') {
         exclude module: 'annotation'
     }
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }
