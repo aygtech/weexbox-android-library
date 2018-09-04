@@ -30,3 +30,6 @@ local.properties
 .gradle/buildOutputCleanup/outputFiles.bin
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
 .gradle/
+core/core.iml
+app/app.iml
+android-library.iml
