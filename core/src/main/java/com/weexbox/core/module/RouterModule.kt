@@ -1,8 +1,8 @@
 package com.weexbox.core.module
 
-import com.alibaba.fastjson.JSON
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.common.WXModule
+import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.controller.WBWeexActivity
 import com.weexbox.core.router.Router
 
@@ -62,7 +62,7 @@ class RouteModule : WXModule() {
     }
 
     fun getRouter(info: Map<String, Any>): Router {
-        return JSON.parseObject(JSON.toJSONString(info), Router::class.java)
+        return WeexBoxEngine.gson.fromJson(WeexBoxEngine.gson.toJson(info), Router::class.java)
     }
 
 }

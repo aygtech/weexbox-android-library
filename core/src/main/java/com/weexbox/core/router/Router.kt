@@ -1,7 +1,6 @@
 package com.weexbox.core.router
 
 import android.content.Intent
-import com.alibaba.fastjson.JSON
 import com.orhanobut.logger.Logger
 import com.weexbox.core.R
 import com.weexbox.core.controller.WBBaseActivity

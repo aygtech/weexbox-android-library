@@ -22,19 +22,20 @@ import android.os.Message
 import android.text.TextUtils
 import android.util.Log
 import android.view.KeyEvent
+import android.view.ViewGroup
 import android.widget.Toast
 import com.orhanobut.logger.Logger
 import com.taobao.weex.common.IWXDebugProxy
 import com.taobao.weex.common.WXRenderStrategy
 import com.taobao.weex.ui.component.NestedContainer
+import com.taobao.weex.utils.WXFileUtils
 import com.weexbox.core.R
 import com.weexbox.core.https.HotRefreshManager
 import com.weexbox.core.https.HotRefreshManager.*
+import com.weexbox.core.router.Router
 import com.weexbox.core.update.UpdateManager
 import com.weexbox.core.util.WXAnalyzerDelegate
 import kotlinx.android.synthetic.main.activity_weex.*
-import java.net.MalformedURLException
-import java.net.URL
 
 /**
  * Author: Mario
@@ -46,30 +47,34 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
 
     open lateinit var url: String
     private var mInstance: WXSDKInstance? = null
-    protected var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
+    private var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
     private var mWXHandler: Handler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.activity_weex)
         window.setFormat(PixelFormat.TRANSLUCENT)
 
-        val u = router?.url
-        if (u == null) {
-            Logger.e("url不能为空")
-        } else {
-            url = u
-            mWXHandler = Handler(this)
-            HotRefreshManager.getInstance().setHandler(mWXHandler)
-            render()
-            mInstance?.onActivityCreate()
+
+        render()
+
+
+//        val u = router?.url
+//        if (u == null) {
+//            Logger.e("url不能为空")
+//        } else {
+//            url = u
+//            mWXHandler = Handler(this)
+//            HotRefreshManager.getInstance().setHandler(mWXHandler)
+
+//            mInstance?.onActivityCreate()
 //            registerBroadcastReceiver()
 
-            mWxAnalyzerDelegate = WXAnalyzerDelegate(this)
-            mWxAnalyzerDelegate?.onCreate()
+//            mWxAnalyzerDelegate = WXAnalyzerDelegate(this)
+//            mWxAnalyzerDelegate?.onCreate()
 
 
-        }
+//        }
     }
 
     private fun render() {
@@ -81,21 +86,24 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
         mInstance?.registerRenderListener(this)
         mInstance?.setNestedInstanceInterceptor(this)
         mInstance?.isTrackComponent = true
-//        mContainer.post {
+
+        mContainer.post {
             val outRect = Rect()
+            val ctx = this@WBWeexActivity
             window.decorView.getWindowVisibleDisplayFrame(outRect)
             try {
                 if (url.startsWith("http")) {
                     // 下载
                 } else {
-                    val file = UpdateManager.getFullUrl(url)
-                    val template = FileUtils.readFileToString(file)
+//                    val file = UpdateManager.getFullUrl(url)
+//                    val template = FileUtils.readFileToString(file)
+                    val template = WXFileUtils.loadAsset(url, this)
                     mInstance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
                 }
             } catch (e: IOException) {
                 Logger.e(e, "")
             }
-//        }
+        }
     }
 
     open fun refreshWeex() {
@@ -172,10 +180,10 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
         if (wrappedView != null) {
             wxView = wrappedView
         }
-//        if (wxView.parent == null) {
-//            mContainer.addView(wxView)
-//        }
-//        mContainer.requestLayout()
+        if (wxView.parent == null) {
+            mContainer.addView(wxView)
+        }
+        mContainer!!.requestLayout()
         Logger.d("renderSuccess")
     }
 

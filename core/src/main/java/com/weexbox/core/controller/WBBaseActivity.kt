@@ -3,6 +3,7 @@ package com.weexbox.core.controller
 import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
+import android.support.v7.app.AppCompatActivity
 import com.weexbox.core.router.Router
 
 /**
@@ -11,7 +12,7 @@ import com.weexbox.core.router.Router
  * Description: This is WBBaseActivity
  */
 
-open class WBBaseActivity : FragmentActivity() {
+open class WBBaseActivity : AppCompatActivity() {
 
     var router: Router? = null
 

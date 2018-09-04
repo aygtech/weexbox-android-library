@@ -2,9 +2,9 @@ package com.weexbox.core
 
 import android.app.Application
 import com.alibaba.android.bindingx.plugin.weex.BindingX
+import com.google.gson.Gson
 import com.taobao.weex.InitConfig
 import com.taobao.weex.WXSDKEngine
-import com.weexbox.core.adapter.ImageAdapter
 import io.realm.Realm
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -21,6 +21,7 @@ import com.weexbox.core.module.StorageModule
 object WeexBoxEngine {
 
     lateinit var application: Application
+    val gson = Gson()
 
     fun initialize(application: Application) {
         this.application = application
@@ -30,10 +31,10 @@ object WeexBoxEngine {
     }
 
     private fun initWeex() {
-        val config = InitConfig.Builder().setImgAdapter(ImageAdapter()).build()
-        WXSDKEngine.initialize(application, config)
+//        val config = InitConfig.Builder().setImgAdapter(ImageAdapter()).build()
+        WXSDKEngine.initialize(application, null)
         BindingX.register()
-        WXSDKEngine.registerModule("route", RouteModule::class.java)
-        WXSDKEngine.registerModule("storage", StorageModule::class.java)
+//        WXSDKEngine.registerModule("route", RouteModule::class.java)
+//        WXSDKEngine.registerModule("storage", StorageModule::class.java)
     }
 }
