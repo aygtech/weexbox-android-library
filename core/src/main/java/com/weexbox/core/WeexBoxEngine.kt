@@ -48,9 +48,9 @@ object WeexBoxEngine {
     /**
      * 启动全局悬浮按钮service
      */
-    fun initFloatingBtn(context: Context) {
+    fun initFloatingBtn(context: Context, service: Class<out FloatingBtnService>) {
         if (FloatingBtnService.STATAG.equals("stop")) {
-            val serviceIntent = Intent(context, FloatingBtnService::class.java)
+            val serviceIntent = Intent(context, service)
 
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //                context.startForegroundService(serviceIntent)

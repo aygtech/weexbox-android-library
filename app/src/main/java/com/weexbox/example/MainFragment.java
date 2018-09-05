@@ -1,5 +1,6 @@
 package com.weexbox.example;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,5 +50,17 @@ public class MainFragment extends WBWeexFragment {
             }
             mRootView.requestLayout();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        registerWeexDebugBroadcast();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        unregisterWeexDebugBroadcast();
     }
 }
