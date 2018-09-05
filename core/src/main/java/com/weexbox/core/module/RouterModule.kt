@@ -12,7 +12,7 @@ import com.weexbox.core.router.Router
  * Description: This is RouterModule
  */
 
-class RouteModule : WXModule() {
+class RouterModule : WXModule() {
 
     val activity = mWXSDKInstance.context as WBWeexActivity
 
