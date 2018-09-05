@@ -15,11 +15,15 @@ class MainActivity : WBWeexActivity() {
         url = "index.js"
 
         super.onCreate(savedInstanceState)
-
-
-
     }
 
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_main)
+//
+//        initFragment()
+//    }
+//
 //    private var weexFragment: MainFragment? = null
 //
 //    private fun initFragment() {

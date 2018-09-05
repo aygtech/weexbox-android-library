@@ -1,6 +1,7 @@
 package com.weexbox.core.controller
 
 import android.app.AlertDialog
+import android.app.Fragment
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.graphics.PixelFormat
@@ -43,9 +44,9 @@ import kotlinx.android.synthetic.main.activity_weex.*
  * Description: This is WBWeexActivity
  */
 
-open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.NestedInstanceInterceptor, Handler.Callback {
+open class WBWeexActivity : WBBaseActivity() {
 
-    open lateinit var url: String
+    open var url: String? = null
     private var mInstance: WXSDKInstance? = null
     private var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
     private var mWXHandler: Handler? = null
@@ -53,10 +54,13 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weex)
-        window.setFormat(PixelFormat.TRANSLUCENT)
+        val fragment = WBWeexFragment()
+        fragment.url = url
+        supportFragmentManager.beginTransaction().replace(R.id.mFragment, fragment).commit()
+//        (fragment as WBWeexFragment).url = url
 
-
-        render()
+//        window.setFormat(PixelFormat.TRANSLUCENT)
+//        render()
 
 
 //        val u = router?.url
@@ -77,37 +81,37 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
 //        }
     }
 
-    private fun render() {
-        mInstance?.destroy()
-        mInstance = null
-        val renderContainer = RenderContainer(this)
-        mInstance = WXSDKInstance(this)
-        mInstance?.setRenderContainer(renderContainer)
-        mInstance?.registerRenderListener(this)
-        mInstance?.setNestedInstanceInterceptor(this)
-        mInstance?.isTrackComponent = true
-
-        mContainer.post {
-            val outRect = Rect()
-            val ctx = this@WBWeexActivity
-            window.decorView.getWindowVisibleDisplayFrame(outRect)
-            try {
-                if (url.startsWith("http")) {
-                    // 下载
-                } else {
-//                    val file = UpdateManager.getFullUrl(url)
-//                    val template = FileUtils.readFileToString(file)
-                    val template = WXFileUtils.loadAsset(url, this)
-                    mInstance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
-                }
-            } catch (e: IOException) {
-                Logger.e(e, "")
-            }
-        }
-    }
-
+//    private fun render() {
+//        mInstance?.destroy()
+//        mInstance = null
+//        val renderContainer = RenderContainer(this)
+//        mInstance = WXSDKInstance(this)
+//        mInstance?.setRenderContainer(renderContainer)
+//        mInstance?.registerRenderListener(this)
+//        mInstance?.setNestedInstanceInterceptor(this)
+//        mInstance?.isTrackComponent = true
+//
+//        mContainer.post {
+//            val outRect = Rect()
+//            val ctx = this@WBWeexActivity
+//            window.decorView.getWindowVisibleDisplayFrame(outRect)
+//            try {
+//                if (url.startsWith("http")) {
+//                    // 下载
+//                } else {
+////                    val file = UpdateManager.getFullUrl(url)
+////                    val template = FileUtils.readFileToString(file)
+//                    val template = WXFileUtils.loadAsset(url, this)
+//                    mInstance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
+//                }
+//            } catch (e: IOException) {
+//                Logger.e(e, "")
+//            }
+//        }
+//    }
+//
     open fun refreshWeex() {
-        render()
+//        render()
     }
 
     /**
@@ -133,119 +137,119 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
 //        registerReceiver(mReceiver, filter)
 //    }
 
-    override fun onStart() {
-        super.onStart()
-        mWxAnalyzerDelegate?.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mInstance?.onActivityResume()
-        mWxAnalyzerDelegate?.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mInstance?.onActivityPause()
-        mWxAnalyzerDelegate?.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mInstance?.onActivityStop()
-        mWxAnalyzerDelegate?.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mInstance?.onActivityDestroy()
-        mWXHandler?.obtainMessage(HOT_REFRESH_DISCONNECT)?.sendToTarget()
-//        unregisterBroadcastReceiver()
-        mWxAnalyzerDelegate?.onDestroy()
-    }
-
-    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        return mWxAnalyzerDelegate != null && mWxAnalyzerDelegate!!.onKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
-    }
-
-    override fun onBackPressed() {
-        if (!mInstance!!.onBackPressed()) {
-            super.onBackPressed()
-        }
-    }
-
-    override fun onViewCreated(instance: WXSDKInstance, view: View) {
-        var wxView = view
-        val wrappedView = mWxAnalyzerDelegate?.onWeexViewCreated(instance, view)
-        if (wrappedView != null) {
-            wxView = wrappedView
-        }
-        if (wxView.parent == null) {
-            mContainer.addView(wxView)
-        }
-        mContainer!!.requestLayout()
-        Logger.d("renderSuccess")
-    }
-
-    override fun onRenderSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
-        mWxAnalyzerDelegate?.onWeexRenderSuccess(instance)
-        Logger.d("Render Finish...")
-    }
-
-    override fun onRefreshSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
-        Logger.d("Update Finish...")
-    }
-
-    override fun onException(instance: WXSDKInstance?, errCode: String?, msg: String?) {
-        mWxAnalyzerDelegate?.onException(instance, errCode, msg)
-        if (!TextUtils.isEmpty(errCode) && errCode!!.contains("|")) {
-            val errCodeList = errCode.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val code = errCodeList[1]
-            val codeType = errCode.substring(0, errCode.indexOf("|"))
-
-            if (TextUtils.equals("1", codeType)) {
-                val errMsg = "codeType:$codeType\n errCode:$code\n ErrorInfo:$msg"
-                degradeAlert(errMsg)
-                return
-            } else {
-                Toast.makeText(applicationContext, "errCode:$errCode Render ERROR:$msg", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    override fun onCreateNestInstance(instance: WXSDKInstance?, container: NestedContainer?) {
-        Logger.d("Nested Instance created.")
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        mInstance?.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        super.onActivityResult(requestCode, resultCode, data)
-        mInstance?.onActivityResult(requestCode, resultCode, data)
-    }
-
-    override fun handleMessage(msg: Message?): Boolean {
-        when (msg?.what) {
-            HOT_REFRESH_CONNECT -> HotRefreshManager.getInstance().connect(msg.obj.toString())
-            HOT_REFRESH_DISCONNECT -> HotRefreshManager.getInstance().disConnect()
-            HOT_REFRESH_REFRESH -> refreshWeex()
-            HOT_REFRESH_CONNECT_ERROR -> Logger.e("hot refresh connect error!")
-        }
-
-        return false
-    }
-
-    private fun degradeAlert(errMsg: String) {
-        AlertDialog.Builder(this)
-                .setTitle("Downgrade success")
-                .setMessage(errMsg)
-                .setPositiveButton("OK", null)
-                .show()
-
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        mWxAnalyzerDelegate?.onStart()
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        mInstance?.onActivityResume()
+//        mWxAnalyzerDelegate?.onResume()
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        mInstance?.onActivityPause()
+//        mWxAnalyzerDelegate?.onPause()
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        mInstance?.onActivityStop()
+//        mWxAnalyzerDelegate?.onStop()
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        mInstance?.onActivityDestroy()
+//        mWXHandler?.obtainMessage(HOT_REFRESH_DISCONNECT)?.sendToTarget()
+////        unregisterBroadcastReceiver()
+//        mWxAnalyzerDelegate?.onDestroy()
+//    }
+//
+//    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+//        return mWxAnalyzerDelegate != null && mWxAnalyzerDelegate!!.onKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
+//    }
+//
+//    override fun onBackPressed() {
+//        if (!mInstance!!.onBackPressed()) {
+//            super.onBackPressed()
+//        }
+//    }
+//
+//    override fun onViewCreated(instance: WXSDKInstance, view: View) {
+//        var wxView = view
+//        val wrappedView = mWxAnalyzerDelegate?.onWeexViewCreated(instance, view)
+//        if (wrappedView != null) {
+//            wxView = wrappedView
+//        }
+//        if (wxView.parent == null) {
+//            mContainer.addView(wxView)
+//        }
+//        mContainer!!.requestLayout()
+//        Logger.d("renderSuccess")
+//    }
+//
+//    override fun onRenderSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
+//        mWxAnalyzerDelegate?.onWeexRenderSuccess(instance)
+//        Logger.d("Render Finish...")
+//    }
+//
+//    override fun onRefreshSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
+//        Logger.d("Update Finish...")
+//    }
+//
+//    override fun onException(instance: WXSDKInstance?, errCode: String?, msg: String?) {
+//        mWxAnalyzerDelegate?.onException(instance, errCode, msg)
+//        if (!TextUtils.isEmpty(errCode) && errCode!!.contains("|")) {
+//            val errCodeList = errCode.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+//            val code = errCodeList[1]
+//            val codeType = errCode.substring(0, errCode.indexOf("|"))
+//
+//            if (TextUtils.equals("1", codeType)) {
+//                val errMsg = "codeType:$codeType\n errCode:$code\n ErrorInfo:$msg"
+//                degradeAlert(errMsg)
+//                return
+//            } else {
+//                Toast.makeText(applicationContext, "errCode:$errCode Render ERROR:$msg", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
+//
+//    override fun onCreateNestInstance(instance: WXSDKInstance?, container: NestedContainer?) {
+//        Logger.d("Nested Instance created.")
+//    }
+//
+//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        mInstance?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//    }
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        mInstance?.onActivityResult(requestCode, resultCode, data)
+//    }
+//
+//    override fun handleMessage(msg: Message?): Boolean {
+//        when (msg?.what) {
+//            HOT_REFRESH_CONNECT -> HotRefreshManager.getInstance().connect(msg.obj.toString())
+//            HOT_REFRESH_DISCONNECT -> HotRefreshManager.getInstance().disConnect()
+//            HOT_REFRESH_REFRESH -> refreshWeex()
+//            HOT_REFRESH_CONNECT_ERROR -> Logger.e("hot refresh connect error!")
+//        }
+//
+//        return false
+//    }
+//
+//    private fun degradeAlert(errMsg: String) {
+//        AlertDialog.Builder(this)
+//                .setTitle("Downgrade success")
+//                .setMessage(errMsg)
+//                .setPositiveButton("OK", null)
+//                .show()
+//
+//    }
 
 //    inner class RefreshBroadcastReceiver : BroadcastReceiver() {
 //        override fun onReceive(context: Context, intent: Intent) {

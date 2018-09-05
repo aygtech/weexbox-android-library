@@ -5,8 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.support.constraint.ConstraintLayout
+import android.support.v4.app.Fragment
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.litesuits.common.io.FileUtils
 import com.orhanobut.logger.Logger
@@ -16,6 +20,7 @@ import com.taobao.weex.WXSDKInstance
 import com.taobao.weex.common.WXRenderStrategy
 import com.taobao.weex.ui.component.NestedContainer
 import com.taobao.weex.utils.WXFileUtils
+import com.weexbox.core.R
 import com.weexbox.core.https.HotRefreshManager
 import com.weexbox.core.update.UpdateManager
 import com.weexbox.core.util.WXAnalyzerDelegate
@@ -26,36 +31,29 @@ import java.io.IOException
  * Time: 2018/8/16 下午4:38
  */
 
-open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRenderListener , WXSDKInstance.NestedInstanceInterceptor {
+open class WBWeexFragment: Fragment() , Handler.Callback, IWXRenderListener , WXSDKInstance.NestedInstanceInterceptor {
 
-    open lateinit var url: String
+    open var url: String? = null
     private var mInstance: WXSDKInstance? = null
-    protected var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
+    private var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
     private var mWXHandler: Handler? = null
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater!!.inflate(R.layout.fragment_weex, container, false)
+        return view
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val u = router?.url
-        if (u == null) {
-            Logger.e("url不能为空")
-        } else {
-            url = u
-            mWXHandler = Handler(this)
-            HotRefreshManager.getInstance().setHandler(mWXHandler)
-            render()
-            mInstance?.onActivityCreate()
+        mWXHandler = Handler(this)
+        HotRefreshManager.getInstance().setHandler(mWXHandler)
+        render()
+        mInstance?.onActivityCreate()
 //            registerBroadcastReceiver()
 
-            mWxAnalyzerDelegate = WXAnalyzerDelegate(activity)
-            mWxAnalyzerDelegate?.onCreate()
-
-
-        }
+        mWxAnalyzerDelegate = WXAnalyzerDelegate(activity)
+        mWxAnalyzerDelegate?.onCreate()
     }
 
     override fun handleMessage(msg: Message?): Boolean {
@@ -82,20 +80,19 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
         mInstance?.registerRenderListener(this)
         mInstance?.setNestedInstanceInterceptor(this)
         mInstance?.isTrackComponent = true
-//        mContainer.post {
+        view!!.post {
             try {
-                if (url.startsWith("http")) {
+                if (url!!.startsWith("http")) {
                     // 下载
                 } else {
 //                    val file = UpdateManager.getFullUrl(url)
 //                    val template = FileUtils.readFileToString(file)
-                    mInstance?.render(url, WXFileUtils.loadAsset(url, context), null, null, WXRenderStrategy.APPEND_ASYNC)
+                    mInstance?.render(url, WXFileUtils.loadAsset(url, activity), null, null, WXRenderStrategy.APPEND_ASYNC)
                 }
             } catch (e: IOException) {
                 Logger.e(e, "")
             }
-//        }
-
+        }
     }
 
     override fun onStart() {
@@ -152,7 +149,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
 
     override fun onRenderSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
         mWxAnalyzerDelegate?.onWeexRenderSuccess(instance)
-        Logger.d("Render Finish...")
+        Logger.d("Render Finish...width:" + width + "   ,height="+height)
     }
 
     override fun onCreateNestInstance(instance: WXSDKInstance?, container: NestedContainer?) {
@@ -185,16 +182,15 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
             wxView = wrappedView
         }
 
-        onAddWeexView(wxView)
-//        if (wxView.parent == null) {
-//            mContainer.addView(wxView)
-//        }
-//        mContainer.requestLayout()
-
+//        onAddWeexView(wxView)
+        if (wxView!!.parent == null) {
+            (this.view as ConstraintLayout).addView(wxView)
+        }
+        this.view!!.requestLayout()
         Logger.d("renderSuccess")
     }
 
-    abstract fun onAddWeexView(wxView: View?);
+//    abstract fun onAddWeexView(wxView: View?);
 
 
 
