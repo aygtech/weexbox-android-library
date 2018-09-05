@@ -214,7 +214,7 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
         mInstance?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         mInstance?.onActivityResult(requestCode, resultCode, data)
     }

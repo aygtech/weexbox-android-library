@@ -18,9 +18,7 @@ import android.provider.Settings
 import android.support.annotation.RequiresApi
 
 
-class FloatingBtnService : Service(), Application.ActivityLifecycleCallbacks {
-
-    private var currentActivity: Activity? = null
+abstract class FloatingBtnService : Service(){
 
     private var view: LinearLayout? = null
 
@@ -40,7 +38,7 @@ class FloatingBtnService : Service(), Application.ActivityLifecycleCallbacks {
         view = inflater.inflate(R.layout.toast_location, null) as LinearLayout
         // 给窗体上的view对象注册点击事件
         view!!.setOnClickListener {
-            val integrator = IntentIntegrator(currentActivity)
+            val integrator = IntentIntegrator(getCurrentActivity())
             integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
             integrator.setPrompt("Scan a barcode")
             //integrator.setCameraId(0);  // Use a specific camera of the device
@@ -126,9 +124,9 @@ class FloatingBtnService : Service(), Application.ActivityLifecycleCallbacks {
         wm!!.addView(view, params)
     }
 
-    override fun onCreate() {
-        application.registerActivityLifecycleCallbacks(this)
+    abstract fun getCurrentActivity(): Activity?
 
+    override fun onCreate() {
         wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
 //        //8.0以后startForegroundService问题
@@ -158,8 +156,6 @@ class FloatingBtnService : Service(), Application.ActivityLifecycleCallbacks {
     }
 
     override fun onDestroy() {
-        application.unregisterActivityLifecycleCallbacks(this)
-
         if (view != null) {
             wm!!.removeView(view)
             view = null
@@ -171,24 +167,5 @@ class FloatingBtnService : Service(), Application.ActivityLifecycleCallbacks {
     companion object {
         protected val TAG = "ShowFloatingBtnService"
         var STATAG = "stop"
-    }
-
-
-
-    //获取当前activity生命周期
-    override fun onActivityPaused(activity: Activity?) {
-    }
-    override fun onActivityStarted(activity: Activity?) {
-    }
-    override fun onActivityDestroyed(activity: Activity?) {
-    }
-    override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
-    }
-    override fun onActivityStopped(activity: Activity?) {
-    }
-    override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
-    }
-    override fun onActivityResumed(activity: Activity?) {
-        currentActivity = activity
     }
 }

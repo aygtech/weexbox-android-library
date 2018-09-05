@@ -1,10 +1,14 @@
 package com.weexbox.core.controller
 
 import android.app.AlertDialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.support.v4.content.LocalBroadcastManager
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -13,7 +17,9 @@ import com.litesuits.common.io.FileUtils
 import com.orhanobut.logger.Logger
 import com.taobao.weex.IWXRenderListener
 import com.taobao.weex.RenderContainer
+import com.taobao.weex.WXSDKEngine
 import com.taobao.weex.WXSDKInstance
+import com.taobao.weex.common.IWXDebugProxy
 import com.taobao.weex.common.WXRenderStrategy
 import com.taobao.weex.ui.component.NestedContainer
 import com.taobao.weex.utils.WXFileUtils
@@ -34,6 +40,10 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
     private var mInstance: WXSDKInstance? = null
     protected var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
     private var mWXHandler: Handler? = null
+
+    //调试广播
+    protected var mBroadcastReceiver: BroadcastReceiver? = null
+    protected var filter: IntentFilter? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -161,7 +171,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
         mInstance?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         mInstance?.onActivityResult(requestCode, resultCode, data)
     }
@@ -193,6 +203,39 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
 
     abstract fun onAddWeexView(wxView: View?);
 
+    //调试广播
+    inner class DefaultBroadcastReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (IWXDebugProxy.ACTION_DEBUG_INSTANCE_REFRESH == intent.action) {
+                refreshWeex()
+            } else if (WXSDKEngine.JS_FRAMEWORK_RELOAD == intent.action) {
+                refreshWeex()
+            }
+        }
+    }
+
+    fun registerWeexDebugBroadcast() {
+        if (mBroadcastReceiver == null){
+            mBroadcastReceiver = DefaultBroadcastReceiver()
+        }
+
+        if (filter == null) {
+            filter = IntentFilter()
+            filter!!.addAction(IWXDebugProxy.ACTION_DEBUG_INSTANCE_REFRESH)
+            filter!!.addAction(WXSDKEngine.JS_FRAMEWORK_RELOAD)
+        }
+
+        LocalBroadcastManager.getInstance(activity!!.applicationContext)
+                .registerReceiver(mBroadcastReceiver!!, filter!!)
+    }
+
+    fun unregisterWeexDebugBroadcast() {
+        if (mBroadcastReceiver != null) {
+            LocalBroadcastManager.getInstance(activity!!.applicationContext)
+                    .unregisterReceiver(mBroadcastReceiver!!)
+            mBroadcastReceiver = null
+        }
+    }
 
 
 
