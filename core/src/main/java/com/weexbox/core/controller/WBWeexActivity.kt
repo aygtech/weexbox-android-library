@@ -98,7 +98,8 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
 //        }
     }
 
-    open fun refreshWeex() {
+    override fun refreshWeex() {
+        super.refreshWeex()
         render()
     }
 

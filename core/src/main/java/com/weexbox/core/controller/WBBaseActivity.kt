@@ -150,4 +150,8 @@ open class WBBaseActivity : FragmentActivity() {
             }
         }
     }
+
+    open fun refreshWeex() {
+
+    }
 }

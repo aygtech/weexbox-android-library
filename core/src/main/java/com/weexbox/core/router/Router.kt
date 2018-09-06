@@ -1,5 +1,6 @@
 package com.weexbox.core.router
 
+import android.app.Activity
 import android.content.Intent
 import com.alibaba.fastjson.JSON
 import com.orhanobut.logger.Logger
@@ -7,6 +8,7 @@ import com.weexbox.core.R
 import com.weexbox.core.controller.WBBaseActivity
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
+import com.weexbox.core.util.ActivityManager
 import java.io.Serializable
 import java.util.*
 
@@ -21,8 +23,8 @@ class Router :Serializable{
     companion object {
         var routes: Map<String, Class<*>> = TreeMap()
         val extraName = "WeexBoxRouter"
-        val typePush = "push"
-        val typePresent = "present"
+        val typePush = "push"   //右往左啟動頁面
+        val typePresent = "present" //下往上啟動頁面
     }
 
     // 下一个weex/web页面路径
@@ -54,11 +56,9 @@ class Router :Serializable{
     }
 
     fun openBrowser(from: WBBaseActivity) {
-        // TODO
     }
 
     fun openPhone(from: WBBaseActivity) {
-        // TODO
     }
 
     fun open(from: WBBaseActivity, to: Class<*>) {
@@ -71,7 +71,16 @@ class Router :Serializable{
     }
 
     fun close(from: WBBaseActivity, levels: Int? = null) {
-        // TODO
-        from.finish()
+        var count = 0;
+        if (levels != null){
+            count = levels;
+        }
+
+        val activities = ActivityManager.getInstance().getAllActivities()
+
+        for (i in 0 until count) {
+            val activity = activities.get(i)
+            activity.finish()
+        }
     }
 }

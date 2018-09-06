@@ -52,15 +52,15 @@ object UpdateManager {
     private var completion: Completion? = null
 
     private const val resourceName = "www"
-    private const val oneName = "weexbox-update-one"
-    private const val twoName = "weexbox-update-two"
-    private const val workingNameKey = "weexbox-update-working-key"
-    private const val sharedPreferencesName = "weexbox-update-sharedPreferences"
+    private const val oneName = "update-one"
+    private const val twoName = "update-two"
+    private const val workingNameKey = "update-working-key"
+    private const val sharedPreferencesName = "update-sharedPreferences"
     private val workingName = WeexBoxEngine.application.applicationContext.getSharedPreferences(sharedPreferencesName, 0).getString(workingNameKey, oneName)
     private val cacheName = if (workingName == oneName) twoName else oneName
     private const val zipName = "www.zip"
-    private const val md5Name = "weexbox-md5.json"
-    private const val configName = "weexbox-config.json"
+    private const val md5Name = "update-md5.json"
+    private const val configName = "update-config.json"
 
     private const val resourceUrl = resourceName
     private val resourceConfigUrl = resourceUrl + File.separator + configName

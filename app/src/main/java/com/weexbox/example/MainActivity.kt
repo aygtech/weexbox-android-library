@@ -32,4 +32,9 @@ class MainActivity : WBBaseActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
                 weexFragment).commit()
     }
+
+    override fun refreshWeex() {
+        super.refreshWeex()
+        weexFragment?.refreshWeex()
+    }
 }

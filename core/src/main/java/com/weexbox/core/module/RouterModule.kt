@@ -3,6 +3,7 @@ package com.weexbox.core.module
 import com.alibaba.fastjson.JSON
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.common.WXModule
+import com.weexbox.core.controller.WBBaseActivity
 import com.weexbox.core.controller.WBWeexActivity
 import com.weexbox.core.router.Router
 
@@ -14,7 +15,7 @@ import com.weexbox.core.router.Router
 
 class RouteModule : WXModule() {
 
-    val activity = mWXSDKInstance.context as WBWeexActivity
+    val activity = mWXSDKInstance.context as WBBaseActivity
 
     //打开weex页面
     @JSMethod(uiThread = true)

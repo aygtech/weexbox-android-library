@@ -1,6 +1,9 @@
-package com.freeson.frame.util;
+package com.weexbox.core.util;
 
 import android.app.Activity;
+import android.util.Log;
+
+import com.taobao.weex.devtools.common.LogUtil;
 
 import java.util.Stack;
 
@@ -160,13 +163,13 @@ public final class ActivityManager {
      * 退出应用程序
      */
     public void exitApplication() {
-        try {
-            ReleaseResourcesUtil.releaseResources();
-            finishAllActivity();
-        } catch (Exception e) {
-            LogUtil.e("退出应用失败");
-        } finally {
-            System.exit(0);
-        }
+//        try {
+//            ReleaseResourcesUtil.releaseResources();
+//            finishAllActivity();
+//        } catch (Exception e) {
+//            Log.e("ActivityManager", "退出应用失败");
+//        } finally {
+//            System.exit(0);
+//        }
     }
 }
