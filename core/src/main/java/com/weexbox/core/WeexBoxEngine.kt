@@ -15,6 +15,7 @@ import com.weexbox.core.module.StorageModule
 import com.weexbox.core.service.FloatingBtnService
 import android.support.v4.content.ContextCompat.startForegroundService
 import android.os.Build
+import android.util.Log
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
 import com.weexbox.core.router.Router
@@ -50,6 +51,7 @@ object WeexBoxEngine {
      * 启动全局悬浮按钮service
      */
     fun initFloatingBtn(context: Context, service: Class<out FloatingBtnService>) {
+        Log.i("ccccccc", "11111")
         if (FloatingBtnService.STATAG.equals("stop")) {
             val serviceIntent = Intent(context, service)
 
@@ -58,6 +60,7 @@ object WeexBoxEngine {
 //            } else {
             context.startService(serviceIntent)
 //            }
+            Log.i("ccccccc", "22222222222")
         }
     }
 

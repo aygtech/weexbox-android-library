@@ -127,6 +127,8 @@ abstract class FloatingBtnService : Service(){
     abstract fun getCurrentActivity(): Activity?
 
     override fun onCreate() {
+
+        Log.i("ccccccc", "3333333333333333")
         wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
 //        //8.0以后startForegroundService问题
