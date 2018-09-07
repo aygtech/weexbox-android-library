@@ -29,7 +29,7 @@ open class WBBaseActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        router = intent.getSerializableExtra(Router.extraName) as Router?
+        router = intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
         if (isRegisterEventBus() && inCreateRegisterEventBus()) {
             EventBusUtil.register(this)
         }

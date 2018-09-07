@@ -17,22 +17,10 @@ class RouteModule : WXModule() {
 
     val activity = mWXSDKInstance.context as WBBaseActivity
 
-    //打开weex页面
+    //打开页面
     @JSMethod(uiThread = true)
-    fun openWeex(info: Map<String, Any>) {
-        getRouter(info).openWeex(activity)
-    }
-
-    //打开web页面
-    @JSMethod(uiThread = true)
-    fun openWeb(info: Map<String, Any>) {
-        getRouter(info).openWeb(activity)
-    }
-
-    //打开原生页面
-    @JSMethod(uiThread = true)
-    fun openNative(info: Map<String, Any>) {
-        getRouter(info).openNative(activity)
+    fun open(info: Map<String, Any>) {
+        getRouter(info).open(activity)
     }
 
     //打开浏览器
