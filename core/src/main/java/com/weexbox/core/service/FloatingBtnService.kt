@@ -116,11 +116,11 @@ abstract class FloatingBtnService : Service(){
         params!!.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
         params!!.format = PixelFormat.TRANSLUCENT
         // 定义窗体的类型 TYPE_PRIORITY_PHONE
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            params!!.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-        } else {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            params!!.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+//        } else {
             params!!.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE
-        }
+//        }
         wm!!.addView(view, params)
     }
 

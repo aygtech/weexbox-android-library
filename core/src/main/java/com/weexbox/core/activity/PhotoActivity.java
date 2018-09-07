@@ -76,11 +76,11 @@ public class PhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         setContentView(R.layout.activity_photoview);
-        page = findViewById(R.id.page);
-        top = findViewById(R.id.top);
-        viewPager = findViewById(R.id.viewPager);
+        page = (TextView) findViewById(R.id.page);
+        top = (RelativeLayout) findViewById(R.id.top);
+        viewPager = (PhotoViewPager) findViewById(R.id.viewPager);
 //        back = findViewById(R.id.back);
-        save = findViewById(R.id.save);
+        save = (TextView) findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

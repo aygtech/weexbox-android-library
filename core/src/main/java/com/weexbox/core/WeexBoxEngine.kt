@@ -13,7 +13,7 @@ import com.orhanobut.logger.Logger
 import com.weexbox.core.module.RouteModule
 import com.weexbox.core.module.StorageModule
 import com.weexbox.core.service.FloatingBtnService
-import android.support.v4.content.ContextCompat.startForegroundService
+//import android.support.v4.content.ContextCompat.startForegroundService
 import android.os.Build
 
 
