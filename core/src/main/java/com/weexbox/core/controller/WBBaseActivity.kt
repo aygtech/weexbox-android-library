@@ -16,6 +16,7 @@ import com.taobao.weex.WXSDKEngine
 import com.taobao.weex.common.IWXDebugProxy
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.EventBusUtil
+import com.weexbox.core.util.SelectImageUtil
 
 /**
  * Author: Mario
@@ -66,7 +67,7 @@ open class WBBaseActivity : FragmentActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        SelectImageUtil.onActivityResult(requestCode, resultCode, data, this)
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if (result != null) {

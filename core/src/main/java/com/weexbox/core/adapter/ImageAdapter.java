@@ -50,9 +50,9 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
         if (strategy.getImageListener() == null) {
           BitmapUtil.displayImage(view, temp, transformation);
         } else {
-          BitmapUtil.displayImage(new SimpleTarget<BitmapDrawable>() {
+          BitmapUtil.displayImage(new SimpleTarget<Drawable>() {
             @Override
-            public void onResourceReady(@NonNull BitmapDrawable resource, @Nullable Transition transition) {
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
               if (strategy.getImageListener() != null) {
                 strategy.getImageListener().onImageFinish(url, view, true, null);
               }

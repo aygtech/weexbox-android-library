@@ -114,6 +114,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/build-info" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/builds" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/check-manifest" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
@@ -145,6 +146,7 @@
     <orderEntry type="library" name="Gradle: com.android.support:appcompat-v7-25.4.0" level="project" />
     <orderEntry type="library" name="Gradle: com.taobao.android:weex_sdk-0.18.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-fragment-25.4.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.LuckSiege.PictureSelector:ucrop-v2.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.6.6@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.chrisbanes:PhotoView-2.1.4" level="project" />
     <orderEntry type="library" name="Gradle: com.github.PhilJay:MPAndroidChart:v3.0.3@jar" level="project" />
@@ -181,6 +183,7 @@
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:glide-4.8.0" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp:okhttp:2.3.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp:okhttp-ws:2.3.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.LuckSiege.PictureSelector:picture_library-v2.2.3" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-annotations:27.1.0@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-core-3.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.journeyapps:zxing-android-embedded-3.6.0" level="project" />
