@@ -21,16 +21,26 @@ import java.util.*
 class Router :Serializable{
 
     companion object {
-        var routes: Map<String, Class<*>> = TreeMap()
-        val extraName = "WeexBoxRouter"
-        val typePush = "push"   //右往左啟動頁面
-        val typePresent = "present" //下往上啟動頁面
+        var routes: TreeMap<String, Class<out WBBaseActivity>> = TreeMap()
+        val EXTRA_NAME = "WeexBoxRouter"
+
+        val TYPE_PUSH = "push"   //右往左啟動頁面
+        val TYPE_PRESENT = "present" //下往上啟動頁面
+
+        val NAME_WEEX = "weex"  //name的类型
+        val NAME_WEB = "web"    //name的类型
+
+        fun register(name: String, controller: Class<out WBBaseActivity>){
+            routes.put(name, controller)
+        }
     }
 
-    // 下一个weex/web页面路径
+    //打开页面类型（weex，web，还有自定义原生）
+    var name: String = ""
+    // 类型为weex，web有数据
     var url: String? = null
     // 页面出现方式：push, present
-    var type: String = Router.typePush
+    var type: String = Router.TYPE_PUSH
     // 是否隐藏导航栏
     var navBarHidden: Boolean = false
     // 是否隐藏状态栏
@@ -38,20 +48,17 @@ class Router :Serializable{
     // 需要传到下一个页面的数据
     var params: Map<String, Any>? = null
 
-    fun openWeex(from: WBBaseActivity) {
-        open(from, WBWeexActivity::class.java)
-    }
-
-    fun openWeb(from: WBBaseActivity) {
-        open(from, WBWebViewActivity::class.java)
-    }
-
-    fun openNative(from: WBBaseActivity) {
-        val to = Router.routes[url]
+    fun open(from: WBBaseActivity) {
+        val to = Router.routes[name]
         if (to == null) {
             Logger.e("该路由名未注册")
         } else {
-            open(from, to)
+            if (type == Router.TYPE_PRESENT) {
+                from.overridePendingTransition(R.anim.present_enter, R.anim.present_exit)
+            }
+            val intent = Intent(from, to)
+            intent.putExtra(Router.EXTRA_NAME, this)
+            from.startActivity(intent)
         }
     }
 
@@ -59,15 +66,6 @@ class Router :Serializable{
     }
 
     fun openPhone(from: WBBaseActivity) {
-    }
-
-    fun open(from: WBBaseActivity, to: Class<*>) {
-        if (type == Router.typePresent) {
-            from.overridePendingTransition(R.anim.present_enter, R.anim.present_exit)
-        }
-        val intent = Intent(from, to)
-        intent.putExtra(Router.extraName, this)
-        from.startActivity(intent)
     }
 
     fun close(from: WBBaseActivity, levels: Int? = null) {

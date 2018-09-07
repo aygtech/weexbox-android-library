@@ -20,7 +20,7 @@ open class WBBaseFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        router = arguments?.getSerializable(Router.extraName) as Router?
+        router = arguments?.getSerializable(Router.EXTRA_NAME) as Router?
         if (isRegisterEventFrageMent() && inCreateEventFrageMent()) {
             EventBusUtil.register(this)
         }
