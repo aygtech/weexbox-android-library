@@ -65,7 +65,7 @@ dependencies {
 
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
-
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 }
 allprojects {
     repositories {
