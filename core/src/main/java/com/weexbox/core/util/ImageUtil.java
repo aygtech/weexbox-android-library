@@ -19,6 +19,9 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import com.weexbox.core.net.HttpUtil;
+import com.weexbox.core.net.callback.HttpFileCallback;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -26,6 +29,8 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
+
+import static com.weexbox.core.util.FileUtil.getSystemGalleryPath;
 
 public final class ImageUtil {
 
@@ -572,26 +577,26 @@ public final class ImageUtil {
         void onBlurComplete(@NonNull Bitmap bitmap);
     }
 
-//    public static void insertImageToSystemGallery(final Context context, final String url) {
-//        if (TextUtils.isEmpty(url)) {
-//            ToastUtil.showLongToast(context, "图片地址不能为空");
-//            return;
-//        }
-//        final int index = url.lastIndexOf(File.separator);
-//        final String fileName = url.substring(index + 1);
-//        HttpUtil.sendDownloadFileRequest(url, new HttpFileCallback(getSystemGalleryPath(), fileName) {
-//            @Override
-//            public void onSuccess(File file, int requestId) {
-//                AndroidUtil.insertImageToSystemGallery(context, file);
-//                ToastUtil.showLongToast(context, "保存成功");
-//            }
-//
-//            @Override
-//            public void onFail(int requestId, int errorCode, String errorMessage) {
-//                ToastUtil.showLongToast(context, "保存失败，请重试～");
-//            }
-//        });
-//    }
+    public static void insertImageToSystemGallery(final Context context, final String url) {
+        if (TextUtils.isEmpty(url)) {
+            ToastUtil.showLongToast(context, "图片地址不能为空");
+            return;
+        }
+        final int index = url.lastIndexOf(File.separator);
+        final String fileName = url.substring(index + 1);
+        HttpUtil.sendDownloadFileRequest(url, new HttpFileCallback(getSystemGalleryPath(), fileName) {
+            @Override
+            public void onSuccess(File file, int requestId) {
+                AndroidUtil.insertImageToSystemGallery(context, file);
+                ToastUtil.showLongToast(context, "保存成功");
+            }
+
+            @Override
+            public void onFail(int requestId, int errorCode, String errorMessage) {
+                ToastUtil.showLongToast(context, "保存失败，请重试～");
+            }
+        });
+    }
 
 //    public static void insertImageToSystemGallery(Context context, final Bitmap bitmap, String fileName) {
 //        final String dir = FileUtil.getSystemGalleryPath();

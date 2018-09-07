@@ -64,4 +64,12 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
 
     implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.1.4'
+
+}
+allprojects {
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
 }
