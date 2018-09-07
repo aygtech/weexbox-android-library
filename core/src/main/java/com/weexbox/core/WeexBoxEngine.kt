@@ -15,8 +15,9 @@ import com.weexbox.core.module.StorageModule
 import com.weexbox.core.service.FloatingBtnService
 //import android.support.v4.content.ContextCompat.startForegroundService
 import android.os.Build
-
-
+import com.weexbox.core.controller.WBWebViewActivity
+import com.weexbox.core.controller.WBWeexActivity
+import com.weexbox.core.router.Router
 
 
 /**
@@ -42,7 +43,7 @@ object WeexBoxEngine {
         BindingX.register()
         WXSDKEngine.registerModule("route", RouteModule::class.java)
         WXSDKEngine.registerModule("storage", StorageModule::class.java)
-
+        registerRouter()
     }
 
     /**
@@ -59,4 +60,10 @@ object WeexBoxEngine {
 //            }
         }
     }
+
+    fun registerRouter() {
+        Router.register(Router.NAME_WEEX, WBWeexActivity::class.java)
+        Router.register(Router.NAME_WEB, WBWebViewActivity::class.java)
+    }
+
 }

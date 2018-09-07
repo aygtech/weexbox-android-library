@@ -27,7 +27,7 @@ class MainActivity : WBBaseActivity() {
 
         weexFragment = MainFragment()
         val bundle = Bundle()
-        bundle.putSerializable(Router.extraName, router)
+        bundle.putSerializable(Router.EXTRA_NAME, router)
         weexFragment!!.setArguments(bundle)
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
                 weexFragment).commit()
