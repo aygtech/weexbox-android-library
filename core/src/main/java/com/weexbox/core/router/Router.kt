@@ -31,7 +31,7 @@ class Router :Serializable{
         val NAME_WEB = "web"    //name的类型
 
         fun register(name: String, controller: Class<out WBBaseActivity>){
-            routes.put(name, controller)
+            routes[name] = controller
         }
     }
 
@@ -62,22 +62,16 @@ class Router :Serializable{
         }
     }
 
-    fun openBrowser(from: WBBaseActivity) {
-    }
-
-    fun openPhone(from: WBBaseActivity) {
-    }
-
-    fun close(from: WBBaseActivity, levels: Int? = null) {
-        var count = 0;
-        if (levels != null){
-            count = levels;
+    fun close(levels: Int? = null) {
+        var count = 0
+        if (levels != null) {
+            count = levels
         }
 
-        val activities = ActivityManager.getInstance().getAllActivities()
+        val activities = ActivityManager.getInstance().allActivities
 
         for (i in 0 until count) {
-            val activity = activities.get(i)
+            val activity = activities[i]
             activity.finish()
         }
     }
