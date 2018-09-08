@@ -118,9 +118,11 @@ open class WBBaseActivity : FragmentActivity() {
      */
     fun refreshWeexUrl(code: String) {
         Toast.makeText(applicationContext, code, Toast.LENGTH_SHORT).show()
-        val intent = Intent("com.alibaba.weex.protocol.openurl")
+        val intent = Intent("com.weexbox.core.controller.openurl")
         intent.setPackage(applicationContext!!.packageName)
-//        intent.data = Uri.parse(code)
+        var router = Router()
+        router.url = code
+        intent.putExtra(Router.EXTRA_NAME, router);
         startActivity(intent)
     }
 

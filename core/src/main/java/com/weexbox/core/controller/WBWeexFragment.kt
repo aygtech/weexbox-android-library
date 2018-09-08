@@ -94,6 +94,8 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
             try {
                 if (url.startsWith("http")) {
                     // 下载
+                    mInstance?.renderByUrl(url, url, null, null, WXRenderStrategy
+                            .APPEND_ASYNC)
                 } else {
                     val file = UpdateManager.getFullUrl(url)
                     val template = FileUtils.readFileToString(file)

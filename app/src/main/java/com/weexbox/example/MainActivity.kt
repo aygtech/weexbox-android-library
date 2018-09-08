@@ -22,12 +22,9 @@ class MainActivity : WBBaseActivity() {
 
     private fun initFragment() {
 
-        val router = Router()
-        router.url = "index.js"
-
         weexFragment = MainFragment()
         val bundle = Bundle()
-        bundle.putSerializable(Router.EXTRA_NAME, router)
+        bundle.putSerializable(Router.EXTRA_NAME, intent.getSerializableExtra(Router.EXTRA_NAME))
         weexFragment!!.setArguments(bundle)
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
                 weexFragment).commit()
