@@ -10,13 +10,13 @@ import com.weexbox.core.adapter.ImageAdapter
 import io.realm.Realm
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import com.weexbox.core.module.RouteModule
 import com.weexbox.core.module.StorageModule
 import com.weexbox.core.service.FloatingBtnService
 //import android.support.v4.content.ContextCompat.startForegroundService
 import android.os.Build
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
+import com.weexbox.core.module.RouterModule
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.BitmapUtil
 
@@ -46,9 +46,13 @@ object WeexBoxEngine {
         val config = InitConfig.Builder().setImgAdapter(ImageAdapter()).build()
         WXSDKEngine.initialize(application, config)
         BindingX.register()
-        WXSDKEngine.registerModule("route", RouteModule::class.java)
-        WXSDKEngine.registerModule("storage", StorageModule::class.java)
+        registerModule()
         registerRouter()
+    }
+
+    fun registerModule() {
+        WXSDKEngine.registerModule("wb-router", RouterModule::class.java)
+        WXSDKEngine.registerModule("wb-storage", StorageModule::class.java)
     }
 
     /**
