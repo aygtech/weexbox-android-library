@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.weexbox.core.WeexBoxEngine;
+import com.weexbox.core.router.Router;
 
 public class App extends Application implements Application.ActivityLifecycleCallbacks {
 
@@ -18,6 +19,8 @@ public class App extends Application implements Application.ActivityLifecycleCal
 
         WeexBoxEngine.INSTANCE.initialize(this);
         registerActivityLifecycleCallbacks(this);
+
+        Router.Companion.register(Router.Companion.getNAME_WEEX(), MainActivity.class);
     }
 
     @Override

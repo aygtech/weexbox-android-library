@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.weexbox.core.WeexBoxEngine;
 import com.weexbox.core.controller.WBBaseActivity;
+import com.weexbox.core.router.Router;
 import com.weexbox.core.service.FloatingBtnService;
 
 public class DemoActivity extends WBBaseActivity {
@@ -23,8 +24,13 @@ public class DemoActivity extends WBBaseActivity {
         findViewById(R.id.oooo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
+//                startActivity(intent);
+
+                Router router = new Router();
+                router.setUrl("index.js");
+                router.setName(Router.Companion.getNAME_WEEX());
+                router.open(DemoActivity.this);
             }
         });
     }
