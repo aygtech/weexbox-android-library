@@ -18,6 +18,7 @@ import android.os.Build
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
 import com.weexbox.core.router.Router
+import com.weexbox.core.util.BitmapUtil
 
 
 /**
@@ -32,6 +33,10 @@ object WeexBoxEngine {
 
     fun initialize(application: Application) {
         this.application = application
+
+        //初始化图片框架
+        BitmapUtil.setContext(application)
+
         Realm.init(application)
         Logger.addLogAdapter(AndroidLogAdapter())
         initWeex()
