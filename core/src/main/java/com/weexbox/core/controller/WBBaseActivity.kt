@@ -120,7 +120,7 @@ open class WBBaseActivity : FragmentActivity() {
         Toast.makeText(applicationContext, code, Toast.LENGTH_SHORT).show()
         val intent = Intent("com.alibaba.weex.protocol.openurl")
         intent.setPackage(applicationContext!!.packageName)
-        intent.data = Uri.parse(code)
+//        intent.data = Uri.parse(code)
         startActivity(intent)
     }
 

@@ -18,6 +18,7 @@
             <!--</intent-filter>-->
             <intent-filter>
                 <action android:name="com.alibaba.weex.protocol.openurl" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 

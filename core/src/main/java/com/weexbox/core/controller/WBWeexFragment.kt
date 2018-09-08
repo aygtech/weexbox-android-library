@@ -53,6 +53,9 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
             Logger.e("url不能为空")
         } else {
             url = u
+
+            Log.i("WBWeexFragment", "url = "+url)
+
             mWXHandler = Handler(this)
             HotRefreshManager.getInstance().setHandler(mWXHandler)
             render()
@@ -90,6 +93,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
         mInstance?.registerRenderListener(this)
         mInstance?.setNestedInstanceInterceptor(this)
         mInstance?.isTrackComponent = true
+        Log.i("WBWeexFragment", "render11111111111111111111111111111111")
         view!!.post {
             try {
                 if (url.startsWith("http")) {
@@ -97,6 +101,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
                 } else {
 //                    val file = UpdateManager.getFullUrl(url)
 //                    val template = FileUtils.readFileToString(file)
+                    Log.i("WBWeexFragment", "render22222222222222222222222222222222222")
                     mInstance?.render(url, WXFileUtils.loadAsset(url, context), null, null, WXRenderStrategy.APPEND_ASYNC)
                 }
             } catch (e: IOException) {
@@ -138,9 +143,12 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
 
     override fun onRefreshSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
         Logger.d("Update Finish...")
+        Log.i("WBWeexFragment", "onRefreshSuccess")
     }
 
     override fun onException(instance: WXSDKInstance?, errCode: String?, msg: String?) {
+        Log.i("WBWeexFragment", "onException  errCode = " + errCode)
+        Log.i("WBWeexFragment", "onException  msg = " + msg)
         mWxAnalyzerDelegate?.onException(instance, errCode, msg)
         if (!TextUtils.isEmpty(errCode) && errCode!!.contains("|")) {
             val errCodeList = errCode.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -158,6 +166,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
     }
 
     override fun onRenderSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
+        Log.i("WBWeexFragment", "onRenderSuccess")
         mWxAnalyzerDelegate?.onWeexRenderSuccess(instance)
         Logger.d("Render Finish...width:" + width + "   ,height="+height)
     }
