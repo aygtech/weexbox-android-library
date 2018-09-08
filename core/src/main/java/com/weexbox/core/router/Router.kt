@@ -62,7 +62,14 @@ class Router :Serializable{
         }
     }
 
-    fun close(levels: Int? = null) {
+    fun openBrowser(from: WBBaseActivity) {
+    }
+
+    fun openPhone(from: WBBaseActivity) {
+    }
+
+
+    fun close(from: WBBaseActivity, levels: Int? = null) {
         var count = 0
         if (levels != null) {
             count = levels
