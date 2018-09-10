@@ -36,7 +36,6 @@ public class LoadDialogUtil {
         KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
-                .setSize(width,height)
                 .setCancellable(isCancel)
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f);
@@ -47,7 +46,6 @@ public class LoadDialogUtil {
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
-                .setSize(width,height)
                 .setDetailsLabel(detail)
                 .setCancellable(isCancel)
                 .setAnimationSpeed(2)
