@@ -12,6 +12,8 @@ public class LoadDialogUtil {
 
     private static KProgressHUD hud;
     private static KProgressHUD progressHUD;
+    public static int width = 68;
+    public static int height = 68;
 
     public static void close() {
         if (hud != null) {
@@ -22,6 +24,7 @@ public class LoadDialogUtil {
     public static void showLoad(Context context) {
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setSize(width,height)
                 .setCancellable(true)
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f);
@@ -32,6 +35,7 @@ public class LoadDialogUtil {
         KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
+                .setSize(width,height)
                 .setCancellable(true)
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f);
@@ -42,6 +46,7 @@ public class LoadDialogUtil {
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
+                .setSize(width,height)
                 .setDetailsLabel(detail)
                 .setCancellable(true)
                 .setAnimationSpeed(2)
@@ -52,6 +57,7 @@ public class LoadDialogUtil {
     public static void showProgress(Context context) {
         progressHUD = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setSize(width,height)
                 .setMaxProgress(100)
                 .show();
     }
@@ -59,6 +65,7 @@ public class LoadDialogUtil {
     public static void showProgressWithText(Context context, String text) {
         progressHUD = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setSize(width,height)
                 .setLabel(text)
                 .setMaxProgress(100)
                 .show();
