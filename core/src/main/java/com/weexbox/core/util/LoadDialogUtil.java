@@ -10,16 +10,16 @@ import com.kaopiz.kprogresshud.KProgressHUD;
  */
 public class LoadDialogUtil {
 
-    private KProgressHUD hud;
-    private KProgressHUD progressHUD;
+    private static KProgressHUD hud;
+    private static KProgressHUD progressHUD;
 
-    public void close() {
+    public static void close() {
         if (hud != null) {
             hud.dismiss();
         }
     }
 
-    public void showLoad(Context context) {
+    public static void showLoad(Context context) {
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setCancellable(true)
@@ -28,7 +28,7 @@ public class LoadDialogUtil {
         hud.show();
     }
 
-    public void showLoadWithText(Context context, String text) {
+    public static void showLoadWithText(Context context, String text) {
         KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
@@ -38,7 +38,7 @@ public class LoadDialogUtil {
         hud.show();
     }
 
-    public void showLoadWithTextAndDetail(Context context, String text, String detail) {
+    public static void showLoadWithTextAndDetail(Context context, String text, String detail) {
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
@@ -49,14 +49,14 @@ public class LoadDialogUtil {
         hud.show();
     }
 
-    public void showProgress(Context context) {
+    public static void showProgress(Context context) {
         progressHUD = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
                 .setMaxProgress(100)
                 .show();
     }
 
-    public void showProgressWithText(Context context, String text) {
+    public static void showProgressWithText(Context context, String text) {
         progressHUD = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
                 .setLabel(text)
@@ -64,7 +64,7 @@ public class LoadDialogUtil {
                 .show();
     }
 
-    public void setProgressHUD(int progress){
+    public static void setProgressHUD(int progress){
         if(progressHUD == null){
             return;
         }
