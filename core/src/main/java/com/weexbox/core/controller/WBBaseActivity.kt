@@ -7,16 +7,21 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
+import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
 import com.taobao.weex.common.IWXDebugProxy
+import com.weexbox.core.R
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.EventBusUtil
 import com.weexbox.core.util.SelectImageUtil
+import com.weexbox.core.widget.SimpleToolbar
 
 /**
  * Author: Mario
@@ -27,6 +32,7 @@ import com.weexbox.core.util.SelectImageUtil
 open class WBBaseActivity : FragmentActivity() {
 
     var router: Router? = null
+    lateinit var toolbar: SimpleToolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +63,29 @@ open class WBBaseActivity : FragmentActivity() {
         }
     }
 
+    override fun setContentView(layoutResID: Int) {
+        val view = layoutInflater.inflate(layoutResID, null)
+        setContentView(view)
+    }
+
+    override fun setContentView(view: View) {
+        if (view is ViewGroup) {
+            toolbar = layoutInflater.inflate(R.layout.activity_title_layout, view, false) as SimpleToolbar
+            if (router != null && toolbar != null){
+                if (router!!.navBarHidden){
+                    toolbar.setAcitionbarVisibility(View.GONE)
+                }
+            }
+
+            view.addView(toolbar, 0)
+        }
+        super.setContentView(view)
+    }
+
+    fun getActionbar(): SimpleToolbar{
+        return toolbar;
+    }
+
     fun isRegisterEventBus(): Boolean {
         return false
     }
@@ -84,7 +113,8 @@ open class WBBaseActivity : FragmentActivity() {
      * 处理devtool返回的DebugProxyUrl,WX启动devtool模式
      * @param code
      */
-    private fun handleDecodeInternally(code: String) {
+    private fun handleDecodeInternally(url: String) {
+        val code = url.replace("\\", "/")
         if (!TextUtils.isEmpty(code)) {
             var uri = Uri.parse(code)
             if (uri.queryParameterNames.contains("bundle")) {
