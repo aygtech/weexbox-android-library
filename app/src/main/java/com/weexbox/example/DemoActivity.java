@@ -2,10 +2,14 @@ package com.weexbox.example;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
@@ -14,6 +18,7 @@ import com.weexbox.core.controller.WBBaseActivity;
 import com.weexbox.core.router.Router;
 import com.weexbox.core.service.FloatingBtnService;
 import com.weexbox.core.update.UpdateManager;
+import com.weexbox.core.widget.SimpleToolbar;
 
 import java.io.File;
 
@@ -43,7 +48,9 @@ public class DemoActivity extends WBBaseActivity {
             }
         });
 
-        checkNewJsVersionAction();
+//        checkNewJsVersionAction();
+
+
     }
 
     private Dialog dialog = null;

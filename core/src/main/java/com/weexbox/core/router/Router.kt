@@ -43,8 +43,6 @@ class Router :Serializable{
     var type: String = Router.TYPE_PUSH
     // 是否隐藏导航栏
     var navBarHidden: Boolean = false
-    // 是否隐藏状态栏
-    var statusBarHidden: Boolean = false
     // 需要传到下一个页面的数据
     var params: Map<String, Any>? = null
 
