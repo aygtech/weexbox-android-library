@@ -14,6 +14,7 @@ public class LoadDialogUtil {
     private static KProgressHUD progressHUD;
     public static int width = 68;
     public static int height = 68;
+    public static boolean isCancel = true;
 
     public static void close() {
         if (hud != null) {
@@ -25,7 +26,7 @@ public class LoadDialogUtil {
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setSize(width,height)
-                .setCancellable(true)
+                .setCancellable(isCancel)
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f);
         hud.show();
@@ -36,7 +37,7 @@ public class LoadDialogUtil {
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
                 .setSize(width,height)
-                .setCancellable(true)
+                .setCancellable(isCancel)
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f);
         hud.show();
@@ -48,7 +49,7 @@ public class LoadDialogUtil {
                 .setLabel(text)
                 .setSize(width,height)
                 .setDetailsLabel(detail)
-                .setCancellable(true)
+                .setCancellable(isCancel)
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f);
         hud.show();
