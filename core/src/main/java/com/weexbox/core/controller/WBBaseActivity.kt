@@ -70,7 +70,7 @@ open class WBBaseActivity : FragmentActivity() {
 
     override fun setContentView(view: View) {
         if (view is ViewGroup) {
-            toolbar = layoutInflater.inflate(R.layout.activity_title_layout, view, false) as SimpleToolbar
+            toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
             if (router != null && toolbar != null){
                 if (router!!.navBarHidden){
                     toolbar.setAcitionbarVisibility(View.GONE)
