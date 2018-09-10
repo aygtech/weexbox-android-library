@@ -64,7 +64,6 @@ public class LoadDialogUtil {
     public static void showProgressWithText(Context context, String text) {
         progressHUD = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
-                .setSize(width,height)
                 .setLabel(text)
                 .setMaxProgress(100)
                 .show();
