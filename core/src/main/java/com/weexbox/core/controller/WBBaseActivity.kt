@@ -1,12 +1,8 @@
 package com.weexbox.core.controller
 
-import android.app.Activity
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
@@ -16,12 +12,18 @@ import android.widget.Toast
 import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
-import com.taobao.weex.common.IWXDebugProxy
+import com.taobao.weex.WXSDKInstance
 import com.weexbox.core.R
+import com.weexbox.core.event.Event
+import com.weexbox.core.event.EventCallback
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.EventBusUtil
 import com.weexbox.core.util.SelectImageUtil
 import com.weexbox.core.widget.SimpleToolbar
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Author: Mario
@@ -29,7 +31,7 @@ import com.weexbox.core.widget.SimpleToolbar
  * Description: This is WBBaseActivity
  */
 
-open class WBBaseActivity : FragmentActivity() {
+open class WBBaseActivity : AppCompatActivity() {
 
     var router: Router? = null
     lateinit var toolbar: SimpleToolbar
@@ -187,4 +189,5 @@ open class WBBaseActivity : FragmentActivity() {
     open fun refreshWeex() {
 
     }
+
 }

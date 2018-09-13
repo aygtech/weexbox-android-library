@@ -46,7 +46,7 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
 
     open lateinit var url: String
     private var mInstance: WXSDKInstance? = null
-    protected var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
+    private var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
     private var mWXHandler: Handler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

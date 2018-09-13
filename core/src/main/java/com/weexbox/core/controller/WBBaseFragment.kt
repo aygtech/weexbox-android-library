@@ -1,50 +1,51 @@
 package com.weexbox.core.controller
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.text.TextUtils
-import android.util.Log
-import android.widget.Toast
-import com.google.zxing.integration.android.IntentIntegrator
-import com.taobao.weex.WXEnvironment
-import com.taobao.weex.WXSDKEngine
+import com.taobao.weex.WXSDKInstance
+import com.taobao.weex.WXSDKManager
+import com.weexbox.core.event.Event
+import com.weexbox.core.event.EventCallback
 import com.weexbox.core.router.Router
-import com.weexbox.core.util.EventBusUtil
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 open class WBBaseFragment: Fragment() {
 
     var router: Router? = null
-    var mFrageMentTag = "";// fragement标识
+    var events: MutableMap<String, EventCallback> = TreeMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         router = arguments?.getSerializable(Router.EXTRA_NAME) as Router?
-        if (isRegisterEventFrageMent() && inCreateEventFrageMent()) {
-            EventBusUtil.register(this)
-        }
+//        if (isRegisterEventFrageMent() && inCreateEventFrageMent()) {
+//            EventBusUtil.register(this)
+//        }
+        EventBus.getDefault().register(this)
     }
 
     override fun onStart() {
         super.onStart()
-        if (isRegisterEventFrageMent() && !inCreateEventFrageMent()) {
-            EventBusUtil.register(this)
-        }
+//        if (isRegisterEventFrageMent() && !inCreateEventFrageMent()) {
+//            EventBusUtil.register(this)
+//        }
     }
 
     override fun onStop() {
         super.onStop()
-        if (isRegisterEventFrageMent() && !inCreateEventFrageMent()) {
-            EventBusUtil.unregister(this)
-        }
+//        if (isRegisterEventFrageMent() && !inCreateEventFrageMent()) {
+//            EventBusUtil.unregister(this)
+//        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (isRegisterEventFrageMent() && inCreateEventFrageMent()) {
-            EventBusUtil.unregister(this)
-        }
+//        if (isRegisterEventFrageMent() && inCreateEventFrageMent()) {
+//            EventBusUtil.unregister(this)
+//        }
+        EventBus.getDefault().unregister(this)
     }
 
     fun isRegisterEventFrageMent(): Boolean {
@@ -53,6 +54,13 @@ open class WBBaseFragment: Fragment() {
 
     fun inCreateEventFrageMent(): Boolean {
         return false
+    }
+
+    // 通用事件
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: Event) {
+        val callback = events[event.name]
+        callback?.invoke(event.info)
     }
 
 }

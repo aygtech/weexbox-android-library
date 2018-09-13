@@ -12,11 +12,10 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.weexbox.core.module.StorageModule
 import com.weexbox.core.service.FloatingBtnService
-//import android.support.v4.content.ContextCompat.startForegroundService
-import android.os.Build
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
 import com.weexbox.core.module.NavigatorModule
+import com.weexbox.core.module.NetworkModule
 import com.weexbox.core.module.RouterModule
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.BitmapUtil
@@ -55,6 +54,7 @@ object WeexBoxEngine {
         WXSDKEngine.registerModule("wb-router", RouterModule::class.java)
         WXSDKEngine.registerModule("wb-storage", StorageModule::class.java)
         WXSDKEngine.registerModule("wb-navigator", NavigatorModule::class.java)
+        WXSDKEngine.registerModule("wb-network", NetworkModule::class.java)
     }
 
     /**

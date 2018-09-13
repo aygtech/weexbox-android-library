@@ -1,120 +1,51 @@
 package com.weexbox.core.module
 
-import android.text.TextUtils
-import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.JSONObject
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
 import com.taobao.weex.common.WXModule
-import com.weexbox.core.net.HttpParams
-import com.weexbox.core.net.HttpRequestHelper
-import com.weexbox.core.net.callback.HttpCallback
-import com.weexbox.core.net.callback.HttpStringCallback
-import okhttp3.Request
-import okhttp3.Response
-import java.io.File
-import java.util.*
+import com.weexbox.core.extension.toMap
+import com.weexbox.core.extension.toObject
+import com.weexbox.core.model.JsOptions
+import com.weexbox.core.model.Result
+import com.weexbox.core.network.Network
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 /**
- *Author:leon.wen
- *Time:2018/9/4   17:32
- *Description:This is NetworkModule
+ * Author: Mario
+ * Time: 2018/9/11 下午7:41
+ * Description: This is NetworkModule
  */
 
-class NetworkModule : WXModule() {
+class NetworkModule : BaseModule() {
 
     @JSMethod(uiThread = false)
     fun request(options: Map<String, Any>, callback: JSCallback) {
-        val url = options.get("url") ?: ""
-        if(TextUtils.isEmpty(url.toString().trim())){
-            return
+        val info = options.toObject(JsOptions::class.java)
+        var method = Network.HTTPMethod.GET
+        if (info.method == "post") {
+            method = Network.HTTPMethod.POST
         }
-        val method = options.get("method") ?: "get"
-        var headers = JSON.toJSONString(options.get("headers")?: "{}")
-        var params = JSON.toJSONString(options.get("params")?: "{}")
-        val headersMaps = JSON.parse(headers) as Map<String, String>?
-        val httpParams = HttpParams(params)
-        val type = headersMaps?.get("contentType");
-        if(method.equals("post")){
-            if(type != null && type.startsWith("application/json")){
-                HttpRequestHelper( null).sendPostJsonRequest(url.toString(),headersMaps, httpParams, toHttpCallback(callback) ?: null)
-            }else{
-                HttpRequestHelper( null).sendPostRequest(url.toString(),headersMaps, httpParams, toHttpCallback(callback) ?: null)
-            }
-        }else{
-            HttpRequestHelper( null).sendGetRequest(url.toString(),headersMaps, httpParams, toHttpCallback(callback) ?: null)
-        }
-    }
+        val result = Result()
 
-    @JSMethod(uiThread = false)
-    fun upload(options: Map<String, Any>, completionCallback: JSCallback, progressCallback: JSCallback) {
-        val url = options.get("to") ?: ""
-        if(TextUtils.isEmpty(url.toString().trim())){
-            return
-        }
-        var images = JSON.parseArray(options.get("files").toString()?: "[]")
-        var httpParams = HashMap<String,File>()
-        for(img in images!!){
-            var key = (img as JSONObject).keys
-            var file = File(img.getString(key.first()))
-            var fileMap = HashMap<String,File>()
-            fileMap.put(key.first() ,file)
-            httpParams.plus(fileMap)
-        }
-        HttpRequestHelper( null).uploadFiles(url.toString(), httpParams as HttpParams, ToProgressHttpCallback(completionCallback, progressCallback) ?: null)
-    }
-
-    fun toHttpCallback(jsCallback: JSCallback) :HttpCallback<String> {
-        if(jsCallback == null){
-            return jsCallback
-        }
-        val callback = object : HttpCallback<String>() {
-            override fun onSuccess(entity: String?, requestId: Int) {
-                var obj = JSONObject()
-                obj.put("status",200)
-                obj.put("errorMsg","")
-                obj.put("data",entity)
-                jsCallback.invoke(obj)
+        Network.request(info.url!!, method, info.params, info.headers, object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                result.code = response.code()
+                val data = response.body()?.string()
+                if (data != null) {
+                    result.data = data.toMap()
+                }
+                result.error = response.errorBody()?.string()
+                callback(result)
             }
 
-            override fun onFail(requestId: Int, errorCode: Int, errorMessage: String) {
-                var obj = JSONObject()
-                obj.put("status",errorCode)
-                obj.put("errorMsg",errorMessage)
-                obj.put("data","")
-                jsCallback.invoke(obj)
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                result.code = Result.error
+                result.error = t.message
+                callback(result)
             }
-        }
-        return callback
-    }
-
-    fun ToProgressHttpCallback(jsCallback: JSCallback, progressCallback: JSCallback) : HttpCallback<String>? {
-        if(jsCallback == null || progressCallback == null){
-            return null
-        }
-        val callback = object : HttpCallback<String>() {
-
-            override fun inProgress(progress: Float, total: Long, id: Int) {
-                super.inProgress(progress, total, id)
-                progressCallback.invokeAndKeepAlive(progress)
-            }
-
-            override fun onSuccess(entity: String?, requestId: Int) {
-                var obj = JSONObject()
-                obj.put("status",200)
-                obj.put("errorMsg","")
-                obj.put("data",entity)
-                jsCallback.invoke(obj)
-            }
-
-            override fun onFail(requestId: Int, errorCode: Int, errorMessage: String) {
-                var obj = JSONObject()
-                obj.put("status",errorCode)
-                obj.put("errorMsg",errorMessage)
-                obj.put("data","")
-                jsCallback.invoke(obj)
-            }
-        }
-        return callback
+        })
     }
 }

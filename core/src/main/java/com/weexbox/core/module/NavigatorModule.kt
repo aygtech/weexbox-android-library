@@ -7,7 +7,7 @@ import com.taobao.weex.common.WXModule
 import com.weexbox.core.controller.WBBaseActivity
 import com.weexbox.core.widget.SimpleToolbar
 
-class NavigatorModule : WXModule() {
+class NavigatorModule : BaseModule() {
 
     //返回手势
     @JSMethod(uiThread = true)
@@ -80,10 +80,6 @@ class NavigatorModule : WXModule() {
     @JSMethod(uiThread = true)
     fun setNavColor(color: String) {
         getActionbar().setAcitionbarAndStatusbarBackground("#" + color)
-    }
-
-    fun getActivity(): WBBaseActivity {
-        return mWXSDKInstance.context as WBBaseActivity
     }
 
     fun getActionbar(): SimpleToolbar {

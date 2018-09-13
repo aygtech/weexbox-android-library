@@ -1,14 +1,8 @@
 package com.weexbox.core.module
 
-import com.alibaba.fastjson.JSON
-import com.google.gson.Gson
 import com.taobao.weex.annotation.JSMethod
-import com.taobao.weex.common.WXModule
-import com.weexbox.core.WeexBoxEngine
-import com.weexbox.core.controller.WBBaseActivity
-import com.weexbox.core.controller.WBWeexActivity
+import com.weexbox.core.extension.toObject
 import com.weexbox.core.router.Router
-import com.weexbox.core.util.GsonUtil
 
 /**
  * Author: Mario
@@ -16,7 +10,7 @@ import com.weexbox.core.util.GsonUtil
  * Description: This is RouterModule
  */
 
-class RouterModule : WXModule() {
+class RouterModule : BaseModule() {
 
     //打开页面
     @JSMethod(uiThread = true)
@@ -52,11 +46,7 @@ class RouterModule : WXModule() {
     }
 
     fun getRouter(info: Map<String, Any>): Router {
-        return GsonUtil.getWeexGson(info, Router::class.java) as Router
-    }
-
-    fun getActivity(): WBBaseActivity {
-        return mWXSDKInstance.context as WBBaseActivity
+        return info.toObject(Router::class.java)
     }
 
 }

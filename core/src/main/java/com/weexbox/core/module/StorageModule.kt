@@ -10,7 +10,7 @@ import com.taobao.weex.common.WXModule
  * Description: This is StorageModule
  */
 
-class StorageModule : WXModule() {
+class StorageModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun setData(key: String, value: String) {
@@ -19,7 +19,7 @@ class StorageModule : WXModule() {
 
     @JSMethod(uiThread = true)
     fun getData(key: String): String {
-        return key;
+        return key
     }
 
     @JSMethod(uiThread = true)

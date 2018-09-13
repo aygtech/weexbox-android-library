@@ -37,13 +37,13 @@ import kotlin.math.log
 open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRenderListener , WXSDKInstance.NestedInstanceInterceptor {
 
     open lateinit var url: String
-    private var mInstance: WXSDKInstance? = null
-    protected var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
+    var mInstance: WXSDKInstance? = null
+    private var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
     private var mWXHandler: Handler? = null
 
     //调试广播
-    protected var mBroadcastReceiver: BroadcastReceiver? = null
-    protected var filter: IntentFilter? = null
+    private var mBroadcastReceiver: BroadcastReceiver? = null
+    private var filter: IntentFilter? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -82,6 +82,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
     }
 
     private fun render() {
+        mInstance
         mInstance?.destroy()
         mInstance = null
         val renderContainer = RenderContainer(activity)
