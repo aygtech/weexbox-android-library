@@ -4,21 +4,18 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import com.alibaba.android.bindingx.plugin.weex.BindingX
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import com.taobao.weex.InitConfig
 import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.adapter.ImageAdapter
-import io.realm.Realm
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
-import com.weexbox.core.module.StorageModule
-import com.weexbox.core.service.FloatingBtnService
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
-import com.weexbox.core.module.NavigatorModule
-import com.weexbox.core.module.NetworkModule
-import com.weexbox.core.module.RouterModule
+import com.weexbox.core.module.*
 import com.weexbox.core.router.Router
+import com.weexbox.core.service.FloatingBtnService
 import com.weexbox.core.util.BitmapUtil
+import io.realm.Realm
 
 
 /**
@@ -55,6 +52,7 @@ object WeexBoxEngine {
         WXSDKEngine.registerModule("wb-storage", StorageModule::class.java)
         WXSDKEngine.registerModule("wb-navigator", NavigatorModule::class.java)
         WXSDKEngine.registerModule("wb-network", NetworkModule::class.java)
+        WXSDKEngine.registerModule("wb-modal", ModalModule::class.java)
     }
 
     /**
