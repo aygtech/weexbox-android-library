@@ -33,7 +33,7 @@ public class LoadDialogUtil {
     }
 
     public static void showLoadWithText(Context context, String text) {
-        KProgressHUD.create(context)
+        hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
                 .setCancellable(isCancel)

@@ -1,7 +1,7 @@
 package com.weexbox.core.extension
 
 import com.alibaba.fastjson.JSON
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Author: Mario
@@ -45,15 +45,15 @@ fun Pair<String, Any>.queryComponents(): List<Pair<String, String>> {
     return components
 }
 
-fun Any.toJSONString(): String {
+fun Any.toJsonString(): String {
     return JSON.toJSONString(this)
 }
 
-fun Any.toMap(): Map<String, Any> {
+fun Any.toJsonMap(): MutableMap<String, Any> {
     if (this is String) {
-        return JSON.parseObject(this).toMap()
+        return JSON.parseObject(this).toMutableMap()
     } else {
-        return JSON.parseObject(toJSONString()).toMap()
+        return JSON.parseObject(toJsonString()).toMutableMap()
     }
 }
 

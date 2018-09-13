@@ -2,8 +2,7 @@ package com.weexbox.core.module
 
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
-import com.taobao.weex.common.WXModule
-import com.weexbox.core.extension.toMap
+import com.weexbox.core.extension.toJsonMap
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
 import com.weexbox.core.model.Result
@@ -35,7 +34,7 @@ class NetworkModule : BaseModule() {
                 result.code = response.code()
                 val data = response.body()?.string()
                 if (data != null) {
-                    result.data = data.toMap()
+                    result.data = data.toJsonMap()
                 }
                 result.error = response.errorBody()?.string()
                 callback(result)
