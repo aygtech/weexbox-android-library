@@ -6,9 +6,10 @@
 
         <!--<item name="android:windowFullscreen">true</item>-->
 
-        <!--状态栏背景颜色是否半透明-->
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <!--状态栏-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--虚拟键-->
+        <item name="android:windowTranslucentNavigation">false</item>
         <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
         <item name="android:statusBarColor">@android:color/transparent</item>
 

@@ -26,7 +26,7 @@ public class SimpleToolbar extends LinearLayout {
     private TextView mTitle;
     private LinearLayout action_bar_center_layout;
     private RelativeLayout actionbar_layout;
-    private View statusbar_layout;
+    private View statusbar_layout, bottom_line;
 
     private boolean refreshPadding = false;
 
@@ -49,6 +49,7 @@ public class SimpleToolbar extends LinearLayout {
         action_bar_center_layout = (LinearLayout) findViewById(R.id.action_bar_center_layout);
         actionbar_layout = findViewById(R.id.actionbar_layout);
         statusbar_layout = findViewById(R.id.statusbar_layout);
+        bottom_line = findViewById(R.id.bottom_line);
 
         ViewGroup.LayoutParams layoutParams = statusbar_layout.getLayoutParams();
         layoutParams.height = getStatusBarHeight(getContext());
@@ -106,6 +107,14 @@ public class SimpleToolbar extends LinearLayout {
         if (actionbar_layout != null){
             actionbar_layout.setVisibility(visibility);
         }
+        if (bottom_line != null){
+            bottom_line.setVisibility(visibility);
+        }
+    }
+
+    //actionbar和statusbar显示与否
+    public void setAcitionbarAndStatusbarVisibility(int visibility) {
+        setVisibility(visibility);
     }
 
     //actionbar和statusbar的背景
@@ -148,6 +157,9 @@ public class SimpleToolbar extends LinearLayout {
 
 
     //左边第一个按钮
+    public void setBackButton(OnClickListener listener) {
+        mBackBtn.setOnClickListener(listener);
+    }
     public void setBackButton(OnClickListener listener, String text) {
         mBackBtn.setVisibility(View.VISIBLE);
         mBackBtn.setText(text);
@@ -188,6 +200,30 @@ public class SimpleToolbar extends LinearLayout {
         icon.setBounds(0, 0, icon.getMinimumWidth(), icon.getMinimumHeight());
         mBackBtn2.setCompoundDrawables(icon, null, null, null);
         mBackBtn2.setOnClickListener(listener);
+    }
+    public void setBackButton2(OnClickListener listener, String text, String color) {
+        mBackBtn2.setVisibility(View.VISIBLE);
+        mBackBtn2.setText(text);
+        mBackBtn2.setTextColor(Color.parseColor(color));
+        mBackBtn2.setOnClickListener(listener);
+    }
+    public void setBackButton2(OnClickListener listener, String text) {
+        mBackBtn2.setVisibility(View.VISIBLE);
+        mBackBtn2.setText(text);
+        mBackBtn2.setOnClickListener(listener);
+    }
+    public void setBackButton2Drawable(OnClickListener listener, String url) {
+        mBackBtn2.setVisibility(View.VISIBLE);
+        mBackBtn2.setOnClickListener(listener);
+        BitmapUtil.displayImage(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition transition) {
+                if (resource != null) {
+                    resource.setBounds(0, 0, resource.getMinimumWidth(), resource.getMinimumHeight());
+                }
+                mBackBtn2.setCompoundDrawables(resource, null, null, null);
+            }
+        }, url);
     }
 
 
@@ -270,7 +306,25 @@ public class SimpleToolbar extends LinearLayout {
         mNextBtn2.setCompoundDrawables(icon, null, null, null);
         mNextBtn2.setBackgroundDrawable(bg);
     }
-
+    public void setRightButton2(OnClickListener listener, String text, String color) {
+        mNextBtn2.setVisibility(View.VISIBLE);
+        mNextBtn2.setText(text);
+        mNextBtn2.setTextColor(Color.parseColor(color));
+        mNextBtn2.setOnClickListener(listener);
+    }
+    public void setRightButton2Drawable(OnClickListener listener, String url) {
+        mNextBtn2.setVisibility(View.VISIBLE);
+        mNextBtn2.setOnClickListener(listener);
+        BitmapUtil.displayImage(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition transition) {
+                if (resource != null) {
+                    resource.setBounds(0, 0, resource.getMinimumWidth(), resource.getMinimumHeight());
+                }
+                mNextBtn2.setCompoundDrawables(resource, null, null, null);
+            }
+        }, url);
+    }
 
 
 
