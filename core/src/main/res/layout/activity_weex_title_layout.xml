@@ -2,22 +2,24 @@
 <com.weexbox.core.widget.SimpleToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <View
         android:id="@+id/statusbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:visibility="visible"
+        tools:visibility="visible" />
 
 
     <RelativeLayout
-        android:visibility="gone"
-        tools:visibility="visible"
         android:id="@+id/actionbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height">
+        android:layout_height="@dimen/title_height"
+        android:visibility="visible"
+        tools:visibility="visible">
 
         <LinearLayout
             android:id="@+id/action_bar_center_layout"
@@ -33,13 +35,13 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:drawablePadding="8dp"
-                android:maxEms="10"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
+                android:maxEms="10"
                 android:singleLine="true"
+                android:text="标题"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                tools:text="12345656" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -48,23 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            tools:drawableLeft="@drawable/more_1x"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:padding="8dp"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textSize="15sp"/>
-
-        <com.weexbox.core.widget.DrawableTextView
-            android:id="@+id/btnBack2"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/btnBack"
-            tools:drawableLeft="@drawable/more_1x"
+            android:drawableLeft="@drawable/arrows_left2"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:padding="8dp"
@@ -73,8 +59,22 @@
             android:textSize="15sp" />
 
         <com.weexbox.core.widget.DrawableTextView
+            android:id="@+id/btnBack2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/btnBack"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15sp"
             android:visibility="gone"
-            tools:visibility="visible"
+            tools:drawableLeft="@drawable/arrows_left2"
+            tools:visibility="visible" />
+
+        <com.weexbox.core.widget.DrawableTextView
             android:id="@+id/btnNext2"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
@@ -87,14 +87,13 @@
             android:paddingRight="12dp"
             android:textColor="@color/black"
             android:textSize="12sp"
+            android:visibility="gone"
             tools:background="#dee55e"
-            tools:text="关注" />
+            tools:text="关注"
+            tools:visibility="visible" />
 
         <com.weexbox.core.widget.DrawableTextView
             android:id="@+id/btnNext"
-            android:visibility="gone"
-            tools:visibility="visible"
-            tools:text="wocao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -105,9 +104,18 @@
             android:padding="8dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="15sp"/>
-
-
+            android:textSize="15sp"
+            android:visibility="gone"
+            tools:text="wocao"
+            tools:visibility="visible" />
     </RelativeLayout>
+
+    <View
+        android:id="@+id/bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_black_50"
+        android:visibility="visible"
+        tools:visibility="visible" />
 
 </com.weexbox.core.widget.SimpleToolbar>

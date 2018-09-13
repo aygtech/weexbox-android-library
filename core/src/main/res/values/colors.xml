@@ -29,4 +29,18 @@
     <color name="color_blue">#ff649afb</color>
 
     <color name="label_bg">#f6f6f6</color>
+
+    <!-- 黑 -->
+    <color name="color_black">#ff333333</color>
+    <color name="color_black_80">#cc333333</color>
+    <color name="color_black_70">#b2333333</color>
+    <color name="color_black_60">#99333333</color>
+    <color name="color_black_50">#80333333</color>
+    <color name="color_black_40">#66333333</color>
+    <color name="color_black_30">#4c333333</color>
+    <color name="color_black_20">#33333333</color>
+    <color name="color_black_15">#26333333</color>
+    <color name="color_black_10">#1a333333</color>
+    <color name="color_black_5">#0d333333</color>
+    <color name="color_black_4">#f6f6f6</color>
 </resources>

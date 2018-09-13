@@ -18,7 +18,7 @@
         android:label="aaaa"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/NoActionbarTheme"
     	tools:replace="android:allowBackup,android:theme">
 
         <activity android:name=".MainActivity">
