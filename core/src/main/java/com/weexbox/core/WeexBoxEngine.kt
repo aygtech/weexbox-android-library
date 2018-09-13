@@ -53,6 +53,7 @@ object WeexBoxEngine {
         WXSDKEngine.registerModule("wb-navigator", NavigatorModule::class.java)
         WXSDKEngine.registerModule("wb-network", NetworkModule::class.java)
         WXSDKEngine.registerModule("wb-modal", ModalModule::class.java)
+        WXSDKEngine.registerModule("wb-external", ExternalModule::class.java)
     }
 
     /**
