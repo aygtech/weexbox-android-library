@@ -16,6 +16,7 @@ import com.weexbox.core.service.FloatingBtnService
 import android.os.Build
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
+import com.weexbox.core.module.ModalModule
 import com.weexbox.core.module.NavigatorModule
 import com.weexbox.core.module.RouterModule
 import com.weexbox.core.router.Router
@@ -55,6 +56,7 @@ object WeexBoxEngine {
         WXSDKEngine.registerModule("wb-router", RouterModule::class.java)
         WXSDKEngine.registerModule("wb-storage", StorageModule::class.java)
         WXSDKEngine.registerModule("wb-navigator", NavigatorModule::class.java)
+        WXSDKEngine.registerModule("wb-modal", ModalModule::class.java)
     }
 
     /**
