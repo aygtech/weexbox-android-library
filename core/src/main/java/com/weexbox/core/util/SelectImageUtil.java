@@ -30,6 +30,9 @@ public class SelectImageUtil {
 
     /**
      * 从相册多选获取图片
+     * count:最多选几张
+     * picked：已经选择了几张
+     * isCamera：是否开启相机
      */
     public static void startImagePickActivity(Activity context,int count, int picked, boolean isCamera, MultipleImageCompleteListener callback) {
         imgType = 0;

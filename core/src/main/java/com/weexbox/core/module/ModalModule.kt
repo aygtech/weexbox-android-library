@@ -119,8 +119,7 @@ class ModalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun showProgress(options: Map<String, Any>) {
-        LoadDialogUtil.showProgressWithText(getActivity(), options["text"] as String)
-        LoadDialogUtil.setProgressHUD(options["progress"] as Int)
+        LoadDialogUtil.showProgressWithText(getActivity(), options["text"] as String, options["progress"] as Int)
     }
 
     @JSMethod(uiThread = true)
