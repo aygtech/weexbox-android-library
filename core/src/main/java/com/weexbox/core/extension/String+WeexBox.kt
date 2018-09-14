@@ -2,11 +2,10 @@ package com.weexbox.core.extension
 
 import android.net.Uri
 import com.alibaba.fastjson.JSON
-import com.weexbox.core.WeexBoxEngine
+import com.alibaba.fastjson.TypeReference
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.*
-import com.google.gson.reflect.TypeToken
 
 
 
@@ -103,4 +102,8 @@ fun String.getHost(): String {
 
 fun <T> String.toObject(clazz: Class<T>): T {
     return JSON.parseObject(this, clazz)
+}
+
+fun <T> String.toObject(type: TypeReference<T>): T {
+    return JSON.parseObject(this, type)
 }

@@ -46,7 +46,6 @@ dependencies {
     api 'org.zeroturnaround:zt-zip:1.13'
     api 'com.squareup.retrofit2:retrofit:2.4.0'
     api 'com.luffykou:android-common-utils:1.1.3'
-    api 'com.google.code.gson:gson:2.8.5'
     api 'com.alibaba.android:bindingx-core:1.0.1'
     api 'com.alibaba.android:bindingx_weex_plugin:1.0.2'
     api 'com.journeyapps:zxing-android-embedded:3.6.0'

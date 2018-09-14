@@ -1,8 +1,5 @@
 package com.weexbox.core.model
 
-import com.alibaba.fastjson.JSON
-import com.google.gson.reflect.TypeToken
-import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.extension.toJsonMap
 import java.util.*
 

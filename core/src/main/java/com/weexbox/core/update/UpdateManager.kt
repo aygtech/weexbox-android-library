@@ -2,14 +2,15 @@ package com.weexbox.core.update
 
 import android.content.Context
 import android.os.AsyncTask
+import com.alibaba.fastjson.JSON
+import com.alibaba.fastjson.TypeReference
 import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.model.Md5Realm
 import com.weexbox.core.model.UpdateConfig
 import com.weexbox.core.model.UpdateMd5
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.litesuits.common.io.FileUtils
 import com.litesuits.common.io.IOUtils
+import com.weexbox.core.extension.toObject
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -96,7 +97,6 @@ object UpdateManager {
     private var cacheConfig: UpdateConfig? = null
     private lateinit var serverConfigData: String
 
-    private val gson = Gson()
     private interface DownloadService {
         @GET("{url}")
         fun get(@Path("url") url: String): Call<ResponseBody>
@@ -182,14 +182,14 @@ object UpdateManager {
     /// 加载本地的config
     private fun loadLocalConfig() {
         val inputStream = WeexBoxEngine.application.applicationContext.assets.open(resourceConfigUrl)
-        resourceConfig = gson.fromJson(IOUtils.toString(inputStream, "UTF-8"), UpdateConfig::class.java)
+        resourceConfig = IOUtils.toString(inputStream, "UTF-8").toObject(UpdateConfig::class.java)
         workingConfig = loadConfig(workingConfigUrl)
         cacheConfig = loadConfig(cacheConfigUrl)
     }
 
     private fun loadConfig(url: File): UpdateConfig? {
         return try {
-            gson.fromJson(FileUtils.readFileToString(url, "UTF-8"), UpdateConfig::class.java)
+            FileUtils.readFileToString(url, "UTF-8").toObject(UpdateConfig::class.java)
         } catch (e: IOException) {
             null
         }
@@ -198,7 +198,7 @@ object UpdateManager {
     /// 加载本地的Md5
     private fun loadLocalMd5() {
         val inputStream = WeexBoxEngine.application.applicationContext.assets.open(resourceMd5Url)
-        resourceMd5 = gson.fromJson(IOUtils.toString(inputStream, "UTF-8"), object: TypeToken<List<UpdateMd5>>(){}.type)
+        resourceMd5 = IOUtils.toString(inputStream, "UTF-8").toObject(object : TypeReference<List<UpdateMd5>>() {})
     }
 
     // 获取服务端config文件
@@ -213,7 +213,7 @@ object UpdateManager {
                 if (response?.isSuccessful == true) {
                     complete(UpdateState.DownloadConfigSuccess)
                     serverConfigData = response.body()!!.string()
-                    val serverConfig = gson.fromJson(serverConfigData, UpdateConfig::class.java)
+                    val serverConfig = serverConfigData.toObject(UpdateConfig::class.java)
                     // 是否需要更新
                     if (shouldDownloadWww(serverConfig)) {
                         downloadMd5()
@@ -329,7 +329,7 @@ object UpdateManager {
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
                 if (response?.isSuccessful == true) {
                     complete(UpdateState.DownloadMd5Success)
-                    val serverMd5: List<UpdateMd5> = gson.fromJson(response.body()!!.string(), object: TypeToken<List<UpdateMd5>>(){}.type)
+                    val serverMd5: List<UpdateMd5> = response.body()!!.string().toObject(object : TypeReference<List<UpdateMd5>>(){})
                     DownloadFilesTask().execute(serverMd5)
                 } else {
                     complete(UpdateState.DownloadMd5Error, 0)

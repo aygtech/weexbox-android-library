@@ -58,5 +58,5 @@ fun Any.toJsonMap(): MutableMap<String, Any> {
 }
 
 fun <T> Map<String, Any>.toObject(clazz: Class<T>): T {
-    return JSON.parseObject(JSON.toJSONString(this), clazz)
+    return JSON.parseObject(toJsonString(), clazz)
 }
