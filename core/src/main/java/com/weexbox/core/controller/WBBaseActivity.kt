@@ -39,6 +39,9 @@ open class WBBaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         router = intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
+        if (router == null){
+            router = Router()
+        }
         if (isRegisterEventBus() && inCreateRegisterEventBus()) {
             EventBusUtil.register(this)
         }
