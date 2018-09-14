@@ -20,40 +20,12 @@ open class WBBaseFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         router = arguments?.getSerializable(Router.EXTRA_NAME) as Router?
-//        if (isRegisterEventFrageMent() && inCreateEventFrageMent()) {
-//            EventBusUtil.register(this)
-//        }
         EventBus.getDefault().register(this)
-    }
-
-    override fun onStart() {
-        super.onStart()
-//        if (isRegisterEventFrageMent() && !inCreateEventFrageMent()) {
-//            EventBusUtil.register(this)
-//        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-//        if (isRegisterEventFrageMent() && !inCreateEventFrageMent()) {
-//            EventBusUtil.unregister(this)
-//        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-//        if (isRegisterEventFrageMent() && inCreateEventFrageMent()) {
-//            EventBusUtil.unregister(this)
-//        }
         EventBus.getDefault().unregister(this)
-    }
-
-    fun isRegisterEventFrageMent(): Boolean {
-        return false
-    }
-
-    fun inCreateEventFrageMent(): Boolean {
-        return false
     }
 
     // 通用事件

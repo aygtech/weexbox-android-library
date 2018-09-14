@@ -240,23 +240,4 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
             mBroadcastReceiver = null
         }
     }
-
-
-
-
-
-
-
-
-
-
-//    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-//        return mWxAnalyzerDelegate != null && mWxAnalyzerDelegate!!.onKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
-//    }
-//
-//    override fun onBackPressed() {
-//        if (!mInstance!!.onBackPressed()) {
-//            super.onBackPressed()
-//        }
-//    }
 }
