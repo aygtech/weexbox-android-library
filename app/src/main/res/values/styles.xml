@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="NoActionbarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="NoActionbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
 
         <!--<item name="android:windowFullscreen">true</item>-->
@@ -15,8 +15,8 @@
 
 
         <!--全屏不顯示狀態欄-->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
     </style>
 
 </resources>

@@ -40,8 +40,8 @@ public class DemoActivity extends WBBaseActivity {
         findViewById(R.id.oooo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
+                startActivity(intent);
 
 //                Router router = new Router();
 //                router.setUrl("index.js");
@@ -49,20 +49,6 @@ public class DemoActivity extends WBBaseActivity {
 //                router.open(DemoActivity.this);
 
 
-                final String[] items = new String[] { "北京", "上海", "广州", "深圳" };
-                // 创建对话框构建器
-                AlertDialog.Builder builder = new AlertDialog.Builder(DemoActivity.this);
-                // 设置参数
-                builder.setTitle("提示")
-                        .setItems(items, new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(DemoActivity.this, items[which],
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                builder.create().show();
             }
         });
 
