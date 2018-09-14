@@ -2,7 +2,7 @@ package com.weexbox.core.network
 
 import com.alibaba.fastjson.JSON
 import com.taobao.weex.http.Status
-import com.weexbox.core.extension.toJSONString
+import com.weexbox.core.extension.toJsonString
 import com.weexbox.core.model.Result
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -51,7 +51,7 @@ object Network {
         if (method == HTTPMethod.POST) {
             val contentType = headers["Content-Type"]
             if (contentType != null && contentType.contains("application/json")) {
-                val body = RequestBody.create(mediaTypeJSON, parameters.toJSONString())
+                val body = RequestBody.create(mediaTypeJSON, parameters.toJsonString())
                 return service.methodJson(url, body, headers)
             } else {
                 return service.methodPost(url, parameters, headers)

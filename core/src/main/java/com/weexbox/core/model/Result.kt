@@ -3,8 +3,7 @@ package com.weexbox.core.model
 import com.alibaba.fastjson.JSON
 import com.google.gson.reflect.TypeToken
 import com.weexbox.core.WeexBoxEngine
-import com.weexbox.core.extension.toJSONString
-import com.weexbox.core.extension.toMap
+import com.weexbox.core.extension.toJsonMap
 import java.util.*
 
 /**
@@ -24,11 +23,11 @@ class Result {
     }
 
     var code: Int = Result.success
-    var data: Map<String, Any> = TreeMap()
+    var data: MutableMap<String, Any> = TreeMap()
     var error: String? = null
     var progress: Int? = null
 
     fun toJsResult(): JsResult {
-        return toMap()
+        return toJsonMap()
     }
 }

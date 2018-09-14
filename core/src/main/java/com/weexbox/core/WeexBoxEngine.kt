@@ -39,29 +39,12 @@ object WeexBoxEngine {
         initWeex()
     }
 
-    private fun initWeex() {
-        val config = InitConfig.Builder().setImgAdapter(ImageAdapter()).build()
-        WXSDKEngine.initialize(application, config)
-        BindingX.register()
-        registerModule()
-        registerRouter()
-    }
-
-    fun registerModule() {
-        WXSDKEngine.registerModule("wb-router", RouterModule::class.java)
-        WXSDKEngine.registerModule("wb-storage", StorageModule::class.java)
-        WXSDKEngine.registerModule("wb-navigator", NavigatorModule::class.java)
-        WXSDKEngine.registerModule("wb-network", NetworkModule::class.java)
-        WXSDKEngine.registerModule("wb-modal", ModalModule::class.java)
-    }
-
     /**
      * 启动全局悬浮按钮service
      */
     fun initFloatingBtn(context: Context, service: Class<out FloatingBtnService>) {
         if (FloatingBtnService.STATAG.equals("stop")) {
             val serviceIntent = Intent(context, service)
-
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //                context.startForegroundService(serviceIntent)
 //            } else {
@@ -70,9 +53,35 @@ object WeexBoxEngine {
         }
     }
 
-    fun registerRouter() {
+
+
+
+
+
+
+
+
+
+
+    private fun initWeex() {
+        val config = InitConfig.Builder().setImgAdapter(ImageAdapter()).build()
+        WXSDKEngine.initialize(application, config)
+        BindingX.register()
+        registerModule()
+        registerRouter()
+    }
+
+    private fun registerModule() {
+        WXSDKEngine.registerModule("wb-router", RouterModule::class.java)
+        WXSDKEngine.registerModule("wb-storage", StorageModule::class.java)
+        WXSDKEngine.registerModule("wb-navigator", NavigatorModule::class.java)
+        WXSDKEngine.registerModule("wb-network", NetworkModule::class.java)
+        WXSDKEngine.registerModule("wb-modal", ModalModule::class.java)
+        WXSDKEngine.registerModule("wb-external", ExternalModule::class.java)
+    }
+
+    private fun registerRouter() {
         Router.register(Router.NAME_WEEX, WBWeexActivity::class.java)
         Router.register(Router.NAME_WEB, WBWebViewActivity::class.java)
     }
-
 }

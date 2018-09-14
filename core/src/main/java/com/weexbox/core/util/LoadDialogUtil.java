@@ -33,7 +33,7 @@ public class LoadDialogUtil {
     }
 
     public static void showLoadWithText(Context context, String text) {
-        KProgressHUD.create(context)
+        hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
                 .setCancellable(isCancel)
@@ -61,18 +61,15 @@ public class LoadDialogUtil {
                 .show();
     }
 
-    public static void showProgressWithText(Context context, String text) {
-        progressHUD = KProgressHUD.create(context)
-                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
-                .setLabel(text)
-                .setMaxProgress(100)
-                .show();
-    }
-
-    public static void setProgressHUD(int progress){
-        if(progressHUD == null){
-            return;
+    public static void showProgressWithText(Context context, String text, int progress) {
+        if (!progressHUD.isShowing()){
+            progressHUD = KProgressHUD.create(context)
+                    .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                    .setLabel(text)
+                    .setMaxProgress(100)
+                    .show();
+        } else {
+            progressHUD.setProgress(progress);
         }
-        progressHUD.setProgress(progress);
     }
 }

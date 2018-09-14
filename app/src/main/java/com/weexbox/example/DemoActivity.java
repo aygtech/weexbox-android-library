@@ -1,11 +1,13 @@
 package com.weexbox.example;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,10 +43,26 @@ public class DemoActivity extends WBBaseActivity {
 //                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
 //                startActivity(intent);
 
-                Router router = new Router();
-                router.setUrl("index.js");
-                router.setName(Router.Companion.getNAME_WEEX());
-                router.open(DemoActivity.this);
+//                Router router = new Router();
+//                router.setUrl("index.js");
+//                router.setName(Router.Companion.getNAME_WEEX());
+//                router.open(DemoActivity.this);
+
+
+                final String[] items = new String[] { "北京", "上海", "广州", "深圳" };
+                // 创建对话框构建器
+                AlertDialog.Builder builder = new AlertDialog.Builder(DemoActivity.this);
+                // 设置参数
+                builder.setTitle("提示")
+                        .setItems(items, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(DemoActivity.this, items[which],
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                builder.create().show();
             }
         });
 
