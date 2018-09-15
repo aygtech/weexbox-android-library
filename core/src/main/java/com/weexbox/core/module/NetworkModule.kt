@@ -31,7 +31,7 @@ class NetworkModule : BaseModule() {
 
         Network.request(info.url!!, method, info.params, info.headers, object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                result.code = response.code()
+                result.status = response.code()
                 val data = response.body()?.string()
                 if (data != null) {
                     result.data = data.toJsonMap()
@@ -41,7 +41,7 @@ class NetworkModule : BaseModule() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                result.code = Result.error
+                result.status = Result.error
                 result.error = t.message
                 callback(result)
             }

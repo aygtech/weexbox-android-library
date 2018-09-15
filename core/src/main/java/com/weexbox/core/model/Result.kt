@@ -19,7 +19,7 @@ class Result {
         const val error = -1
     }
 
-    var code: Int = Result.success
+    var status: Int = Result.success
     var data: MutableMap<String, Any> = TreeMap()
     var error: String? = null
     var progress: Int? = null

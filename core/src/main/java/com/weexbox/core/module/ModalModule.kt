@@ -44,7 +44,7 @@ class ModalModule : BaseModule() {
 
                     override fun onClick(dialog: DialogInterface, which: Int) {
                         val result = Result()
-                        result.code = Result.error
+                        result.status = Result.error
                         completionCallback.invoke(Result())
                     }
                 })
@@ -74,7 +74,7 @@ class ModalModule : BaseModule() {
 
                     override fun onClick(dialog: DialogInterface, which: Int) {
                         val result = Result()
-                        result.code = Result.error
+                        result.status = Result.error
                         completionCallback.invoke(Result())
                     }
                 })
