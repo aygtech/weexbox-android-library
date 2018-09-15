@@ -1,40 +1,28 @@
 package com.weexbox.core.controller
 
 import android.app.AlertDialog
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.graphics.PixelFormat
-import android.os.Bundle
-import android.view.View
-
-import com.litesuits.common.io.FileUtils
-import com.taobao.weex.IWXRenderListener
-import com.taobao.weex.RenderContainer
-import com.taobao.weex.WXSDKInstance
-
-import java.io.IOException
-import android.graphics.Rect
-import java.io.File
 import android.content.Intent
-import android.content.IntentFilter
+import android.graphics.PixelFormat
+import android.graphics.Rect
+import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.text.TextUtils
-import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.widget.Toast
+import com.litesuits.common.io.FileUtils
 import com.orhanobut.logger.Logger
-import com.taobao.weex.common.IWXDebugProxy
+import com.taobao.weex.IWXRenderListener
+import com.taobao.weex.RenderContainer
+import com.taobao.weex.WXSDKInstance
 import com.taobao.weex.common.WXRenderStrategy
 import com.taobao.weex.ui.component.NestedContainer
-import com.weexbox.core.R
 import com.weexbox.core.https.HotRefreshManager
 import com.weexbox.core.https.HotRefreshManager.*
 import com.weexbox.core.update.UpdateManager
 import com.weexbox.core.util.WXAnalyzerDelegate
-import kotlinx.android.synthetic.main.activity_weex.*
-import java.net.MalformedURLException
-import java.net.URL
+import java.io.IOException
 
 /**
  * Author: Mario
@@ -42,7 +30,7 @@ import java.net.URL
  * Description: This is WBWeexActivity
  */
 
-open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.NestedInstanceInterceptor, Handler.Callback {
+open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.NestedInstanceInterceptor, Handler.Callback, WBBaseActivity.HaveFragmentListener {
 
     open lateinit var url: String
     private var mInstance: WXSDKInstance? = null
@@ -68,7 +56,7 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
             mWxAnalyzerDelegate = WXAnalyzerDelegate(this)
             mWxAnalyzerDelegate?.onCreate()
 
-
+            setHaveFragmentListener(this)
         }
     }
 
@@ -82,24 +70,23 @@ open class WBWeexActivity : WBBaseActivity(), IWXRenderListener, WXSDKInstance.N
         mInstance?.setNestedInstanceInterceptor(this)
         mInstance?.isTrackComponent = true
 //        mContainer.post {
-            val outRect = Rect()
-            window.decorView.getWindowVisibleDisplayFrame(outRect)
-            try {
-                if (url.startsWith("http")) {
-                    // 下载
-                } else {
-                    val file = UpdateManager.getFullUrl(url)
-                    val template = FileUtils.readFileToString(file)
-                    mInstance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
-                }
-            } catch (e: IOException) {
-                Logger.e(e, "")
+        val outRect = Rect()
+        window.decorView.getWindowVisibleDisplayFrame(outRect)
+        try {
+            if (url.startsWith("http")) {
+                // 下载
+            } else {
+                val file = UpdateManager.getFullUrl(url)
+                val template = FileUtils.readFileToString(file)
+                mInstance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
             }
+        } catch (e: IOException) {
+            Logger.e(e, "")
+        }
 //        }
     }
 
-    override fun refreshWeex() {
-        super.refreshWeex()
+    override fun refreshFragmentWeex() {
         render()
     }
 

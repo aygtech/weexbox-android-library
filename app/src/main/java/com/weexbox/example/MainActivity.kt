@@ -9,13 +9,14 @@ import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.controller.WBBaseActivity
 import com.weexbox.core.router.Router
 
-class MainActivity : WBBaseActivity() {
+class MainActivity : WBBaseActivity(), WBBaseActivity.HaveFragmentListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initFragment()
+        setHaveFragmentListener(this)
     }
 
     private var weexFragment: MainFragment? = null
@@ -30,8 +31,7 @@ class MainActivity : WBBaseActivity() {
                 weexFragment).commit()
     }
 
-    override fun refreshWeex() {
-        super.refreshWeex()
+    override fun refreshFragmentWeex() {
         weexFragment?.refreshWeex()
     }
 }
