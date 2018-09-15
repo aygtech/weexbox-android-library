@@ -191,8 +191,20 @@ open class WBBaseActivity : AppCompatActivity() {
         }
     }
 
-    open fun refreshWeex() {
 
+
+    interface HaveFragmentListener {
+        fun refreshWeex()
+    }
+    lateinit var listener: HaveFragmentListener
+    fun setHaveFragmentListener(haveFragmentListener: HaveFragmentListener){
+        listener = haveFragmentListener
+    }
+
+    fun refreshWeex(){
+        if (listener != null){
+            listener.refreshWeex()
+        }
     }
 
 }

@@ -54,8 +54,8 @@ public class DemoActivity extends WBBaseActivity {
 
 //        checkNewJsVersionAction();
 
-
     }
+
 
     private Dialog dialog = null;
     private void checkNewJsVersionAction() {
