@@ -3,6 +3,8 @@ package com.weexbox.core.module
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
 import com.weexbox.core.event.Event
+import com.weexbox.core.extension.toObject
+import com.weexbox.core.model.JsOptions
 
 /**
  * Author: Mario
@@ -20,8 +22,9 @@ class EventModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun emit(name: String, info: Map<String, Any>?) {
-        Event.emit(name, info)
+    fun emit(options: Map<String, Any>) {
+        val info = options.toObject(JsOptions::class.java)
+        Event.emit(info.name!!, info.params)
     }
 
     @JSMethod(uiThread = true)

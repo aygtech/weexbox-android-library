@@ -13,4 +13,5 @@ class JsOptions {
     var method: String? = null
     var headers: Map<String, String>? = null
     var params: Map<String, Any>? = null
+    var name: String? = null
 }
