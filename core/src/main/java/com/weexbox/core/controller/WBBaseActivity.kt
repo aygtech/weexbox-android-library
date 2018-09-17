@@ -17,6 +17,7 @@ import com.weexbox.core.R
 import com.weexbox.core.event.Event
 import com.weexbox.core.event.EventCallback
 import com.weexbox.core.router.Router
+import com.weexbox.core.util.ActivityManager
 import com.weexbox.core.util.EventBusUtil
 import com.weexbox.core.util.SelectImageUtil
 import com.weexbox.core.widget.SimpleToolbar
@@ -38,6 +39,7 @@ open class WBBaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ActivityManager.getInstance().addActivity(this)
         router = intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
         if (router == null){
             router = Router()
@@ -63,6 +65,7 @@ open class WBBaseActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        ActivityManager.getInstance().removeActivity(this)
         if (isRegisterEventBus() && inCreateRegisterEventBus()) {
             EventBusUtil.unregister(this)
         }
