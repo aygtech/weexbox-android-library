@@ -24,14 +24,14 @@ class NavigatorModule : BaseModule() {
 
         if (info.get("text") != null && info.get("color") != null){
             getActionbar().setTitleTextListener(View.OnClickListener {
-                completionCallback.invokeAndKeepAlive(result.toJsResult())
+                completionCallback.invokeAndKeepAlive(result)
             })
             getActionbar().setTitleText(info.get("text") as String?)
             getActionbar().setTitleTextColor("#" + info.get("color") as String?)
 
         } else if (info.get("text") != null){
             getActionbar().setTitleTextListener(View.OnClickListener {
-                completionCallback.invokeAndKeepAlive(result.toJsResult())
+                completionCallback.invokeAndKeepAlive(result)
             })
             getActionbar().setTitleText(info.get("text") as String?)
 
@@ -52,34 +52,34 @@ class NavigatorModule : BaseModule() {
                 info = items[0]
                 if (info.get("text") != null && info.get("color") != null){
                     getActionbar().setBackButton(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("text") as String?, "#" + info.get("color") as String?)
 
                 } else if (info.get("text") != null){
                     getActionbar().setBackButton(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("text") as String?)
 
                 } else if (info.get("image") != null){
                     getActionbar().setBackButtonDrawable(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("image") as String?)
                 }
             } else if (i == 1){
                 info = items[1]
                 if (info.get("text") != null && info.get("color") != null){
                     getActionbar().setBackButton2(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("text") as String?, "#" + info.get("color") as String?)
 
                 } else if (info.get("text") != null){
                     getActionbar().setBackButton2(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("text") as String?)
 
                 } else if (info.get("image") != null){
                     getActionbar().setBackButton2Drawable(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("image") as String?)
                 }
             }
@@ -99,17 +99,17 @@ class NavigatorModule : BaseModule() {
                 info = items[0]
                 if (info.get("text") != null && info.get("color") != null){
                     getActionbar().setRightButton(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("text") as String?, "#" + info.get("color") as String?)
 
                 } else if (info.get("text") != null){
                     getActionbar().setRightButton(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("text") as String?)
 
                 } else if (info.get("image") != null){
                     getActionbar().setRightButtonDrawable(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("image") as String?)
                 }
 
@@ -117,17 +117,17 @@ class NavigatorModule : BaseModule() {
                 info = items[1]
                 if (info.get("text") != null && info.get("color") != null){
                     getActionbar().setRightButton2(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("text") as String?, "#" + info.get("color") as String?)
 
                 } else if (info.get("text") != null){
                     getActionbar().setRightButton2(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("text") as String?)
 
                 } else if (info.get("image") != null){
                     getActionbar().setRightButton2Drawable(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
+                        completionCallback.invokeAndKeepAlive(result)
                     }, info.get("image") as String?)
                 }
 
