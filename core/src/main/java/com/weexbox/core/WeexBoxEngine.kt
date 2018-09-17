@@ -78,6 +78,7 @@ object WeexBoxEngine {
         WXSDKEngine.registerModule("wb-network", NetworkModule::class.java)
         WXSDKEngine.registerModule("wb-modal", ModalModule::class.java)
         WXSDKEngine.registerModule("wb-external", ExternalModule::class.java)
+        WXSDKEngine.registerModule("wb-event", EventModule::class.java)
     }
 
     private fun registerRouter() {
