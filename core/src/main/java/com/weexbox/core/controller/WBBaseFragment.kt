@@ -38,4 +38,8 @@ open class WBBaseFragment: Fragment() {
     open fun doFragmentResume() {}
 
     open fun doFragmentPause() {}
+
+    open fun onBackPressed(): Boolean {
+        return false
+    }
 }
