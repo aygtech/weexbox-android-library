@@ -35,4 +35,7 @@ open class WBBaseFragment: Fragment() {
         callback?.invoke(event.info)
     }
 
+    fun doFragmentResume() {}
+
+    fun doFragmentPause() {}
 }
