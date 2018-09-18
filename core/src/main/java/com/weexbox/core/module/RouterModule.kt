@@ -33,9 +33,7 @@ class RouterModule : BaseModule() {
 
     @JSMethod(uiThread = false)
     fun getParams(): Map<String, Any>? {
-        val result = Result()
-        result.data = getActivity().router?.params?.toMutableMap() ?: result.data
-        return result.toJsResult()
+        return getActivity().router?.params
     }
 
     @JSMethod(uiThread = true)
