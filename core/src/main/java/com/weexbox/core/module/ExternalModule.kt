@@ -19,7 +19,7 @@ class ExternalModule : BaseModule() {
                     map.put("url", imgs[0])
                 }
                 result.data = map
-                completionCallback.invoke(result)
+                completionCallback.invoke(result.toJsResult())
             }
         })
     }

@@ -1,6 +1,5 @@
 package com.weexbox.core.adapter;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -18,62 +17,58 @@ import com.weexbox.core.util.BitmapUtil;
 
 public class ImageAdapter implements IWXImgLoaderAdapter {
 
-  public ImageAdapter() {
-  }
-
-  @Override
-  public void setImage(final String url, final ImageView view,
-                       WXImageQuality quality, final WXImageStrategy strategy) {
-    Runnable runnable = new Runnable() {
-
-      @Override
-      public void run() {
-        if(view==null||view.getLayoutParams()==null){
-          return;
-        }
-        if (TextUtils.isEmpty(url)) {
-          view.setImageBitmap(null);
-          return;
-        }
-        String temp = url;
-        if (url.startsWith("//")) {
-          temp = "http:" + url;
-        }
-
-        if (!TextUtils.isEmpty(strategy.placeHolder)) {
-          BitmapUtil.displayImage(view, strategy.placeHolder);
-        }
-        BlurTransformation transformation = null;
-        if (strategy.blurRadius != 0) {
-          transformation = new BlurTransformation(strategy.blurRadius);
-        }
-        if (strategy.getImageListener() == null) {
-          BitmapUtil.displayImage(view, temp, transformation);
-        } else {
-          BitmapUtil.displayImage(new SimpleTarget<Drawable>() {
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-              if (strategy.getImageListener() != null) {
-                strategy.getImageListener().onImageFinish(url, view, true, null);
-              }
-              view.setImageDrawable(resource);
-            }
-
-            @Override
-            public void onLoadFailed(@Nullable Drawable errorDrawable) {
-              super.onLoadFailed(errorDrawable);
-              if (strategy.getImageListener() != null) {
-                strategy.getImageListener().onImageFinish(url, view, false, null);
-              }
-            }
-          }, temp, transformation);
-        }
-      }
-    };
-    if(Thread.currentThread() == Looper.getMainLooper().getThread()){
-      runnable.run();
-    }else {
-      WXSDKManager.getInstance().postOnUiThread(runnable, 0);
+    public ImageAdapter() {
     }
-  }
+
+    @Override
+    public void setImage(final String url, final ImageView view,
+                         WXImageQuality quality, final WXImageStrategy strategy) {
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                if (view == null || view.getLayoutParams() == null) {
+                    return;
+                }
+                if (TextUtils.isEmpty(url)) {
+                    view.setImageBitmap(null);
+                    return;
+                }
+                if (!TextUtils.isEmpty(strategy.placeHolder)) {
+                    BitmapUtil.displayImage(view, strategy.placeHolder);
+                }
+                if (url.startsWith("http")) {
+                    // 网络加载
+                    if (strategy.getImageListener() == null) {
+                        BitmapUtil.displayImage(view, url, null);
+                    } else {
+                        BitmapUtil.displayImage(new SimpleTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                if (strategy.getImageListener() != null) {
+                                    strategy.getImageListener().onImageFinish(url, view, true, null);
+                                }
+                                view.setImageDrawable(resource);
+                            }
+
+                            @Override
+                            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                super.onLoadFailed(errorDrawable);
+                                if (strategy.getImageListener() != null) {
+                                    strategy.getImageListener().onImageFinish(url, view, false, null);
+                                }
+                            }
+                        }, url, null);
+                    }
+                } else if (url.startsWith("bundle://")) {
+                    // 本地bundle加载
+
+                } else {
+                    // 本地加载
+
+                }
+            }
+        };
+        WXSDKManager.getInstance().postOnUiThread(runnable, 0);
+    }
 }
