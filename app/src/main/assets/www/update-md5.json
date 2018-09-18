@@ -1,10 +1,102 @@
 [
   {
     "path": "login/page1.js",
-    "md5": "a5ea74ca727f88982fd3f9a480cfe52d"
+    "md5": "ab10419b624d420542b3e82f98f520d3"
   },
   {
     "path": "module1/page1.js",
-    "md5": "dce66b17399ee75116ba25b027b75640"
+    "md5": "e34af57f16ba51d8b85f895c00287998"
+  },
+  {
+    "path": "module1/page2.js",
+    "md5": "c5d0d566d4516fc83363fc37566ae99d"
+  },
+  {
+    "path": "task/add.js",
+    "md5": "cb75421c222293a106279ca2a33d05a3"
+  },
+  {
+    "path": "task/address.js",
+    "md5": "b50ebed70f5a4ec1f819f4ae604699a1"
+  },
+  {
+    "path": "task/detail.js",
+    "md5": "3d4337789a321fe07ee7f96dbb3e6b31"
+  },
+  {
+    "path": "task/fee.js",
+    "md5": "145107e5ba8154c5bcf3001675098345"
+  },
+  {
+    "path": "task/finish.js",
+    "md5": "7329991ef0155b8d764419dae6ddf4da"
+  },
+  {
+    "path": "task/friends.js",
+    "md5": "f2e959440a65b3a3f90d316bcc39b59f"
+  },
+  {
+    "path": "task/group.js",
+    "md5": "52257c2573a89fbfbbaaaba9ec0c3666"
+  },
+  {
+    "path": "task/index.js",
+    "md5": "d146fdc13212d323c2453c264fdea155"
+  },
+  {
+    "path": "test/bairdtest.js",
+    "md5": "81f507a08f3bfc378a1beed5f4420dc7"
+  },
+  {
+    "path": "user/attentionlist.js",
+    "md5": "8f0869b2ed180bcfc167776413555f98"
+  },
+  {
+    "path": "user/editGroupInfo.js",
+    "md5": "025f81c3108ce77703acdcbc455895ea"
+  },
+  {
+    "path": "user/editorInfo.js",
+    "md5": "a4ef2b8fb37602686d912896185191e4"
+  },
+  {
+    "path": "user/groupDetail.js",
+    "md5": "d68016f5c7b63dff70f8e0295b33407b"
+  },
+  {
+    "path": "user/grouplist.js",
+    "md5": "25ba1a0e937916753b37f82d67a39e75"
+  },
+  {
+    "path": "user/groupMemberlist_paging.js",
+    "md5": "6e5feceea2d79c875ae175acd839ff41"
+  },
+  {
+    "path": "user/groupMemberlist.js",
+    "md5": "6bbb27f8992e62a7ff572ee687b8b8a0"
+  },
+  {
+    "path": "user/help.js",
+    "md5": "b06d37056c23d6e63269600bf7f48b4e"
+  },
+  {
+    "path": "user/index.js",
+    "md5": "ad8eda0e24bebf0c044e092673efbdb0"
+  },
+  {
+    "path": "user/info.js",
+    "md5": "a48bcd426a68ca1212180623ed0a7ed7"
+  },
+  {
+    "path": "user/list.js",
+    "md5": "d10062ecb567e2f6562ceabfc044015a"
+  },
+  {
+    "path": "user/replace.js",
+    "md5": "70701fa9d9d50669d4f58f7378cb6b60"
+  },
+  {
+    "path": "user/set.js",
+    "md5": "94ed5033dfe7e2809af378db8c9652bd"
   }
 ]

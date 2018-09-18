@@ -30,7 +30,7 @@ class RouterModule : BaseModule() {
         getRouter(info).openPhone(getActivity())
     }
 
-    @JSMethod(uiThread = true)
+    @JSMethod(uiThread = false)
     fun getParams(): Map<String, Any>? {
         return getActivity().router!!.params
     }

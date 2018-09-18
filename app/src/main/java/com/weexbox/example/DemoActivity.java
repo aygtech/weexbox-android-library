@@ -52,8 +52,7 @@ public class DemoActivity extends WBBaseActivity {
             }
         });
 
-//        checkNewJsVersionAction();
-
+        checkNewJsVersionAction();
     }
 
 
