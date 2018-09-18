@@ -2,6 +2,7 @@ package com.weexbox.core.module
 
 import com.taobao.weex.annotation.JSMethod
 import com.weexbox.core.extension.toObject
+import com.weexbox.core.model.Result
 import com.weexbox.core.router.Router
 
 /**
@@ -32,7 +33,9 @@ class RouterModule : BaseModule() {
 
     @JSMethod(uiThread = false)
     fun getParams(): Map<String, Any>? {
-        return getActivity().router!!.params
+        val result = Result()
+        result.data = getActivity().router?.params?.toMutableMap() ?: result.data
+        return result.toJsResult()
     }
 
     @JSMethod(uiThread = true)
