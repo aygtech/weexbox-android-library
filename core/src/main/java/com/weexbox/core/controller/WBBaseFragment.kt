@@ -35,4 +35,11 @@ open class WBBaseFragment: Fragment() {
         callback?.invoke(event.info)
     }
 
+    open fun doFragmentResume() {}
+
+    open fun doFragmentPause() {}
+
+    open fun onBackPressed(): Boolean {
+        return false
+    }
 }

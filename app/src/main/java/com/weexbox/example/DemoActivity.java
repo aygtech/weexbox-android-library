@@ -32,7 +32,7 @@ public class DemoActivity extends WBBaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getRouter().setNavBarHidden(true);
         setContentView(R.layout.activity_demo);
 
         WeexBoxEngine.INSTANCE.initFloatingBtn(DemoActivity.this, BtnSerivice.class);
@@ -52,8 +52,7 @@ public class DemoActivity extends WBBaseActivity {
             }
         });
 
-//        checkNewJsVersionAction();
-
+        checkNewJsVersionAction();
     }
 
 

@@ -20,67 +20,70 @@ class NavigatorModule : BaseModule() {
     //中间title
     @JSMethod(uiThread = true)
     fun setCenterItem(info: Map<String, Any>, completionCallback: JSCallback) {
-        val result = Result()
+        if (getActionbar() != null){
+            val result = Result()
 
-        if (info.get("text") != null && info.get("color") != null){
-            getActionbar().setTitleTextListener(View.OnClickListener {
-                completionCallback.invokeAndKeepAlive(result.toJsResult())
-            })
-            getActionbar().setTitleText(info.get("text") as String?)
-            getActionbar().setTitleTextColor("#" + info.get("color") as String?)
+            if (info.get("text") != null && info.get("color") != null){
+                getActionbar().setTitleTextListener(View.OnClickListener {
+                    completionCallback.invokeAndKeepAlive(result)
+                })
+                getActionbar().setTitleText(info.get("text") as String?)
+                getActionbar().setTitleTextColor("#" + info.get("color") as String?)
 
-        } else if (info.get("text") != null){
-            getActionbar().setTitleTextListener(View.OnClickListener {
-                completionCallback.invokeAndKeepAlive(result.toJsResult())
-            })
-            getActionbar().setTitleText(info.get("text") as String?)
+            } else if (info.get("text") != null){
+                getActionbar().setTitleTextListener(View.OnClickListener {
+                    completionCallback.invokeAndKeepAlive(result)
+                })
+                getActionbar().setTitleText(info.get("text") as String?)
 
+            }
         }
     }
 
     //左item
     @JSMethod(uiThread = true)
     fun setLeftItems(items: List<Map<String, Any>>, completionCallback: JSCallback) {
+        if (getActionbar() != null){
+            for (i in items.indices) {
+                var info: Map<String, Any>
+                val result = Result()
+                result.data["index"]  = i
 
-        for (i in items.indices) {
-            var info: Map<String, Any>
-            val result = Result()
-            result.data["index"]  = i
 
+                if (i == 0){
+                    info = items[0]
+                    if (info.get("text") != null && info.get("color") != null){
+                        getActionbar().setBackButton(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("text") as String?, "#" + info.get("color") as String?)
 
-            if (i == 0){
-                info = items[0]
-                if (info.get("text") != null && info.get("color") != null){
-                    getActionbar().setBackButton(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("text") as String?, "#" + info.get("color") as String?)
+                    } else if (info.get("text") != null){
+                        getActionbar().setBackButton(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("text") as String?)
 
-                } else if (info.get("text") != null){
-                    getActionbar().setBackButton(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("text") as String?)
+                    } else if (info.get("image") != null){
+                        getActionbar().setBackButtonDrawable(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("image") as String?)
+                    }
+                } else if (i == 1){
+                    info = items[1]
+                    if (info.get("text") != null && info.get("color") != null){
+                        getActionbar().setBackButton2(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("text") as String?, "#" + info.get("color") as String?)
 
-                } else if (info.get("image") != null){
-                    getActionbar().setBackButtonDrawable(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("image") as String?)
-                }
-            } else if (i == 1){
-                info = items[1]
-                if (info.get("text") != null && info.get("color") != null){
-                    getActionbar().setBackButton2(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("text") as String?, "#" + info.get("color") as String?)
+                    } else if (info.get("text") != null){
+                        getActionbar().setBackButton2(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("text") as String?)
 
-                } else if (info.get("text") != null){
-                    getActionbar().setBackButton2(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("text") as String?)
-
-                } else if (info.get("image") != null){
-                    getActionbar().setBackButton2Drawable(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("image") as String?)
+                    } else if (info.get("image") != null){
+                        getActionbar().setBackButton2Drawable(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("image") as String?)
+                    }
                 }
             }
         }
@@ -89,48 +92,49 @@ class NavigatorModule : BaseModule() {
     //右item
     @JSMethod(uiThread = true)
     fun setRightItems(items: List<Map<String, Any>>, completionCallback: JSCallback) {
+        if (getActionbar() != null){
+            for (i in items.indices) {
+                var info: Map<String, Any>
+                val result = Result()
+                result.data["index"]  = i
 
-        for (i in items.indices) {
-            var info: Map<String, Any>
-            val result = Result()
-            result.data["index"]  = i
+                if (i == 0){
+                    info = items[0]
+                    if (info.get("text") != null && info.get("color") != null){
+                        getActionbar().setRightButton(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("text") as String?, "#" + info.get("color") as String?)
 
-            if (i == 0){
-                info = items[0]
-                if (info.get("text") != null && info.get("color") != null){
-                    getActionbar().setRightButton(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("text") as String?, "#" + info.get("color") as String?)
+                    } else if (info.get("text") != null){
+                        getActionbar().setRightButton(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("text") as String?)
 
-                } else if (info.get("text") != null){
-                    getActionbar().setRightButton(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("text") as String?)
+                    } else if (info.get("image") != null){
+                        getActionbar().setRightButtonDrawable(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("image") as String?)
+                    }
 
-                } else if (info.get("image") != null){
-                    getActionbar().setRightButtonDrawable(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("image") as String?)
+                } else if (i == 1){
+                    info = items[1]
+                    if (info.get("text") != null && info.get("color") != null){
+                        getActionbar().setRightButton2(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("text") as String?, "#" + info.get("color") as String?)
+
+                    } else if (info.get("text") != null){
+                        getActionbar().setRightButton2(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("text") as String?)
+
+                    } else if (info.get("image") != null){
+                        getActionbar().setRightButton2Drawable(View.OnClickListener {
+                            completionCallback.invokeAndKeepAlive(result)
+                        }, info.get("image") as String?)
+                    }
+
                 }
-
-            } else if (i == 1){
-                info = items[1]
-                if (info.get("text") != null && info.get("color") != null){
-                    getActionbar().setRightButton2(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("text") as String?, "#" + info.get("color") as String?)
-
-                } else if (info.get("text") != null){
-                    getActionbar().setRightButton2(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("text") as String?)
-
-                } else if (info.get("image") != null){
-                    getActionbar().setRightButton2Drawable(View.OnClickListener {
-                        completionCallback.invokeAndKeepAlive(result.toJsResult())
-                    }, info.get("image") as String?)
-                }
-
             }
         }
     }
@@ -138,7 +142,9 @@ class NavigatorModule : BaseModule() {
     //导航栏颜色
     @JSMethod(uiThread = true)
     fun setNavColor(color: String) {
-        getActionbar().setAcitionbarAndStatusbarBackground("#" + color)
+        if (getActionbar() != null){
+            getActionbar().setAcitionbarAndStatusbarBackground("#" + color)
+        }
     }
 
     fun getActionbar(): SimpleToolbar {
