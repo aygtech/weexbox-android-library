@@ -2,12 +2,15 @@ package com.weexbox.core.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.request.target.Target;
 import com.weexbox.core.adapter.GlideApp;
 import com.weexbox.core.adapter.GlideRequest;
+
+import java.io.File;
 
 /**
  * Created by freeson on 16/8/1.
@@ -24,7 +27,7 @@ public class BitmapUtil {
      ****/
     public static final int NON_EXISTENT_ID = 0;
     public static int DEFAULT = CENTER_INSIDE;
-    private static Context sContext;
+    public static Context sContext;
 
     public static void setContext(final Context context) {
         BitmapUtil.sContext = context;
@@ -43,69 +46,97 @@ public class BitmapUtil {
     }
 
     public static void displayImage(final Target target, final String url) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
+    }
+
+    public static void displayImage(final Target target, final File file) {
+        display(sContext, target, "", file, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
     }
 
     public static void displayImage(final ImageView target, final String url) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
+    }
+
+    public static void displayImage(final ImageView target, final File file) {
+        display(sContext, target, "", file, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
     }
 
     public static void displayImage(final Target target, final String url, final int displayType) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, null);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, null);
     }
 
     public static void displayImage(final ImageView target, final String url, final int displayType) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, null);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, null);
     }
 
     public static void displayImage(final Target target, final String url, final
     Transformation transformation) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
+    }
+
+    public static void displayImage(final Target target, final File file, final
+    Transformation transformation) {
+        display(sContext, target, "", file, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
+    }
+
+    public static void displayImage(final Target target, final int id, final
+    Transformation transformation) {
+        display(sContext, target, id, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
     }
 
     public static void displayImage(final ImageView target, final String url, final
     Transformation transformation) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
+    }
+
+    public static void displayImage(final ImageView target, final File file, final
+    Transformation transformation) {
+        display(sContext, target, "", file, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
+    }
+
+    public static void displayImage(final ImageView target, final int id, final
+    Transformation transformation) {
+        display(sContext, target, id, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
     }
 
     public static void displayImage(final Target target, final String url, final int defaultLoadId, final int
             defaultErrorId) {
-        display(sContext, target, url, defaultLoadId, defaultErrorId, DEFAULT, null);
+        display(sContext, target, url, null, defaultLoadId, defaultErrorId, DEFAULT, null);
     }
 
     public static void displayImage(final ImageView target, final String url, final int defaultLoadId, final int
             defaultErrorId) {
-        display(sContext, target, url, defaultLoadId, defaultErrorId, DEFAULT, null);
+        display(sContext, target, url, null, defaultLoadId, defaultErrorId, DEFAULT, null);
     }
 
     public static void displayImage(final Target target, final String url, final int displayType, final Transformation
             transformation) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, transformation);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, transformation);
     }
 
     public static void displayImage(final ImageView target, final String url, final int displayType, final Transformation
             transformation) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, transformation);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, transformation);
     }
 
     public static void displayImage(final Target target, final String url, final int defaultLoadId, final int
             defaultErrorId, final Transformation transformation) {
-        display(sContext, target, url, defaultLoadId, defaultErrorId, DEFAULT, transformation);
+        display(sContext, target, url, null, defaultLoadId, defaultErrorId, DEFAULT, transformation);
     }
 
     public static void displayImage(final ImageView target, final String url, final int defaultLoadId, final int
             defaultErrorId, final Transformation transformation) {
-        display(sContext, target, url, defaultLoadId, defaultErrorId, DEFAULT, transformation);
+        display(sContext, target, url, null, defaultLoadId, defaultErrorId, DEFAULT, transformation);
     }
 
     public static void displayImage(final Target target, final String url, final int defaultLoadId, final int
             defaultErrorId, final int displayType, final Transformation transformation) {
-        display(sContext, target, url, defaultLoadId, defaultErrorId, displayType, transformation);
+        display(sContext, target, url, null, defaultLoadId, defaultErrorId, displayType, transformation);
     }
 
     public static void displayImage(final ImageView target, final String url, final int defaultLoadId, final int
             defaultErrorId, final int displayType, final Transformation transformation) {
-        display(sContext, target, url, defaultLoadId, defaultErrorId, displayType, transformation);
+        display(sContext, target, url, null, defaultLoadId, defaultErrorId, displayType, transformation);
     }
 
     /**
@@ -113,7 +144,7 @@ public class BitmapUtil {
      * @param url
      */
     public static void displayCircleImage(final Target target, final String url) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, null);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, null);
     }
 
     /**
@@ -121,7 +152,7 @@ public class BitmapUtil {
      * @param url
      */
     public static void displayCircleImage(final ImageView target, final String url) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, null);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, null);
     }
 
     /**
@@ -130,7 +161,7 @@ public class BitmapUtil {
      * @param transformation 如果为空，则用Glide默认的circleCrop
      */
     public static void displayCircleImage(final Target target, final String url, final Transformation transformation) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, transformation);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, transformation);
     }
 
     /**
@@ -141,7 +172,7 @@ public class BitmapUtil {
      * @param transformation 如果为空，则用Glide默认的circleCrop
      */
     public static void displayCircleImage(final ImageView target, final String url, final Transformation transformation) {
-        display(sContext, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, transformation);
+        display(sContext, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, transformation);
     }
 
 
@@ -153,7 +184,7 @@ public class BitmapUtil {
      */
     public static void displayCircleImage(final Target target, final String url, final int defaultLoadId, final int
             defaultErrorId) {
-        display(sContext, target, url, defaultLoadId, defaultErrorId, CIRCLE, null);
+        display(sContext, target, url, null, defaultLoadId, defaultErrorId, CIRCLE, null);
     }
 
     /**
@@ -164,7 +195,7 @@ public class BitmapUtil {
      */
     public static void displayCircleImage(final ImageView target, final String url, final int defaultLoadId, final int
             defaultErrorId) {
-        display(sContext, target, url, defaultLoadId, defaultErrorId, CIRCLE, null);
+        display(sContext, target, url, null, defaultLoadId, defaultErrorId, CIRCLE, null);
     }
 
     /**
@@ -174,7 +205,7 @@ public class BitmapUtil {
      */
     public static void displayCircleImage(final Target target, final String url, final int defaultLoadId, final int
             defaultErrorId, final Transformation transformation) {
-        display(sContext, target, url, defaultLoadId, defaultErrorId, CIRCLE, transformation);
+        display(sContext, target, url, null, defaultLoadId, defaultErrorId, CIRCLE, transformation);
     }
 
     /**
@@ -186,7 +217,7 @@ public class BitmapUtil {
      */
     public static void displayCircleImage(final ImageView target, final String url, final int defaultLoadId, final int
             defaultErrorId, final Transformation transformation) {
-        display(sContext, target, url, defaultLoadId, defaultErrorId, CIRCLE, transformation);
+        display(sContext, target, url, null, defaultLoadId, defaultErrorId, CIRCLE, transformation);
     }
 
     /**
@@ -195,71 +226,89 @@ public class BitmapUtil {
      * @param url
      */
     public static void displayImage(final Context context, final Target target, final String url) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
+    }
+
+    public static void displayImage(final Context context, final Target target, final File file) {
+        display(context, target, "", file, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
     }
 
     public static void displayImage(final Context context, final ImageView target, final String url) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
+    }
+
+    public static void displayImage(final Context context, final ImageView target, final File file) {
+        display(context, target, "", file, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, null);
     }
 
     public static void displayImage(final Context context, final Target target, final String url, final int displayType) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, null);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, null);
     }
 
     public static void displayImage(final Context context, final ImageView target, final String url, final int displayType) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, null);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, null);
     }
 
     public static void displayImage(final Context context, final Target target, final String url, final
     Transformation transformation) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
+    }
+
+    public static void displayImage(final Context context, final Target target, final File file, final
+    Transformation transformation) {
+        display(context, target, "", file, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
     }
 
     public static void displayImage(final Context context, final ImageView target, final String url, final
     Transformation transformation) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
+    }
+
+    public static void displayImage(final Context context, final ImageView target, final File file, final
+    Transformation transformation) {
+        display(context, target, "", file, NON_EXISTENT_ID, NON_EXISTENT_ID, DEFAULT, transformation);
     }
 
     public static void displayImage(final Context context, final Target target, final String url, final int displayType, final
     Transformation transformation) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, transformation);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, transformation);
     }
 
     public static void displayImage(final Context context, final ImageView target, final String url, final int displayType, final
     Transformation transformation) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, transformation);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, displayType, transformation);
     }
 
     public static void displayImage(final Context context, final ImageView target, final String url, final int defaultLoadId, final int
             defaultErrorId) {
-        display(context, target, url, defaultLoadId, defaultErrorId, DEFAULT, null);
+        display(context, target, url, null, defaultLoadId, defaultErrorId, DEFAULT, null);
     }
 
     public static void displayImage(final Context context, final Target target, final String url, final int defaultLoadId, final int
             defaultErrorId) {
-        display(context, target, url, defaultLoadId, defaultErrorId, DEFAULT, null);
+        display(context, target, url, null, defaultLoadId, defaultErrorId, DEFAULT, null);
     }
 
     public static void displayImage(final Context context, final Target target, final String url, final int defaultLoadId, final int
             defaultErrorId, final Transformation transformation) {
-        display(context, target, url, defaultLoadId, defaultErrorId, DEFAULT, transformation);
+        display(context, target, url, null, defaultLoadId, defaultErrorId, DEFAULT, transformation);
     }
 
     public static void displayImage(final Context context, final ImageView target, final String url, final int defaultLoadId, final int
             defaultErrorId, final Transformation transformation) {
-        display(context, target, url, defaultLoadId, defaultErrorId, DEFAULT, transformation);
+        display(context, target, url, null, defaultLoadId, defaultErrorId, DEFAULT, transformation);
     }
 
     public static void displayImage(final Context context, final Target target, final String url, final int defaultLoadId, final int
             defaultErrorId, final int displayType, final
                                     Transformation transformation) {
-        display(context, target, url, defaultLoadId, defaultErrorId, displayType, transformation);
+        display(context, target, url, null, defaultLoadId, defaultErrorId, displayType, transformation);
     }
 
     public static void displayImage(final Context context, final ImageView target, final String url, final int defaultLoadId, final int
             defaultErrorId, final int displayType, final
                                     Transformation transformation) {
-        display(context, target, url, defaultLoadId, defaultErrorId, displayType, transformation);
+        display(context, target, url, null, defaultLoadId, defaultErrorId, displayType, transformation);
     }
 
     /**
@@ -269,7 +318,7 @@ public class BitmapUtil {
      * @param url
      */
     public static void displayCircleImage(final Context context, final Target target, final String url) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, null);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, null);
     }
 
     /**
@@ -279,7 +328,7 @@ public class BitmapUtil {
      * @param url
      */
     public static void displayCircleImage(final Context context, final ImageView target, final String url) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, null);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, null);
     }
 
     /**
@@ -291,7 +340,7 @@ public class BitmapUtil {
      */
     public static void displayCircleImage(final Context context, final Target target, final String url, final Transformation
             transformation) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, transformation);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, transformation);
     }
 
     /**
@@ -303,7 +352,7 @@ public class BitmapUtil {
      */
     public static void displayCircleImage(final Context context, final ImageView target, final String url, final Transformation
             transformation) {
-        display(context, target, url, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, transformation);
+        display(context, target, url, null, NON_EXISTENT_ID, NON_EXISTENT_ID, CIRCLE, transformation);
     }
 
     /**
@@ -315,7 +364,7 @@ public class BitmapUtil {
     public static void displayCircleImage(final Context context, final Target target, final String url, final int defaultLoadId,
                                           final int
                                                   defaultErrorId) {
-        display(context, target, url, defaultLoadId, defaultErrorId, CIRCLE, null);
+        display(context, target, url, null, defaultLoadId, defaultErrorId, CIRCLE, null);
     }
 
     /**
@@ -327,7 +376,7 @@ public class BitmapUtil {
     public static void displayCircleImage(final Context context, final ImageView target, final String url, final int defaultLoadId,
                                           final int
                                                   defaultErrorId) {
-        display(context, target, url, defaultLoadId, defaultErrorId, CIRCLE, null);
+        display(context, target, url, null, defaultLoadId, defaultErrorId, CIRCLE, null);
     }
 
     /**
@@ -340,7 +389,7 @@ public class BitmapUtil {
     public static void displayCircleImage(final Context context, final Target target, final String url, final int defaultLoadId,
                                           final int
                                                   defaultErrorId, final Transformation transformation) {
-        display(context, target, url, defaultLoadId, defaultErrorId, CIRCLE, transformation);
+        display(context, target, url, null, defaultLoadId, defaultErrorId, CIRCLE, transformation);
     }
 
     /**
@@ -353,13 +402,13 @@ public class BitmapUtil {
     public static void displayCircleImage(final Context context, final ImageView target, final String url, final int defaultLoadId,
                                           final int
                                                   defaultErrorId, final Transformation transformation) {
-        display(context, target, url, defaultLoadId, defaultErrorId, CIRCLE, transformation);
+        display(context, target, url, null, defaultLoadId, defaultErrorId, CIRCLE, transformation);
     }
 
-    private static void display(final Context context, final Target target, final String url, final int defaultLoadId, final int
+    private static void display(final Context context, final Target target, final String url, File file, final int defaultLoadId, final int
             defaultErrorId,
                                 final int displayType, final Transformation transformation) {
-        GlideRequest request = configDisplay(context, url, displayType, transformation);
+        GlideRequest request = configDisplay(context, url, file,0, displayType, transformation);
         if (defaultLoadId != NON_EXISTENT_ID) {
             request = request.placeholder(defaultLoadId);
         }
@@ -369,10 +418,10 @@ public class BitmapUtil {
         request.into(target);
     }
 
-    private static void display(final Context context, final ImageView target, final String url, final int defaultLoadId, final int
+    private static void display(final Context context, final ImageView target, final String url, File file, final int defaultLoadId, final int
             defaultErrorId,
                                 final int displayType, final Transformation transformation) {
-        GlideRequest request = configDisplay(context, url, displayType, transformation);
+        GlideRequest request = configDisplay(context, url, file,0, displayType, transformation);
         if (defaultLoadId != NON_EXISTENT_ID) {
             request = request.placeholder(defaultLoadId);
         }
@@ -382,9 +431,42 @@ public class BitmapUtil {
         request.into(target);
     }
 
-    private static GlideRequest configDisplay(final Context context, final String url, final int displayType, final Transformation
+    private static void display(final Context context, final ImageView target, final int id, final int defaultLoadId, final int
+            defaultErrorId,
+                                final int displayType, final Transformation transformation) {
+        GlideRequest request = configDisplay(context, "", null,id, displayType, transformation);
+        if (defaultLoadId != NON_EXISTENT_ID) {
+            request = request.placeholder(defaultLoadId);
+        }
+        if (defaultErrorId != NON_EXISTENT_ID) {
+            request = request.error(defaultErrorId);
+        }
+        request.into(target);
+    }
+
+    private static void display(final Context context, final Target target, final int id,  final int defaultLoadId, final int
+            defaultErrorId,
+                                final int displayType, final Transformation transformation) {
+        GlideRequest request = configDisplay(context, "", null,id, displayType, transformation);
+        if (defaultLoadId != NON_EXISTENT_ID) {
+            request = request.placeholder(defaultLoadId);
+        }
+        if (defaultErrorId != NON_EXISTENT_ID) {
+            request = request.error(defaultErrorId);
+        }
+        request.into(target);
+    }
+
+    private static GlideRequest configDisplay(final Context context, final String url, File file,int id, final int displayType, final Transformation
             transformation) {
-        GlideRequest request = buildGlideRequest(context, url);
+        GlideRequest request;
+        if (!TextUtils.isEmpty(url)) {
+            request = buildGlideRequest(context, url);
+        } else if(file!=null){
+            request = buildGlideRequest(context, file);
+        }else {
+            request = buildGlideRequest(context, id);
+        }
         if (displayType == CIRCLE) {
             if (transformation == null) {
                 request = request.circleCrop();
@@ -397,7 +479,7 @@ public class BitmapUtil {
                     request = request.fitCenter();
                     break;
                 case CENTER_INSIDE:
-                    request= request.centerInside();
+                    request = request.centerInside();
                     break;
                 case CENTER_CROP:
                     request = request.centerCrop();
@@ -415,13 +497,39 @@ public class BitmapUtil {
 
     private static GlideRequest buildGlideRequest(final Object context, final String url) {
         if (context instanceof android.support.v4.app.Fragment) {
-            final android.support.v4.app.Fragment fragment = (android.support.v4.app.Fragment)context;
+            final android.support.v4.app.Fragment fragment = (android.support.v4.app.Fragment) context;
             return GlideApp.with(fragment).load(url);
         } else if (context instanceof Activity) {
             Activity activity = (Activity) context;
             return GlideApp.with(activity).load(url);
         } else {
-            return GlideApp.with((Context)context).load(url);
+            return GlideApp.with((Context) context).load(url);
+        }
+    }
+
+
+    private static GlideRequest buildGlideRequest(final Object context, final File file) {
+        if (context instanceof android.support.v4.app.Fragment) {
+            final android.support.v4.app.Fragment fragment = (android.support.v4.app.Fragment) context;
+            return GlideApp.with(fragment).load(file);
+        } else if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            return GlideApp.with(activity).load(file);
+        } else {
+            return GlideApp.with((Context) context).load(file);
+        }
+    }
+
+
+    private static GlideRequest buildGlideRequest(final Object context, final int id) {
+        if (context instanceof android.support.v4.app.Fragment) {
+            final android.support.v4.app.Fragment fragment = (android.support.v4.app.Fragment) context;
+            return GlideApp.with(fragment).load(id);
+        } else if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            return GlideApp.with(activity).load(id);
+        } else {
+            return GlideApp.with((Context) context).load(id);
         }
     }
 }
