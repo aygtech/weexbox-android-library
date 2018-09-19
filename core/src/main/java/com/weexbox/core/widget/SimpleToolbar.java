@@ -56,6 +56,10 @@ public class SimpleToolbar extends LinearLayout {
         statusbar_layout.setLayoutParams(layoutParams);
     }
 
+    public void setStatusbarLayoutGone(){
+        statusbar_layout.setVisibility(GONE);
+    }
+
     /**
      * 获取状态栏高度
      *

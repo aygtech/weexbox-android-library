@@ -20,7 +20,7 @@ class NavigatorModule : BaseModule() {
     //中间title
     @JSMethod(uiThread = true)
     fun setCenterItem(info: Map<String, Any>, completionCallback: JSCallback) {
-        if (getActionbar() != null){
+        if (getActionbar() != null && info != null){
             val result = Result()
 
             if (info.get("text") != null && info.get("color") != null){
