@@ -24,16 +24,20 @@ class NavigatorModule : BaseModule() {
             val result = Result()
 
             if (info.get("text") != null && info.get("color") != null){
-                getActionbar().setTitleTextListener(View.OnClickListener {
-                    completionCallback.invokeAndKeepAlive(result)
-                })
+                if(completionCallback != null){
+                    getActionbar().setTitleTextListener(View.OnClickListener {
+                        completionCallback.invokeAndKeepAlive(result)
+                    })
+                }
                 getActionbar().setTitleText(info.get("text") as String?)
                 getActionbar().setTitleTextColor("#" + info.get("color") as String?)
 
             } else if (info.get("text") != null){
-                getActionbar().setTitleTextListener(View.OnClickListener {
-                    completionCallback.invokeAndKeepAlive(result)
-                })
+                if(completionCallback != null){
+                    getActionbar().setTitleTextListener(View.OnClickListener {
+                        completionCallback.invokeAndKeepAlive(result)
+                    })
+                }
                 getActionbar().setTitleText(info.get("text") as String?)
 
             }
