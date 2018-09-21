@@ -1,102 +1,162 @@
 [
   {
+    "path": "im/applyTask.js",
+    "md5": "d1e5a474d628ddc2ce6e2f698bcb2818"
+  },
+  {
+    "path": "im/giveScore.js",
+    "md5": "011e5e99c426c76c62978bce7e1145f1"
+  },
+  {
+    "path": "im/invation.js",
+    "md5": "9556762ca515fe357f3ba3991e8ea181"
+  },
+  {
+    "path": "im/invationScore.js",
+    "md5": "c9799a50260902fa4bfe31c91a5775ec"
+  },
+  {
+    "path": "im/sureComplete.js",
+    "md5": "498e68c89aeebcf62a0f4c420b184e0f"
+  },
+  {
+    "path": "im/sureCompleteList.js",
+    "md5": "097a52466875ce48f46f12a3a55f1519"
+  },
+  {
+    "path": "im/taskList.js",
+    "md5": "6105920193427e9b62734c41dfeafd84"
+  },
+  {
     "path": "login/page1.js",
-    "md5": "ab10419b624d420542b3e82f98f520d3"
+    "md5": "b70ffa5ec3f756ff709772d88dfbd355"
   },
   {
     "path": "module1/page1.js",
-    "md5": "e34af57f16ba51d8b85f895c00287998"
+    "md5": "247db8b8b325256608c940672ac46612"
   },
   {
     "path": "module1/page2.js",
-    "md5": "c5d0d566d4516fc83363fc37566ae99d"
+    "md5": "57ad4529ba412652050d061402df6029"
   },
   {
     "path": "task/add.js",
-    "md5": "cb75421c222293a106279ca2a33d05a3"
+    "md5": "38d691bad59d6e5642fd7bfb969c70bc"
   },
   {
     "path": "task/address.js",
-    "md5": "b50ebed70f5a4ec1f819f4ae604699a1"
+    "md5": "f48131c33534baa0aa2bfc3cf0b6f734"
   },
   {
     "path": "task/detail.js",
-    "md5": "3d4337789a321fe07ee7f96dbb3e6b31"
+    "md5": "3a97090776fd80922c0f6fd0ebb6efcf"
   },
   {
     "path": "task/fee.js",
-    "md5": "145107e5ba8154c5bcf3001675098345"
+    "md5": "99f289d208fec1c3b65800b4d73c79e1"
   },
   {
     "path": "task/finish.js",
-    "md5": "7329991ef0155b8d764419dae6ddf4da"
+    "md5": "e7c45f5caba84fa9bb3d84713ec43048"
   },
   {
     "path": "task/friends.js",
-    "md5": "f2e959440a65b3a3f90d316bcc39b59f"
+    "md5": "6ed00eea52012138ac13230e1cedffd5"
   },
   {
     "path": "task/group.js",
-    "md5": "52257c2573a89fbfbbaaaba9ec0c3666"
+    "md5": "94eb50b232a530399eecbca585852225"
   },
   {
     "path": "task/index.js",
-    "md5": "d146fdc13212d323c2453c264fdea155"
+    "md5": "2ca8297bebbdbcb0ee11a41f30138303"
+  },
+  {
+    "path": "task/progress.js",
+    "md5": "6511b951ec07ad91bfe8166ac27623fd"
   },
   {
     "path": "test/bairdtest.js",
-    "md5": "81f507a08f3bfc378a1beed5f4420dc7"
+    "md5": "6b0478247e22d1c14ab2b893a2944c45"
   },
   {
     "path": "user/attentionlist.js",
-    "md5": "8f0869b2ed180bcfc167776413555f98"
+    "md5": "042fdc487b86cf7cd79af97ba1f528a0"
+  },
+  {
+    "path": "user/commonProblems.js",
+    "md5": "2e492851e199df4320d0862b6966342c"
+  },
+  {
+    "path": "user/credit.js",
+    "md5": "e7459152377fdd71f5e2f86b7d2b892e"
+  },
+  {
+    "path": "user/creditList.js",
+    "md5": "9d99a1e221a7f6d2b77c65336087866f"
   },
   {
     "path": "user/editGroupInfo.js",
-    "md5": "025f81c3108ce77703acdcbc455895ea"
+    "md5": "34943f48090f8cd1ab0fae01633e381d"
   },
   {
     "path": "user/editorInfo.js",
-    "md5": "a4ef2b8fb37602686d912896185191e4"
+    "md5": "0c544e1c8d805ada45148743884a92ed"
+  },
+  {
+    "path": "user/freezingPoints.js",
+    "md5": "250d0f740c9eb32e28ac10ca4c1d6bd4"
   },
   {
     "path": "user/groupDetail.js",
-    "md5": "d68016f5c7b63dff70f8e0295b33407b"
+    "md5": "19809ef5eb14feba494ea8ff25fe5929"
   },
   {
     "path": "user/grouplist.js",
-    "md5": "25ba1a0e937916753b37f82d67a39e75"
+    "md5": "329cfdf227cf9a73257890415f1c846f"
   },
   {
     "path": "user/groupMemberlist_paging.js",
-    "md5": "6e5feceea2d79c875ae175acd839ff41"
+    "md5": "ce27c09b3a68ad2bf62303b1e615aba8"
   },
   {
     "path": "user/groupMemberlist.js",
-    "md5": "6bbb27f8992e62a7ff572ee687b8b8a0"
+    "md5": "14317a64e0ee89b5fefb5e0878ad3acd"
   },
   {
     "path": "user/help.js",
-    "md5": "b06d37056c23d6e63269600bf7f48b4e"
+    "md5": "4fe03dba5d7a94949f3702d42108baa3"
   },
   {
     "path": "user/index.js",
-    "md5": "ad8eda0e24bebf0c044e092673efbdb0"
+    "md5": "9edf78910ec96907c45ddb7b43ab6d95"
   },
   {
     "path": "user/info.js",
-    "md5": "a48bcd426a68ca1212180623ed0a7ed7"
+    "md5": "53eedfd8c26a25cae03b646db0d3a06f"
   },
   {
     "path": "user/list.js",
-    "md5": "d10062ecb567e2f6562ceabfc044015a"
+    "md5": "8089ab1aba56a7f6d4c94726eb379fef"
   },
   {
     "path": "user/replace.js",
-    "md5": "70701fa9d9d50669d4f58f7378cb6b60"
+    "md5": "1129dc886b10383fe398528d51fb349a"
+  },
+  {
+    "path": "user/rulesShow.js",
+    "md5": "38d60d4ea2139a646af636e52f630683"
   },
   {
     "path": "user/set.js",
-    "md5": "94ed5033dfe7e2809af378db8c9652bd"
+    "md5": "a26be564ea56acfcde4301acaba27469"
+  },
+  {
+    "path": "user/wallet.js",
+    "md5": "d9c3e889da1a820deea2696e903aada1"
+  },
+  {
+    "path": "user/walletRecord.js",
+    "md5": "9835cc614fd0b8954b891c467183b9b9"
   }
 ]

@@ -79,13 +79,16 @@ open class WBBaseActivity : AppCompatActivity() {
     override fun setContentView(view: View) {
         if (view is ViewGroup) {
             if (router != null){
+                toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
+                view.addView(toolbar, 0)
+                toolbar.setBackButton(View.OnClickListener {
+                    finish()
+                })
+
                 if (!(router!!.navBarHidden)){
-                    toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
                     toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
-                    toolbar.setBackButton(View.OnClickListener {
-                        finish()
-                    })
-                    view.addView(toolbar, 0)
+                } else{
+                    toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
                 }
             }
         }

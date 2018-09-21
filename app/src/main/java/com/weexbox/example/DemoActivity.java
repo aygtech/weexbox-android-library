@@ -23,6 +23,8 @@ import com.weexbox.core.update.UpdateManager;
 import com.weexbox.core.widget.SimpleToolbar;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function4;
@@ -40,15 +42,26 @@ public class DemoActivity extends WBBaseActivity {
         findViewById(R.id.oooo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
+//                startActivity(intent);
 
 //                Router router = new Router();
 //                router.setUrl("index.js");
 //                router.setName(Router.Companion.getNAME_WEEX());
 //                router.open(DemoActivity.this);
 
+                Router router = new Router();
+                router.setNavBarHidden(true);
+                router.setUrl("task/detail.js");
+                router.setName("weex");
 
+                Map<String, Integer> params = new HashMap<String, Integer>();
+                params.put("id", 20);
+                router.setParams(params);
+//                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
+//                intent.putExtra(Router.Companion.getEXTRA_NAME(), router);
+//                startActivity(intent);
+                router.open(DemoActivity.this);
             }
         });
 
