@@ -79,6 +79,8 @@ class Router :Serializable{
         if (activities.size < count){
             count = activities.size
         }
+
+        Log.i("ffwedqedwedwe", "levels = "+ levels);
         for (i in 0 until count - 1) {
             Log.i("ffwedqedwedwe", "i = "+ i);
             val activity = activities[(activities.size - i -1)]
