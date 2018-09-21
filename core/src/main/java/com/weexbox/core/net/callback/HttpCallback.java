@@ -32,6 +32,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
     private static String keyData = "data";
     private static String keyMessage = "message";
     private static int rightCode = RIGHT_CODE;
+    private static int rightCode2 = 200;
 
     private int errorCode = RIGHT_CODE;
     private String msg = null;
@@ -114,7 +115,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
                 }
                 final int code = jsonObject.optInt(keyCode);
                 this.msg = jsonObject.optString(keyMessage);
-                if (code != rightCode) {
+                if (code != rightCode && code != rightCode2) {
                     this.errorCode = code;
                     throw new Exception(this.msg);
                 }
