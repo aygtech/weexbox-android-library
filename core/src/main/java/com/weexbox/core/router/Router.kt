@@ -78,7 +78,7 @@ class Router :Serializable{
         if (activities.size < count){
             count = activities.size
         }
-        for (i in 0 until count) {
+        for (i in 0 until count - 1) {
             val activity = activities[(activities.size - i -1)]
             activity.finish()
         }
