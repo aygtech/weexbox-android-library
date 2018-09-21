@@ -2,6 +2,7 @@ package com.weexbox.core.router
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import com.alibaba.fastjson.JSON
 import com.orhanobut.logger.Logger
 import com.weexbox.core.R
@@ -79,6 +80,7 @@ class Router :Serializable{
             count = activities.size
         }
         for (i in 0 until count - 1) {
+            Log.i("ffwedqedwedwe", "i = "+ i);
             val activity = activities[(activities.size - i -1)]
             activity.finish()
         }

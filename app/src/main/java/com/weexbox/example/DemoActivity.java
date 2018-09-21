@@ -58,9 +58,6 @@ public class DemoActivity extends WBBaseActivity {
                 Map<String, Integer> params = new HashMap<String, Integer>();
                 params.put("id", 20);
                 router.setParams(params);
-//                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
-//                intent.putExtra(Router.Companion.getEXTRA_NAME(), router);
-//                startActivity(intent);
                 router.open(DemoActivity.this);
             }
         });
