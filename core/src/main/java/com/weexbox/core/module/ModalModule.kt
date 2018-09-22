@@ -114,7 +114,7 @@ class ModalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun showLoading(text: String) {
-        LoadDialogUtil.showLoadWithText(getFragment()!!.context, text)
+        LoadDialogUtil.showLoadWithText(getActivity(), text)
     }
 
     @JSMethod(uiThread = true)
