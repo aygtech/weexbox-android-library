@@ -3,6 +3,7 @@ package com.weexbox.core.module
 import com.alibaba.fastjson.JSONObject
 import com.taobao.weex.common.WXModule
 import com.weexbox.core.controller.WBBaseActivity
+import com.weexbox.core.controller.WBBaseFragment
 import com.weexbox.core.controller.WBWeexFragment
 import java.util.*
 
@@ -18,7 +19,7 @@ open class BaseModule: WXModule() {
         return mWXSDKInstance.context as WBBaseActivity
     }
 
-    fun getFragment(): WBWeexFragment? {
+    fun getFragment(): WBBaseFragment? {
         val fragments = getActivity().supportFragmentManager.fragments as List<WBWeexFragment>
         for (fragment in fragments) {
             if (mWXSDKInstance == fragment.mInstance) {
