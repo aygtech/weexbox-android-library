@@ -1,30 +1,23 @@
 package com.weexbox.example;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.weexbox.core.WeexBoxEngine;
 import com.weexbox.core.controller.WBBaseActivity;
 import com.weexbox.core.router.Router;
-import com.weexbox.core.service.FloatingBtnService;
 import com.weexbox.core.update.UpdateManager;
-import com.weexbox.core.widget.SimpleToolbar;
+import com.weexbox.core.util.LoadDialogUtil;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function4;
@@ -54,11 +47,12 @@ public class DemoActivity extends WBBaseActivity {
                 router.setNavBarHidden(true);
                 router.setUrl("task/detail.js");
                 router.setName("weex");
-
                 Map<String, Integer> params = new HashMap<String, Integer>();
                 params.put("id", 20);
                 router.setParams(params);
                 router.open(DemoActivity.this);
+
+
             }
         });
 
@@ -67,6 +61,7 @@ public class DemoActivity extends WBBaseActivity {
 
 
     private Dialog dialog = null;
+
     private void checkNewJsVersionAction() {
         String url = "http://iquest-test92.aiyuangong.com/hotdeploy/cornerstone-update-url.txt";
         UpdateManager.INSTANCE.setServer(url);
@@ -86,7 +81,7 @@ public class DemoActivity extends WBBaseActivity {
                     // 可以将url存到全局静态变量供之后使用
                     case CanEnterApp:
                         Logger.i("MainActivity", "CanEnterApp:");
-                        Logger.i("MainActivity", "CanEnterApp:file = "+ file);
+                        Logger.i("MainActivity", "CanEnterApp:file = " + file);
                         if (!BuildConfig.DEBUG) {
                             if (dialog != null) {
                                 dialog.dismiss();
@@ -128,6 +123,7 @@ public class DemoActivity extends WBBaseActivity {
             }
         });
     }
+
     private void updateError(final String step) {
         Logger.i("MainActivity", step);
         if (dialog != null) {

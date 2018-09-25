@@ -23,6 +23,7 @@ public class LoadDialogUtil {
     }
 
     public static void showLoad(Context context) {
+        close();
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setSize(width,height)
@@ -33,6 +34,7 @@ public class LoadDialogUtil {
     }
 
     public static void showLoadWithText(Context context, String text) {
+        close();
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
@@ -43,6 +45,7 @@ public class LoadDialogUtil {
     }
 
     public static void showLoadWithTextAndDetail(Context context, String text, String detail) {
+        close();
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
