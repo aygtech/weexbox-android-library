@@ -39,25 +39,32 @@
                 android:gravity="center_vertical"
                 android:maxEms="10"
                 android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="#3F3453"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
         <com.weexbox.core.widget.DrawableTextView
             android:id="@+id/btnBack"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:drawableLeft="@drawable/arrows_left2"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:padding="8dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
         <com.weexbox.core.widget.DrawableTextView
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
             android:id="@+id/btnBack2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,7 +72,6 @@
             android:layout_toRightOf="@+id/btnBack"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:padding="8dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -85,7 +91,7 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:visibility="gone"
             tools:background="#dee55e"
             tools:text="关注"
@@ -112,8 +118,8 @@
     <View
         android:id="@+id/bottom_line"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_black_50"
+        android:layout_height="5dp"
+        android:background="@drawable/actionbar_bottom_line"
         android:visibility="visible"
         tools:visibility="visible" />
 
