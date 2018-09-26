@@ -202,14 +202,14 @@ open class WBBaseActivity : AppCompatActivity() {
     interface HaveFragmentListener {
         fun refreshFragmentWeex()
     }
-    lateinit var listener: HaveFragmentListener
+    var listener: HaveFragmentListener? = null
     fun setHaveFragmentListener(haveFragmentListener: HaveFragmentListener){
         listener = haveFragmentListener
     }
 
     fun refreshWeex(){
         if (listener != null){
-            listener.refreshFragmentWeex()
+            listener!!.refreshFragmentWeex()
         }
     }
 

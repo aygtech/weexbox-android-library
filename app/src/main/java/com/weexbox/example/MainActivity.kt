@@ -3,6 +3,7 @@ package com.weexbox.example
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.taobao.weex.WXSDKEngine
 import com.taobao.weex.common.WXException
 import com.weexbox.core.WeexBoxEngine
@@ -16,6 +17,11 @@ class MainActivity : WBBaseActivity(), WBBaseActivity.HaveFragmentListener {
         setContentView(R.layout.activity_main)
 
         initFragment()
+        getActionbar().setBackButton(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                refreshWeex()
+            }
+        })
         setHaveFragmentListener(this)
     }
 
