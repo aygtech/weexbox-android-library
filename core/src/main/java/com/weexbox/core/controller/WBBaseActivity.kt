@@ -99,11 +99,11 @@ open class WBBaseActivity : AppCompatActivity() {
         return toolbar;
     }
 
-    fun isRegisterEventBus(): Boolean {
+    open fun isRegisterEventBus(): Boolean {
         return false
     }
 
-    fun inCreateRegisterEventBus(): Boolean {
+    open fun inCreateRegisterEventBus(): Boolean {
         return false
     }
 
