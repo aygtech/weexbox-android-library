@@ -26,7 +26,7 @@ public class BitmapUtil {
      * 默认不可用的id
      ****/
     public static final int NON_EXISTENT_ID = 0;
-    public static int DEFAULT = CENTER_CROP;
+    public static int DEFAULT = CENTER_INSIDE;
     public static Context sContext;
 
     public static void setContext(final Context context) {
