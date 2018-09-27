@@ -112,6 +112,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
     override fun onStart() {
         super.onStart()
         mWxAnalyzerDelegate?.onStart()
+        mInstance?.fireGlobalEventCallback("viewDidAppear", null)
     }
 
     override fun onResume() {
@@ -130,6 +131,7 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
         super.onStop()
         mInstance?.onActivityStop()
         mWxAnalyzerDelegate?.onStop()
+        mInstance?.fireGlobalEventCallback("viewDidDisappear", null)
     }
 
     override fun onDestroy() {
@@ -138,10 +140,6 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
         mWXHandler?.obtainMessage(HotRefreshManager.HOT_REFRESH_DISCONNECT)?.sendToTarget()
 //        unregisterBroadcastReceiver()
         mWxAnalyzerDelegate?.onDestroy()
-    }
-
-    override fun onRefreshSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
-        Logger.d("Update Finish...")
     }
 
     override fun onException(instance: WXSDKInstance?, errCode: String?, msg: String?) {
@@ -164,6 +162,11 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
     override fun onRenderSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
         mWxAnalyzerDelegate?.onWeexRenderSuccess(instance)
         Logger.d("Render Finish...width:" + width + "   ,height="+height)
+        mInstance?.fireGlobalEventCallback("viewDidAppear", null)
+    }
+
+    override fun onRefreshSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
+        Logger.d("Refresh Success")
     }
 
     override fun onCreateNestInstance(instance: WXSDKInstance?, container: NestedContainer?) {
@@ -201,8 +204,6 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
 //            mContainer.addView(wxView)
 //        }
 //        mContainer.requestLayout()
-
-        Logger.d("renderSuccess")
     }
 
     abstract fun onAddWeexView(wxView: View?);
