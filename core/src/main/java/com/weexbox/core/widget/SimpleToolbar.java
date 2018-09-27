@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,53 +130,76 @@ public class SimpleToolbar extends LinearLayout {
 
     //中间title设置
     public void setTitleText(int text) {
-        if (mTitle != null){
+        if (mTitle != null && text > 0){
             mTitle.setText(text);
         }
     }
     public void setTitleText(String text) {
-        if (mTitle != null){
+        if (mTitle != null && text!= null){
             mTitle.setText(text);
         }
     }
     public void setTitleText(String text, Drawable icon) {
+        if (mTitle == null || text == null || icon == null){
+            return;
+        }
         mTitle.setText(text);
         icon.setBounds(0, 0, getHeight() / 2, getHeight() / 2);
         mTitle.setCompoundDrawables(icon, null, null, null);
     }
     public void setTitleText(OnClickListener listener, String text, Drawable icon) {
+        if (mTitle == null || text == null || icon == null){
+            return;
+        }
         mTitle.setText(text);
         icon.setBounds(0, 0, getHeight() / 2, getHeight() / 2);
         mTitle.setCompoundDrawables(icon, null, null, null);
         mTitle.setOnClickListener(listener);
     }
     public void setTitleTextColor(int color) {
-        mTitle.setTextColor(color);
+        if (mTitle != null && color > 0){
+            mTitle.setTextColor(color);
+        }
     }
     public void setTitleTextColor(String color) {
-        mTitle.setTextColor(Color.parseColor(color));
+        if (mTitle != null && !TextUtils.isEmpty(color)){
+            mTitle.setTextColor(Color.parseColor(color));
+        }
     }
     public void setTitleTextListener(OnClickListener listener) {
-        mTitle.setOnClickListener(listener);
+        if (mTitle != null){
+            mTitle.setOnClickListener(listener);
+        }
     }
 
 
     //左边第一个按钮
     public void setBackButton(OnClickListener listener) {
-        mBackBtn.setOnClickListener(listener);
+        if (mBackBtn != null){
+            mBackBtn.setOnClickListener(listener);
+        }
     }
     public void setBackButton(OnClickListener listener, String text) {
+        if (mBackBtn == null || text == null){
+            return;
+        }
         mBackBtn.setVisibility(View.VISIBLE);
         mBackBtn.setText(text);
         mBackBtn.setOnClickListener(listener);
     }
     public void setBackButton(OnClickListener listener, String text, String color) {
+        if (mBackBtn == null || text == null || TextUtils.isEmpty(color)){
+            return;
+        }
         mBackBtn.setVisibility(View.VISIBLE);
         mBackBtn.setText(text);
         mBackBtn.setTextColor(Color.parseColor(color));
         mBackBtn.setOnClickListener(listener);
     }
     public void setBackButton(OnClickListener listener, String text, Drawable icon) {
+        if (mBackBtn == null || text == null || icon == null){
+            return;
+        }
         mBackBtn.setVisibility(View.VISIBLE);
         mBackBtn.setText(text);
         icon.setBounds(0, 0, icon.getMinimumWidth(), icon.getMinimumHeight());
@@ -183,6 +207,9 @@ public class SimpleToolbar extends LinearLayout {
         mBackBtn.setOnClickListener(listener);
     }
     public void setBackButtonDrawable(OnClickListener listener, String url) {
+        if (mBackBtn == null || TextUtils.isEmpty(url)){
+            return;
+        }
         mBackBtn.setVisibility(View.VISIBLE);
         mBackBtn.setOnClickListener(listener);
         BitmapUtil.displayImage(new SimpleTarget<Drawable>() {
@@ -199,6 +226,9 @@ public class SimpleToolbar extends LinearLayout {
 
     //左边第二个按钮
     public void setBackButton2(OnClickListener listener, String text, Drawable icon) {
+        if (mBackBtn2 == null || text == null || icon == null){
+            return;
+        }
         mBackBtn2.setVisibility(View.VISIBLE);
         mBackBtn2.setText(text);
         icon.setBounds(0, 0, icon.getMinimumWidth(), icon.getMinimumHeight());
@@ -206,17 +236,26 @@ public class SimpleToolbar extends LinearLayout {
         mBackBtn2.setOnClickListener(listener);
     }
     public void setBackButton2(OnClickListener listener, String text, String color) {
+        if (mBackBtn2 == null || text == null || TextUtils.isEmpty(color)){
+            return;
+        }
         mBackBtn2.setVisibility(View.VISIBLE);
         mBackBtn2.setText(text);
         mBackBtn2.setTextColor(Color.parseColor(color));
         mBackBtn2.setOnClickListener(listener);
     }
     public void setBackButton2(OnClickListener listener, String text) {
+        if (mBackBtn2 == null || text == null){
+            return;
+        }
         mBackBtn2.setVisibility(View.VISIBLE);
         mBackBtn2.setText(text);
         mBackBtn2.setOnClickListener(listener);
     }
     public void setBackButton2Drawable(OnClickListener listener, String url) {
+        if (mBackBtn2 == null || TextUtils.isEmpty(url)){
+            return;
+        }
         mBackBtn2.setVisibility(View.VISIBLE);
         mBackBtn2.setOnClickListener(listener);
         BitmapUtil.displayImage(new SimpleTarget<Drawable>() {
@@ -233,26 +272,41 @@ public class SimpleToolbar extends LinearLayout {
 
     //右边第一个按钮
     public void setRightButton(OnClickListener listener, String text) {
+        if (mNextBtn == null || text == null){
+            return;
+        }
         mNextBtn.setVisibility(View.VISIBLE);
         mNextBtn.setText(text);
         mNextBtn.setOnClickListener(listener);
     }
     public void setRightButtonText(String text) {
+        if (mNextBtn == null || text == null){
+            return;
+        }
         mNextBtn.setText(text);
     }
     public void setRightButton(OnClickListener listener, String text, int color) {
+        if (mNextBtn == null || text == null){
+            return;
+        }
         mNextBtn.setVisibility(View.VISIBLE);
         mNextBtn.setText(text);
         mNextBtn.setTextColor(color);
         mNextBtn.setOnClickListener(listener);
     }
     public void setRightButton(OnClickListener listener, String text, String color) {
+        if (mNextBtn == null || text == null || TextUtils.isEmpty(color)){
+            return;
+        }
         mNextBtn.setVisibility(View.VISIBLE);
         mNextBtn.setText(text);
         mNextBtn.setTextColor(Color.parseColor(color));
         mNextBtn.setOnClickListener(listener);
     }
     public void setRightButton(OnClickListener listener, String text, Drawable icon) {
+        if (mNextBtn == null || text == null || icon == null){
+            return;
+        }
         mNextBtn.setVisibility(View.VISIBLE);
         mNextBtn.setText(text);
         if (icon != null) {
@@ -262,6 +316,9 @@ public class SimpleToolbar extends LinearLayout {
         mNextBtn.setOnClickListener(listener);
     }
     public void setRightButtonDrawable(OnClickListener listener, String url) {
+        if (mNextBtn == null || TextUtils.isEmpty(url)){
+            return;
+        }
         mNextBtn.setVisibility(View.VISIBLE);
         mNextBtn.setOnClickListener(listener);
         BitmapUtil.displayImage(new SimpleTarget<Drawable>() {
@@ -278,20 +335,32 @@ public class SimpleToolbar extends LinearLayout {
 
     //右边第二个按钮
     public void setRightButton2(OnClickListener listener, String text) {
+        if (mNextBtn2 == null || text == null){
+            return;
+        }
         mNextBtn2.setVisibility(View.VISIBLE);
         mNextBtn2.setText(text);
         mNextBtn2.setOnClickListener(listener);
     }
     public void setRightButtonText2(String text) {
+        if (mNextBtn2 == null || text == null){
+            return;
+        }
         mNextBtn2.setText(text);
     }
     public void setRightButton2(OnClickListener listener, String text, int color) {
+        if (mNextBtn2 == null || text == null){
+            return;
+        }
         mNextBtn2.setVisibility(View.VISIBLE);
         mNextBtn2.setText(text);
         mNextBtn2.setTextColor(color);
         mNextBtn2.setOnClickListener(listener);
     }
     public void setRightButton2(OnClickListener listener, String text, Drawable icon) {
+        if (mNextBtn2 == null || text == null || icon == null){
+            return;
+        }
         mNextBtn2.setVisibility(View.VISIBLE);
         mNextBtn2.setText(text);
         icon.setBounds(0, 0, icon.getMinimumWidth(), icon.getMinimumHeight());
@@ -299,9 +368,14 @@ public class SimpleToolbar extends LinearLayout {
         mNextBtn2.setOnClickListener(listener);
     }
     public void setRightButton2Listener(OnClickListener listener) {
-        mNextBtn2.setOnClickListener(listener);
+        if (mNextBtn2 != null){
+            mNextBtn2.setOnClickListener(listener);
+        }
     }
     public void setRightButton2TextAndIcon(String text, Drawable icon, Drawable bg) {
+        if (mNextBtn2 == null || text == null || icon == null || bg == null){
+            return;
+        }
         mNextBtn2.setVisibility(View.VISIBLE);
         mNextBtn2.setText(text);
         if (icon != null) {
@@ -311,12 +385,18 @@ public class SimpleToolbar extends LinearLayout {
         mNextBtn2.setBackgroundDrawable(bg);
     }
     public void setRightButton2(OnClickListener listener, String text, String color) {
+        if (mNextBtn2 == null || text == null || TextUtils.isEmpty(color)){
+            return;
+        }
         mNextBtn2.setVisibility(View.VISIBLE);
         mNextBtn2.setText(text);
         mNextBtn2.setTextColor(Color.parseColor(color));
         mNextBtn2.setOnClickListener(listener);
     }
     public void setRightButton2Drawable(OnClickListener listener, String url) {
+        if (mNextBtn2 == null || TextUtils.isEmpty(url)){
+            return;
+        }
         mNextBtn2.setVisibility(View.VISIBLE);
         mNextBtn2.setOnClickListener(listener);
         BitmapUtil.displayImage(new SimpleTarget<Drawable>() {
