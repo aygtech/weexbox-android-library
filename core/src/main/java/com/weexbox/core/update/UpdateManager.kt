@@ -47,10 +47,9 @@ object UpdateManager {
         DownloadFileError, // "下载文件出错"
         DownloadFileSuccess, // "下载文件成功"
         UpdateSuccess, // "更新成功"
-        CanEnterApp, // "可以进入App"
     }
 
-    private var completion: Completion? = null
+    private lateinit var completion: Completion
 
     private const val resourceName = "www"
     private const val oneName = "update-one"
@@ -71,8 +70,8 @@ object UpdateManager {
     private val workingUrl = WeexBoxEngine.application.applicationContext.getDir(workingName, Context.MODE_PRIVATE)
     private val workingConfigUrl = File(workingUrl, configName)
 
-    private val cacheUrl = WeexBoxEngine.application.applicationContext.getDir(cacheName, Context.MODE_PRIVATE)
-    private val cacheConfigUrl = File(cacheUrl, configName)
+    private var cacheUrl = WeexBoxEngine.application.applicationContext.getDir(cacheName, Context.MODE_PRIVATE)
+    private var cacheConfigUrl = File(cacheUrl, configName)
 
 //    private lateinit var serverConfigUrl: String
 //    private lateinit var serverMd5Url: String
@@ -89,7 +88,7 @@ object UpdateManager {
 
     private val workingRealm = Realm.getInstance(RealmConfiguration.Builder().name("$workingName.realm").build())
     private val cacheRealmConfig = RealmConfiguration.Builder().name("$cacheName.realm").build()
-    private val cacheRealm = Realm.getInstance(cacheRealmConfig)
+    private var cacheRealm = Realm.getInstance(cacheRealmConfig)
 
     private lateinit var resourceConfig: UpdateConfig
     private lateinit var resourceMd5: List<UpdateMd5>
@@ -110,8 +109,17 @@ object UpdateManager {
         downloadService = Retrofit.Builder().baseUrl(host + File.separator).build().create(DownloadService::class.java)
     }
 
+    // 设置强制更新
+    var forceUpdate = false
+
+
     // 检查更新
     fun update(completion: Completion) {
+        if (forceUpdate) {
+            cacheUrl = workingUrl
+            cacheConfigUrl = workingConfigUrl
+            cacheRealm = workingRealm
+        }
         this.completion = completion
         loadLocalConfig()
         loadLocalMd5()
@@ -126,11 +134,6 @@ object UpdateManager {
     // 获取完整路径
     fun getFullUrl(file: String): File {
         return workingUrl.resolve(file)
-    }
-
-    // 结束回调
-    fun noMoreCallback() {
-        completion = null
     }
 
     // 将APP预置包解压到工作目录
@@ -173,8 +176,10 @@ object UpdateManager {
     }
 
     private fun enterApp() {
-        // 返回工作目录地址
-        complete(UpdateState.CanEnterApp, 100, null, workingUrl)
+        if (!forceUpdate) {
+            // 返回工作目录地址
+            complete(UpdateState.UpdateSuccess, 100, null, workingUrl)
+        }
         // 开始静默更新
         update()
     }
@@ -218,7 +223,7 @@ object UpdateManager {
                     if (shouldDownloadWww(serverConfig)) {
                         downloadMd5()
                     } else {
-                        complete(UpdateState.UpdateSuccess, 100, null, workingUrl)
+                        complete(UpdateState.UpdateSuccess, 100, null, cacheUrl)
                     }
                 } else {
                     complete(UpdateState.DownloadConfigError)
@@ -428,7 +433,14 @@ object UpdateManager {
     }
 
     private fun complete(state: UpdateState, progress: Int = 0, error: Throwable? = null, url: File? = null) {
-        completion?.invoke(state, progress, error, url)
+        if (state == UpdateState.UpdateSuccess) {
+            if (forceUpdate || (!forceUpdate && url == workingUrl)) {
+                completion(state, progress, error, url)
+            }
+        }
+        else {
+            completion(state, progress, error, url)
+        }
     }
 
     private fun saveConfig() {
