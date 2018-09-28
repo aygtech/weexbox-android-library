@@ -18,7 +18,7 @@ class ExternalModule : BaseModule() {
                 var map = TreeMap<String, Any>()
                 if (imgs!![0].length > 0) {
                     var array = arrayListOf<String>();
-                    array[0] = imgs[0];
+                    array.add(imgs[0])
                     map.put("urls", array)
                 }
                 result.data = map
