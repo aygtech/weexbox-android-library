@@ -1,40 +1,16 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
-
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
-
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
 #okhttputils
 -dontwarn com.weexbox.core.okhttp.**
 -keep class com.weexbox.core.okhttp.**{*;}
-
 
 #okhttp
 -dontwarn okhttp3.**
 -keep class okhttp3.**{*;}
 
-
 #okio
 -dontwarn okio.**
 -keep class okio.**{*;}
 
-
-#weex开始
+#weex
 -keep class com.taobao.weex.WXDebugTool{*;}
 -keep class com.taobao.weex.devtools.common.LogUtil{*;}
 -keepclassmembers class ** {
@@ -56,4 +32,3 @@
 -keep public class * extends com.taobao.weex.common.WXModule{*;}
 -keep public class * extends com.taobao.weex.ui.component.WXComponent{*;}
 -keep class * implements com.taobao.weex.ui.IExternalComponentGetter{*;}
-#weex结束
