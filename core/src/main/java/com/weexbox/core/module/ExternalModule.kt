@@ -5,6 +5,7 @@ import com.taobao.weex.bridge.JSCallback
 import com.weexbox.core.model.Result
 import com.weexbox.core.util.SelectImageUtil
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ExternalModule : BaseModule() {
 
@@ -16,7 +17,9 @@ class ExternalModule : BaseModule() {
                 val result = Result()
                 var map = TreeMap<String, Any>()
                 if (imgs!![0].length > 0) {
-                    map.put("url", imgs[0])
+                    var array = arrayListOf<String>();
+                    array[0] = imgs[0];
+                    map.put("urls", array)
                 }
                 result.data = map
                 completionCallback.invoke(result.toJsResult())
