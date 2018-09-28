@@ -22,6 +22,12 @@ class MainActivity : WBBaseActivity(), WBBaseActivity.HaveFragmentListener {
                 refreshWeex()
             }
         })
+        getActionbar().setBackButton2(object: View.OnClickListener{
+            override fun onClick(v: View?) {
+            }
+
+        }, "聊天")
+        getActionbar().setTitleText("的身份为是东方财富网而我是大伟大房产额挖坟第三方")
         setHaveFragmentListener(this)
     }
 
