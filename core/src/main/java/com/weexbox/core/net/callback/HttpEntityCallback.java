@@ -32,14 +32,19 @@ public abstract class HttpEntityCallback<T> extends HttpCallback<T> {
         Type t = getClass().getGenericSuperclass();
         if (t instanceof ParameterizedType) {
             Type[] p = ((ParameterizedType) t).getActualTypeArguments();
+//            if (isList()) {
+//                Class<T> entityClass = (Class<T>) p[0];
+//                object = new Gson().fromJson(data, entityClass);
+//            } else {
+//                Class<T> entityClass = (Class<T>) p[0];
+//                object = new Gson().fromJson(data, entityClass);
+//            }
+
             if (isList()) {
-                Class<T> entityClass = (Class<T>) p[0];
-                object = new Gson().fromJson(data, entityClass);
-//                object = JSON.parseObject(data, p[0]);
+                object = JSON.parseObject(data, p[0]);
             } else {
                 Class<T> entityClass = (Class<T>) p[0];
-                object = new Gson().fromJson(data, entityClass);
-//                object = JSON.parseObject(data, entityClass);
+                object = JSON.parseObject(data, entityClass);
             }
         }
 
