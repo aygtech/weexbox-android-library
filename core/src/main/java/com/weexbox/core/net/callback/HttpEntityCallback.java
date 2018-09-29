@@ -40,6 +40,7 @@ public abstract class HttpEntityCallback<T> extends HttpCallback<T> {
 //                object = new Gson().fromJson(data, entityClass);
 //            }
 
+            
             if (isList()) {
                 object = JSON.parseObject(data, p[0]);
             } else {
