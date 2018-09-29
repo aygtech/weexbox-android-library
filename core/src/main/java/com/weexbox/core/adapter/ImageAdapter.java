@@ -42,7 +42,7 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                 if (!TextUtils.isEmpty(strategy.placeHolder)) {
                     BitmapUtil.displayImage(view, strategy.placeHolder);
                 }
-                
+
                 if (url.startsWith("http")) {
                     // 网络加载
                     if (strategy.getImageListener() == null) {
@@ -76,7 +76,7 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
     }
 
     private SimpleTarget getTarget(final String url, final ImageView view, final WXImageStrategy strategy) {
-        SimpleTarget target = new SimpleTarget<Drawable>(view.getWidth(),view.getHeight()) {
+        SimpleTarget target = new SimpleTarget<Drawable>(view.getLayoutParams().width,view.getLayoutParams().height) {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                 if (strategy.getImageListener() != null) {
