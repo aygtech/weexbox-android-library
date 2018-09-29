@@ -78,23 +78,6 @@ public class DemoActivity extends WBBaseActivity {
 //                        }
                         Logger.i("MainActivity", "integer:" + integer);
                         break;
-                    // 已经做好进入APP的准备，建议在准生产和生产环境时让用户进入APP
-                    // 可以将url存到全局静态变量供之后使用
-                    case CanEnterApp:
-                        Logger.i("MainActivity", "CanEnterApp:");
-                        Logger.i("MainActivity", "CanEnterApp:file = " + file);
-                        if (!BuildConfig.DEBUG) {
-                            if (dialog != null) {
-                                dialog.dismiss();
-                                dialog = null;
-                            }
-                            startToActivity();
-                        } else {
-//                            if (dialog == null) {
-//                                dialog = showLoadingDialog();
-//                            }
-                        }
-                        break;
                     // 静默更新成功
                     // 建议在测试环境时让测试人员进入APP
                     case UpdateSuccess:
