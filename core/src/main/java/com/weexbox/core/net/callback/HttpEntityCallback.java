@@ -1,6 +1,8 @@
 package com.weexbox.core.net.callback;
 
 import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -31,10 +33,13 @@ public abstract class HttpEntityCallback<T> extends HttpCallback<T> {
         if (t instanceof ParameterizedType) {
             Type[] p = ((ParameterizedType) t).getActualTypeArguments();
             if (isList()) {
-                object = JSON.parseObject(data, p[0]);
+                Class<T> entityClass = (Class<T>) p[0];
+                object = new Gson().fromJson(data, entityClass);
+//                object = JSON.parseObject(data, p[0]);
             } else {
                 Class<T> entityClass = (Class<T>) p[0];
-                object = JSON.parseObject(data, entityClass);
+                object = new Gson().fromJson(data, entityClass);
+//                object = JSON.parseObject(data, entityClass);
             }
         }
 
