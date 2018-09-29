@@ -36,9 +36,13 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                     view.setImageBitmap(null);
                     return;
                 }
+                if (view.getLayoutParams().width <= 0 || view.getLayoutParams().height <= 0) {
+                    return;
+                }
                 if (!TextUtils.isEmpty(strategy.placeHolder)) {
                     BitmapUtil.displayImage(view, strategy.placeHolder);
                 }
+                
                 if (url.startsWith("http")) {
                     // 网络加载
                     if (strategy.getImageListener() == null) {
