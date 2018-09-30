@@ -137,19 +137,23 @@ abstract class FloatingBtnService : Service(){
 //        startForeground(1, notification)
 
         //8.0以后权限问题
-//        if (Build.VERSION.SDK_INT >= 23) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (!Settings.canDrawOverlays(this)) {
-                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-                startActivity(intent)
-                return
+        try {
+            if (Build.VERSION.SDK_INT >= 23) {
+                if (!Settings.canDrawOverlays(this)) {
+                    val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+                    startActivity(intent)
+                    return
+                } else {
+                    //Android6.0以上
+                    showAddress()
+                }
             } else {
-                //Android6.0以上
+                //Android6.0以下，不用动态声明权限
                 showAddress()
             }
-        } else {
-            //Android6.0以下，不用动态声明权限
-            showAddress()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
         }
 
         STATAG = "start"
