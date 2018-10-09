@@ -313,6 +313,17 @@ public class SimpleToolbar extends LinearLayout {
         mNextBtn.setTextColor(Color.parseColor(color));
         mNextBtn.setOnClickListener(listener);
     }
+    public void setRightButton(OnClickListener listener, Drawable icon) {
+        if (mNextBtn == null || icon == null){
+            return;
+        }
+        mNextBtn.setVisibility(View.VISIBLE);
+        if (icon != null) {
+            icon.setBounds(0, 0, icon.getMinimumWidth(), icon.getMinimumHeight());
+        }
+        mNextBtn.setCompoundDrawables(icon, null, null, null);
+        mNextBtn.setOnClickListener(listener);
+    }
     public void setRightButton(OnClickListener listener, String text, Drawable icon) {
         if (mNextBtn == null || text == null || icon == null){
             return;
