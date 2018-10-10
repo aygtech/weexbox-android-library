@@ -64,7 +64,7 @@ public class DemoActivity extends WBBaseActivity {
     private Dialog dialog = null;
 
     private void checkNewJsVersionAction() {
-        String url = "http://iquest-test92.aiyuangong.com/hotdeploy/cornerstone-update-url.txt";
+        String url = "http://iquest-test92.aiyuangong.com/hotdeploy/";
         UpdateManager.INSTANCE.setServer(url);
         UpdateManager.INSTANCE.update(new Function4<UpdateManager.UpdateState, Integer, Throwable, File, Unit>() {
             @Override

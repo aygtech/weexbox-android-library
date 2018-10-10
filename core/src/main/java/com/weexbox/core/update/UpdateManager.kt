@@ -61,6 +61,7 @@ object UpdateManager {
     private const val zipName = "www.zip"
     private const val md5Name = "update-md5.json"
     private const val configName = "update-config.json"
+    private const val versionName = "update-version.txt"
 
     private const val resourceUrl = resourceName
     private val resourceConfigUrl = resourceUrl + File.separator + configName
@@ -76,13 +77,12 @@ object UpdateManager {
 //    private lateinit var serverConfigUrl: String
 //    private lateinit var serverMd5Url: String
     // 设置更新服务器
-    private lateinit var serverUrl: String
+//    private lateinit var serverUrl: String
 //        set(url) {
 //            field = url
 //            serverConfigUrl = serverUrl + File.separator + configName
 //            serverMd5Url = serverUrl + File.separator + md5Name
 //        }
-    private lateinit var serverWwwFile: String
     private lateinit var serverWwwName: String
 
 
@@ -104,9 +104,7 @@ object UpdateManager {
 
     // 设置更新服务器
     fun setServer(url: String) {
-        val host = url.substringBeforeLast(File.separator)
-        serverWwwFile = url.substringAfterLast(File.separator)
-        downloadService = Retrofit.Builder().baseUrl(host + File.separator).build().create(DownloadService::class.java)
+        downloadService = Retrofit.Builder().baseUrl(url + File.separator).build().create(DownloadService::class.java)
     }
 
     // 设置强制更新
@@ -158,7 +156,7 @@ object UpdateManager {
     private fun getServer() {
         complete(UpdateState.GetServer)
 
-        downloadService.get(serverWwwFile).enqueue(object: Callback<ResponseBody> {
+        downloadService.get(versionName).enqueue(object: Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                 complete(UpdateState.GetServerError, 0, t)
             }
