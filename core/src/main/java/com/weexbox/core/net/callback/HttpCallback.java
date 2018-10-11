@@ -4,7 +4,9 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
 
+import com.weexbox.core.net.HttpUtil;
 import com.weexbox.core.okhttp.callback.Callback;
+import com.weexbox.core.util.AES128Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +35,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
     private static String keyMessage = "message";
     private static int rightCode = RIGHT_CODE;
     private static int rightCode2 = 200;
+    public static boolean isEncrypt = false;
 
     private int errorCode = RIGHT_CODE;
     private String msg = null;
@@ -40,11 +43,12 @@ public abstract class HttpCallback<T> extends Callback<T> {
     private IFinishListener mListener;
     private String mRequestUrl;
 
-    public static void config(final int rightCode, final String keyCode, final String keyData, final String keyMessage) {
+    public static void config(final int rightCode, final String keyCode, final String keyData, final String keyMessage,final boolean isEncrypt) {
         HttpCallback.rightCode = rightCode;
         HttpCallback.keyCode = keyCode;
         HttpCallback.keyData = keyData;
         HttpCallback.keyMessage = keyMessage;
+        HttpCallback.isEncrypt = isEncrypt;
     }
 
     public void setOnFinishListener(final IFinishListener listener, final String url) {
@@ -106,8 +110,11 @@ public abstract class HttpCallback<T> extends Callback<T> {
         if (useInputStream()) {
             t = decodeInputStream(response.body().byteStream(), response.body().contentLength(), requestId);
         } else {
-            final String string = response.body().string();
+            String string = response.body().string();
             if (!TextUtils.isEmpty(string)) {
+                if(isEncrypt){
+                    string = AES128Util.decrypt(HttpUtil.key,string);
+                }
                 JSONObject jsonObject = new JSONObject(string);
                 if (jsonObject == null) {
                     errorCode = JSON_EXCEPTION;
