@@ -15,6 +15,8 @@ import com.weexbox.core.okhttp.builder.PostStringBuilder;
 import com.weexbox.core.okhttp.cookie.CookieJarImpl;
 import com.weexbox.core.okhttp.cookie.store.PersistentCookieStore;
 import com.weexbox.core.okhttp.https.HttpsUtils;
+import com.weexbox.core.util.AES128Util;
+import com.weexbox.core.util.AndroidUtil;
 import com.weexbox.core.util.LogUtil;
 
 
@@ -44,6 +46,7 @@ import okhttp3.Response;
 public final class HttpUtil {
 
     private static RequestInterceptor requestInterceptor;
+    public static String key = "";
 
     private HttpUtil() {
     }
@@ -189,6 +192,22 @@ public final class HttpUtil {
             stringBuilder.headers(params.getUrlParams());
         }
         stringBuilder.mediaType(MediaType.parse("application/json; charset=utf-8"));
+        requestAction(stringBuilder, tag, callback);
+    }
+
+    public static void sendPostStringRequest(final String url, final Map<String,String> header,  final HttpParams params, final Object tag, final HttpCallback callback) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+        PostStringBuilder stringBuilder = OkHttpUtils.postString().url(url);
+        if (params != null) {
+            stringBuilder.content(AES128Util.encrypt(key,params.convertToJson()));
+        } else {
+            stringBuilder.content(AES128Util.encrypt(key,new HttpParams().convertToJson()));
+        }
+        if (header != null) {
+            stringBuilder.headers(params.getUrlParams());
+        }
         requestAction(stringBuilder, tag, callback);
     }
 
