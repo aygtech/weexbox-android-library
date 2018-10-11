@@ -57,7 +57,7 @@ object UpdateManager {
     private const val workingNameKey = "update-working-key"
     private const val sharedPreferencesName = "update-sharedPreferences"
     private val workingName = WeexBoxEngine.application.applicationContext.getSharedPreferences(sharedPreferencesName, 0).getString(workingNameKey, oneName)
-    private val cacheName = if (workingName == oneName) twoName else oneName
+    private var cacheName = if (workingName == oneName) twoName else oneName
     private const val zipName = "www.zip"
     private const val md5Name = "update-md5.json"
     private const val configName = "update-config.json"
@@ -114,6 +114,7 @@ object UpdateManager {
     // 检查更新
     fun update(completion: Completion) {
         if (forceUpdate) {
+            cacheName = workingName
             cacheUrl = workingUrl
             cacheConfigUrl = workingConfigUrl
             cacheRealm = workingRealm
