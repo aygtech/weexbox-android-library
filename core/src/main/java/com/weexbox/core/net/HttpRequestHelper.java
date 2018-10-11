@@ -43,13 +43,13 @@ public final class HttpRequestHelper implements IFrameHttpRequest, HttpCallback.
     }
 
     @Override
-    public void sendGetRequest(String url, final Map<String,String> header, HttpParams params, final boolean showLoadingView, HttpCallback callback) {
-        this.sendGetRequest(url, header, params, this, showLoadingView, callback);
+    public void sendGetRequest(String url, final Map<String,String> header, HttpParams params, final boolean isEncrypt, HttpCallback callback) {
+        this.sendGetRequest(url, header, params, this, isEncrypt, callback);
     }
 
     @Override
-    public void sendGetRequest(String url, final Map<String,String> header, HttpParams params, Object tag, final boolean showLoadingView, HttpCallback callback) {
-        this.sendRequest(url,header, params, tag, callback, true, showLoadingView, false, false, null, false);
+    public void sendGetRequest(String url, final Map<String,String> header, HttpParams params, Object tag, final boolean isEncrypt, HttpCallback callback) {
+        this.sendRequest(url,header, params, tag, callback, true, isEncrypt, false, false, null, false);
     }
 
     @Override
@@ -63,8 +63,8 @@ public final class HttpRequestHelper implements IFrameHttpRequest, HttpCallback.
     }
 
     @Override
-    public void sendPostRequest(String url, final Map<String,String> header, HttpParams params, final boolean showLoadingView, HttpCallback callback) {
-        this.sendPostRequest(url, header,  params, this, showLoadingView, callback);
+    public void sendPostRequest(String url, final Map<String,String> header, HttpParams params, final boolean isEncrypt, HttpCallback callback) {
+        this.sendPostRequest(url, header,  params, this, isEncrypt, callback);
     }
 
     public void sendPostJsonRequest(String url, final Map<String,String> header, HttpParams params,HttpCallback callback) {
@@ -72,18 +72,18 @@ public final class HttpRequestHelper implements IFrameHttpRequest, HttpCallback.
     }
 
     @Override
-    public void sendPostJsonRequest(String url, final Map<String,String> header, HttpParams params, final boolean showLoadingView, HttpCallback callback) {
-        this.sendPostJsonRequest(url, header,  params, this, showLoadingView, callback);
+    public void sendPostJsonRequest(String url, final Map<String,String> header, HttpParams params, final boolean isEncrypt, HttpCallback callback) {
+        this.sendPostJsonRequest(url, header,  params, this, isEncrypt, callback);
     }
 
     @Override
-    public void sendPostRequest(String url,final Map<String,String> header, HttpParams params, Object tag, boolean showLoadingView, HttpCallback callback) {
-        this.sendRequest(url, header,  params, tag, callback, false, showLoadingView, false, false, null, false);
+    public void sendPostRequest(String url,final Map<String,String> header, HttpParams params, Object tag, boolean isEncrypt, HttpCallback callback) {
+        this.sendRequest(url, header,  params, tag, callback, false, isEncrypt, false, false, null, false);
     }
 
     @Override
-    public void sendPostJsonRequest(String url,final Map<String,String> header, HttpParams params, Object tag, boolean showLoadingView, HttpCallback callback) {
-        this.sendRequest(url, header,  params, tag, callback, false, showLoadingView, false, false, null, true);
+    public void sendPostJsonRequest(String url,final Map<String,String> header, HttpParams params, Object tag, boolean isEncrypt, HttpCallback callback) {
+        this.sendRequest(url, header,  params, tag, callback, false, isEncrypt, false, false, null, true);
     }
 
     @Override
@@ -99,7 +99,7 @@ public final class HttpRequestHelper implements IFrameHttpRequest, HttpCallback.
     }
 
     private void sendRequest(final String url, final Map<String,String> header, final HttpParams params, final Object tag, final HttpCallback callback,
-                             final boolean useGet, final boolean showLoadingView, final boolean showLoadingDialog, final boolean
+                             final boolean useGet, final boolean isEncrypt, final boolean showLoadingDialog, final boolean
                                      canCancel, final String loadingText, final boolean useJsonRequest) {
         if (isRequesting(url)) {
             if (this.mFinishListener != null) {
@@ -113,7 +113,11 @@ public final class HttpRequestHelper implements IFrameHttpRequest, HttpCallback.
             HttpUtil.sendGetRequest(url,header, params, tag, callback);
         } else {
             if (useJsonRequest) {
-                HttpUtil.sendPostJsonRequest(url,header, params, tag, callback);
+                if(isEncrypt){
+                    HttpUtil.sendPostStringRequest(url,header, params, tag, callback);
+                }else {
+                    HttpUtil.sendPostJsonRequest(url,header, params, tag, callback);
+                }
             } else {
                 HttpUtil.sendPostRequest(url,header, params, tag, callback);
             }
