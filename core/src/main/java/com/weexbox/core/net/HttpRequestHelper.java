@@ -113,7 +113,7 @@ public final class HttpRequestHelper implements IFrameHttpRequest, HttpCallback.
             HttpUtil.sendGetRequest(url,header, params, tag, callback);
         } else {
             if (useJsonRequest) {
-                if(isEncrypt){
+                if(HttpCallback.isEncrypt){
                     HttpUtil.sendPostStringRequest(url,header, params, tag, callback);
                 }else {
                     HttpUtil.sendPostJsonRequest(url,header, params, tag, callback);

@@ -58,8 +58,9 @@ public final class HttpUtil {
     /**
      * 初始化OkHttpClient, 默认不带上cookies管理
      */
-    public static void init(HttpUtil.RequestInterceptor interceptor) {
+    public static void init(HttpUtil.RequestInterceptor interceptor,String keyStr) {
         requestInterceptor = interceptor;
+        key = keyStr;
         OkHttpClient.Builder builder = build();
         initHttp(builder);
     }

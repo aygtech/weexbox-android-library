@@ -35,7 +35,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
     private static String keyMessage = "message";
     private static int rightCode = RIGHT_CODE;
     private static int rightCode2 = 200;
-    private static boolean isEncrypt = false;
+    public static boolean isEncrypt = false;
 
     private int errorCode = RIGHT_CODE;
     private String msg = null;
