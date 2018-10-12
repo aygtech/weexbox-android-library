@@ -66,6 +66,7 @@ public class DemoActivity extends WBBaseActivity {
     private void checkNewJsVersionAction() {
         String url = "https://iquest-test.aiyuangong.com/hotdeploy";
         UpdateManager.INSTANCE.setServer(url);
+        UpdateManager.INSTANCE.setForceUpdate(true);
         UpdateManager.INSTANCE.update(new Function4<UpdateManager.UpdateState, Integer, Throwable, File, Unit>() {
             @Override
             public Unit invoke(UpdateManager.UpdateState updateState, Integer integer, Throwable throwable, File file) {
