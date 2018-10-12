@@ -85,9 +85,9 @@ object UpdateManager {
 //        }
     private lateinit var serverWwwName: String
 
-
-    private val workingRealm = Realm.getInstance(RealmConfiguration.Builder().name("$workingName.realm").build())
-    private val cacheRealmConfig = RealmConfiguration.Builder().name("$cacheName.realm").build()
+    private val workingRealmConfig = RealmConfiguration.Builder().name("$workingName.realm").build()
+    private val workingRealm = Realm.getInstance(workingRealmConfig)
+    private var cacheRealmConfig = RealmConfiguration.Builder().name("$cacheName.realm").build()
     private var cacheRealm = Realm.getInstance(cacheRealmConfig)
 
     private lateinit var resourceConfig: UpdateConfig
@@ -117,6 +117,7 @@ object UpdateManager {
             cacheName = workingName
             cacheUrl = workingUrl
             cacheConfigUrl = workingConfigUrl
+            cacheRealmConfig = workingRealmConfig
             cacheRealm = workingRealm
         }
         this.completion = completion
