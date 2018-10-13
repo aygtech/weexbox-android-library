@@ -86,7 +86,7 @@ class ModalModule : BaseModule() {
 
         val list = options["actions"] as List<Map<String, String>>
         var items = arrayOfNulls<String>(list.size)
-        for (i in list.indices){
+        for (i in list.indices) {
             items[i] = list[i].get("title")!!
         }
 
@@ -115,6 +115,11 @@ class ModalModule : BaseModule() {
     @JSMethod(uiThread = true)
     fun showLoading(text: String) {
         LoadDialogUtil.showLoadWithText(getActivity(), text)
+    }
+
+    @JSMethod(uiThread = true)
+    fun showLoading(text: String, setTransparent: Boolean) {
+        LoadDialogUtil.showLoadWithText(getActivity(), text, setTransparent)
     }
 
     @JSMethod(uiThread = true)

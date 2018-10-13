@@ -40,8 +40,7 @@ public class LoadDialogUtil {
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel(text)
                 .setCancellable(isCancel)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f);
+                .setAnimationSpeed(2);
         hud.show();
     }
 
