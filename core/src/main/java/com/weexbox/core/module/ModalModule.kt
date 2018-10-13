@@ -113,13 +113,12 @@ class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun showLoading(text: String) {
-        LoadDialogUtil.showLoadWithText(getActivity(), text)
-    }
-
-    @JSMethod(uiThread = true)
     fun showLoading(text: String, setTransparent: Boolean) {
-        LoadDialogUtil.showLoadWithText(getActivity(), text, setTransparent)
+        var isTransparent = false;
+        if (setTransparent != null) {
+            isTransparent = setTransparent;
+        }
+        LoadDialogUtil.showLoadWithText(getActivity(), text, isTransparent)
     }
 
     @JSMethod(uiThread = true)
