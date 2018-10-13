@@ -1,5 +1,6 @@
 package com.weexbox.core.module
 
+import android.text.TextUtils
 import android.view.View
 import com.alibaba.fastjson.JSONObject
 import com.taobao.weex.annotation.JSMethod
@@ -23,7 +24,7 @@ class NavigatorModule : BaseModule() {
         if (getActionbar() != null && info != null){
             val result = Result()
 
-            if (info.get("text") != null && info.get("color") != null){
+            if (info.get("text") != null && !TextUtils.isEmpty(info.get("color") as CharSequence?)){
                 if(completionCallback != null){
                     getActionbar().setTitleTextListener(View.OnClickListener {
                         completionCallback.invokeAndKeepAlive(result)
@@ -56,7 +57,7 @@ class NavigatorModule : BaseModule() {
 
                 if (i == 0){
                     info = items[0]
-                    if (info.get("text") != null && info.get("color") != null){
+                    if (info.get("text") != null && !TextUtils.isEmpty(info.get("color") as CharSequence?)){
                         getActionbar().setBackButton(View.OnClickListener {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("text") as String?, "#" + info.get("color") as String?)
@@ -66,14 +67,14 @@ class NavigatorModule : BaseModule() {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("text") as String?)
 
-                    } else if (info.get("image") != null){
+                    } else if (!TextUtils.isEmpty(info.get("image"))){
                         getActionbar().setBackButtonDrawable(View.OnClickListener {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("image") as String?)
                     }
                 } else if (i == 1){
                     info = items[1]
-                    if (info.get("text") != null && info.get("color") != null){
+                    if (info.get("text") != null && !TextUtils.isEmpty(info.get("color") as CharSequence?)){
                         getActionbar().setBackButton2(View.OnClickListener {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("text") as String?, "#" + info.get("color") as String?)
@@ -83,7 +84,7 @@ class NavigatorModule : BaseModule() {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("text") as String?)
 
-                    } else if (info.get("image") != null){
+                    } else if (!TextUtils.isEmpty(info.get("image"))){
                         getActionbar().setBackButton2Drawable(View.OnClickListener {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("image") as String?)
@@ -104,7 +105,7 @@ class NavigatorModule : BaseModule() {
 
                 if (i == 0){
                     info = items[0]
-                    if (info.get("text") != null && info.get("color") != null){
+                    if (info.get("text") != null && !TextUtils.isEmpty(info.get("color") as CharSequence?)){
                         getActionbar().setRightButton(View.OnClickListener {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("text") as String?, "#" + info.get("color") as String?)
@@ -114,7 +115,7 @@ class NavigatorModule : BaseModule() {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("text") as String?)
 
-                    } else if (info.get("image") != null){
+                    } else if (!TextUtils.isEmpty(info.get("image"))){
                         getActionbar().setRightButtonDrawable(View.OnClickListener {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("image") as String?)
@@ -122,7 +123,7 @@ class NavigatorModule : BaseModule() {
 
                 } else if (i == 1){
                     info = items[1]
-                    if (info.get("text") != null && info.get("color") != null){
+                    if (info.get("text") != null && !TextUtils.isEmpty(info.get("color") as CharSequence?)){
                         getActionbar().setRightButton2(View.OnClickListener {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("text") as String?, "#" + info.get("color") as String?)
@@ -132,7 +133,7 @@ class NavigatorModule : BaseModule() {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("text") as String?)
 
-                    } else if (info.get("image") != null){
+                    } else if (!TextUtils.isEmpty(info.get("image"))){
                         getActionbar().setRightButton2Drawable(View.OnClickListener {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("image") as String?)
