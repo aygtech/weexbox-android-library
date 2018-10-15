@@ -18,4 +18,10 @@ class JsOptions {
 
     var name: String? = null
 
+    //ExternalModule 相机相册使用options
+    var enableCrop = false
+    var isCircle = true
+    var width = 100
+    var height = 100
+    var count: Int = 0
 }

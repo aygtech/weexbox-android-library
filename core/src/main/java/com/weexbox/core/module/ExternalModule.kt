@@ -13,23 +13,12 @@ import kotlin.collections.ArrayList
 class ExternalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
-    fun openCamera(options: JSONObject, completionCallback: JSCallback) {
-        var enableCrop =  false
-        var isCircle =  true
-        var width =  1
-        var height =  1
-        if(options.get("enableCrop") != null){
-            options.getBoolean("enableCrop")
-        }
-        if(options.get("isCircle") != null){
-            options.getBoolean("isCircle")
-        }
-        if(options.get("width") != null){
-            options.getInteger("width")
-        }
-        if(options.get("height") != null){
-            options.getInteger("height")
-        }
+    fun openCamera(options: Map<String, Any>, completionCallback: JSCallback) {
+        val info = options.toObject(JsOptions::class.java)
+        var enableCrop = info.enableCrop
+        var isCircle = info.isCircle
+        var width = info.width
+        var height = info.height
         SelectImageUtil.startCamera(getActivity(), width, height, enableCrop, isCircle, object : SelectImageUtil.MultipleImageCompleteListener {
             override fun onComplete(imgs: Array<out String>?) {
                 val result = Result()
@@ -47,11 +36,12 @@ class ExternalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun openPhoto(options: JSONObject, completionCallback: JSCallback) {
-        val count = options.getInteger("count")
-        var enableCrop = false
-        if(options.get("enableCrop") != null){
-            enableCrop = options.getBoolean("enableCrop")
-        }
+        val info = options.toObject(JsOptions::class.java)
+        val count = info.count
+        var enableCrop = info.enableCrop
+        var isCircle = info.isCircle
+        var width = info.width
+        var height = info.height
         val listener = SelectImageUtil.MultipleImageCompleteListener {
             fun onComplete(imgs: Array<out String>?) {
                 val result = Result()
