@@ -3,6 +3,7 @@ package com.weexbox.core.extension
 import android.net.Uri
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.TypeReference
+import java.io.File
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.*
@@ -106,4 +107,11 @@ fun <T> String.toObject(clazz: Class<T>): T {
 
 fun <T> String.toObject(type: TypeReference<T>): T {
     return JSON.parseObject(this, type)
+}
+
+fun String.appendingPathComponent(pathComponent: String): String {
+    if (substring(lastIndex) == File.separator) {
+        return this + pathComponent
+    }
+    return this + File.separator + pathComponent
 }

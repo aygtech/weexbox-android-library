@@ -2,7 +2,6 @@ package com.weexbox.core.update
 
 import android.content.Context
 import android.os.AsyncTask
-import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.TypeReference
 import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.model.Md5Realm
@@ -10,7 +9,9 @@ import com.weexbox.core.model.UpdateConfig
 import com.weexbox.core.model.UpdateMd5
 import com.litesuits.common.io.FileUtils
 import com.litesuits.common.io.IOUtils
+import com.weexbox.core.extension.appendingPathComponent
 import com.weexbox.core.extension.toObject
+import com.weexbox.core.network.Network
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -19,13 +20,8 @@ import org.zeroturnaround.zip.ZipUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
 import java.io.File
 import java.io.IOException
-import retrofit2.Retrofit
-
-
 
 private typealias Completion = (state: UpdateManager.UpdateState, progress: Int, error: Throwable?, url: File?) -> Unit
 
@@ -64,9 +60,9 @@ object UpdateManager {
     private const val versionName = "update-version.txt"
 
     private const val resourceUrl = resourceName
-    private val resourceConfigUrl = resourceUrl + File.separator + configName
-    private val resourceMd5Url = resourceUrl + File.separator + md5Name
-    private val resourceZipUrl = resourceUrl + File.separator + zipName
+    private val resourceConfigUrl = resourceUrl.appendingPathComponent(configName)
+    private val resourceMd5Url = resourceUrl.appendingPathComponent(md5Name)
+    private val resourceZipUrl = resourceUrl.appendingPathComponent(zipName)
 
     private val workingUrl = WeexBoxEngine.application.applicationContext.getDir(workingName, Context.MODE_PRIVATE)
     private val workingConfigUrl = File(workingUrl, configName)
@@ -74,16 +70,23 @@ object UpdateManager {
     private var cacheUrl = WeexBoxEngine.application.applicationContext.getDir(cacheName, Context.MODE_PRIVATE)
     private var cacheConfigUrl = File(cacheUrl, configName)
 
-//    private lateinit var serverConfigUrl: String
-//    private lateinit var serverMd5Url: String
+    private lateinit var serverVersionUrl: String
+    private lateinit var serverConfigUrl: String
+    private lateinit var serverMd5Url: String
     // 设置更新服务器
-//    private lateinit var serverUrl: String
-//        set(url) {
-//            field = url
-//            serverConfigUrl = serverUrl + File.separator + configName
-//            serverMd5Url = serverUrl + File.separator + md5Name
-//        }
-    private lateinit var serverWwwName: String
+    var serverUrl: String = ""
+        set(url) {
+            field = url
+            serverVersionUrl = serverUrl.appendingPathComponent(versionName)
+            serverConfigUrl = serverUrl.appendingPathComponent(configName)
+            serverMd5Url = serverUrl.appendingPathComponent(md5Name)
+        }
+    private var serverWwwUrl: String = ""
+        set(url) {
+            field = url
+            serverConfigUrl = serverWwwUrl.appendingPathComponent(configName)
+            serverMd5Url = serverWwwUrl.appendingPathComponent(md5Name)
+        }
 
     private val workingRealmConfig = RealmConfiguration.Builder().name("$workingName.realm").build()
     private val workingRealm = Realm.getInstance(workingRealmConfig)
@@ -96,16 +99,16 @@ object UpdateManager {
     private var cacheConfig: UpdateConfig? = null
     private lateinit var serverConfigData: String
 
-    private interface DownloadService {
-        @GET("{url}")
-        fun get(@Path("url") url: String): Call<ResponseBody>
-    }
-    private lateinit var downloadService: DownloadService
+//    private interface DownloadService {
+//        @GET("{url}")
+//        fun get(@Path("url") url: String): Call<ResponseBody>
+//    }
+//    private lateinit var downloadService: DownloadService
 
     // 设置更新服务器
-    fun setServer(url: String) {
-        downloadService = Retrofit.Builder().baseUrl(url + File.separator).build().create(DownloadService::class.java)
-    }
+//    fun setServer(url: String) {
+//        downloadService = Retrofit.Builder().baseUrl(url + File.separator).build().create(DownloadService::class.java)
+//    }
 
     // 设置强制更新
     var forceUpdate = false
@@ -157,15 +160,14 @@ object UpdateManager {
 
     private fun getServer() {
         complete(UpdateState.GetServer)
-
-        downloadService.get(versionName).enqueue(object: Callback<ResponseBody> {
+        Network.request(serverVersionUrl, Network.HTTPMethod.GET, null, null, object: Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                 complete(UpdateState.GetServerError, 0, t)
             }
 
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
                 if (response?.isSuccessful == true) {
-                    serverWwwName = response.body()!!.string()
+                    serverWwwUrl = serverUrl.appendingPathComponent(response.body()!!.string())
                     // 获取服务端config文件
                     downloadConfig()
                 } else {
@@ -209,7 +211,7 @@ object UpdateManager {
     // 获取服务端config文件
     private fun downloadConfig() {
         complete(UpdateState.DownloadConfig)
-        downloadService.get(serverWwwName + File.separator + configName).enqueue(object: Callback<ResponseBody> {
+        Network.request(serverConfigUrl, Network.HTTPMethod.GET, null, null, object: Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                 complete(UpdateState.DownloadConfigError, 0, t)
             }
@@ -326,7 +328,7 @@ object UpdateManager {
 
     private fun downloadMd5() {
         complete(UpdateState.DownloadMd5)
-        downloadService.get(serverWwwName + File.separator + md5Name).enqueue(object: Callback<ResponseBody> {
+        Network.request(serverMd5Url, Network.HTTPMethod.GET, null, null, object: Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                 complete(UpdateState.DownloadMd5Error, 0, t)
             }
@@ -393,7 +395,7 @@ object UpdateManager {
             val file = files[index]
             val path = file.path!!
             val destination = File(cacheUrl, path)
-            downloadService.get(serverWwwName + File.separator + path).enqueue(object: Callback<ResponseBody> {
+            Network.request(serverWwwUrl.appendingPathComponent(path), Network.HTTPMethod.GET, null, null, object: Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                     if (retry == 0) {
                         complete(UpdateState.DownloadFileError, 0, t)
