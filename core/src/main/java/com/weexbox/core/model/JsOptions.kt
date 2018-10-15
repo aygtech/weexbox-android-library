@@ -13,5 +13,9 @@ class JsOptions {
     var method: String? = null
     var headers: Map<String, String>? = null
     var params: Map<String, Any>? = null
+    var responseType: String? = null
+//    var files: Array<UploadFile>?
+
     var name: String? = null
+
 }

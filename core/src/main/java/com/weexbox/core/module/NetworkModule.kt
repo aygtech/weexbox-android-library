@@ -24,7 +24,7 @@ class NetworkModule : BaseModule() {
     fun request(options: Map<String, Any>, callback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         var method = Network.HTTPMethod.GET
-        if (info.method == "post") {
+        if (info.method?.toUpperCase() == "POST") {
             method = Network.HTTPMethod.POST
         }
         val result = Result()
@@ -34,7 +34,11 @@ class NetworkModule : BaseModule() {
                 result.status = response.code()
                 val data = response.body()?.string()
                 if (data != null) {
-                    result.data = data.toJsonMap()
+                    if (info.responseType?.toUpperCase() == "JSON") {
+                        result.data["data"] = data.toJsonMap()
+                    } else {
+                        result.data["data"] = data
+                    }
                 }
                 result.error = response.errorBody()?.string()
                 callback(result)
