@@ -28,6 +28,31 @@ public class SelectImageUtil {
     private static int imgType = 0;//0原图，1为剪切图，2为压缩图
    // private static Activity activity;
 
+    //单独启动相机，只支持单张图片
+    public static void startCamera(Activity context, int w, int h,  boolean enableCrop, boolean isCircle, MultipleImageCompleteListener callback) {
+        Activity activity = context;
+        if (activity == null) {
+            ToastUtil.showLongToast(activity, "未知错误，请退出重试");
+            return;
+        }
+        mCompleteListener = callback;
+        PictureSelector.create(activity)
+                .openCamera(PictureMimeType.ofImage())
+                .selectionMode(PictureConfig.SINGLE)
+                .enableCrop(enableCrop)
+                .sizeMultiplier(0.9f)
+                .compress(false)
+                .cropCompressQuality(100)
+                .withAspectRatio(w,h)
+                .circleDimmedLayer(isCircle)
+                .showCropFrame(!isCircle)
+                .previewImage(true)
+                .rotateEnabled(true)
+                .scaleEnabled(true)
+                .forResult(SingleImgType);
+    }
+
+
     /**
      * 从相册多选获取图片
      * count:最多选几张
