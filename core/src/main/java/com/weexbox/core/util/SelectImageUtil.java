@@ -30,6 +30,11 @@ public class SelectImageUtil {
 
     //单独启动相机，只支持单张图片
     public static void startCamera(Activity context, int w, int h,  boolean enableCrop, boolean isCircle, MultipleImageCompleteListener callback) {
+        if(enableCrop){
+            imgType = 1;
+        }else {
+            imgType = 0;
+        }
         Activity activity = context;
         if (activity == null) {
             ToastUtil.showLongToast(activity, "未知错误，请退出重试");
@@ -90,7 +95,11 @@ public class SelectImageUtil {
      * 单选  w剪裁宽 h剪裁高 isCamera 是否拍照，enableCrop是否剪裁，是否圆形剪裁，否则矩形剪裁
      */
     public static void startImagePickActivity(Activity context, int w, int h, boolean isCamera, boolean enableCrop, boolean isCircle, MultipleImageCompleteListener callback) {
-        imgType = 1;
+        if(enableCrop){
+            imgType = 1;
+        }else {
+            imgType = 0;
+        }
         Activity activity = context;
         if (activity == null) {
             ToastUtil.showLongToast(activity, "未知错误，请退出重试");
