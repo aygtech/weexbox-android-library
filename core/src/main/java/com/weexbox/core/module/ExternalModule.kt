@@ -1,5 +1,6 @@
 package com.weexbox.core.module
 
+import com.alibaba.fastjson.JSONObject
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
 import com.weexbox.core.extension.toObject
@@ -12,11 +13,23 @@ import kotlin.collections.ArrayList
 class ExternalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
-    fun openCamera(options: Map<String, Any>, completionCallback: JSCallback) {
-        val enableCrop = options["enableCrop"] as Boolean ?: false
-        val isCircle = options["isCircle"] as Boolean ?: true
-        val width = options["width"] as Int ?: 1
-        val height = options["height"] as Int ?: 1
+    fun openCamera(options: JSONObject, completionCallback: JSCallback) {
+        var enableCrop =  false
+        var isCircle =  true
+        var width =  1
+        var height =  1
+        if(options.get("enableCrop") != null){
+            options.getBoolean("enableCrop")
+        }
+        if(options.get("isCircle") != null){
+            options.getBoolean("isCircle")
+        }
+        if(options.get("width") != null){
+            options.getInteger("width")
+        }
+        if(options.get("height") != null){
+            options.getInteger("height")
+        }
         SelectImageUtil.startCamera(getActivity(), width, height, enableCrop, isCircle, object : SelectImageUtil.MultipleImageCompleteListener {
             override fun onComplete(imgs: Array<out String>?) {
                 val result = Result()
@@ -33,9 +46,12 @@ class ExternalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun openPhoto(options: Map<String, Any>, completionCallback: JSCallback) {
-        val count = options["count"] as Int
-        val enableCrop = options["enableCrop"] as Boolean ?: false
+    fun openPhoto(options: JSONObject, completionCallback: JSCallback) {
+        val count = options.getInteger("count")
+        var enableCrop = false
+        if(options.get("enableCrop") != null){
+            enableCrop = options.getBoolean("enableCrop")
+        }
         val listener = SelectImageUtil.MultipleImageCompleteListener {
             fun onComplete(imgs: Array<out String>?) {
                 val result = Result()
