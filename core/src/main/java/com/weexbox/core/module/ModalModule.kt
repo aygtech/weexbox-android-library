@@ -35,17 +35,15 @@ class ModalModule : BaseModule() {
         builder.setTitle(options["title"] as String)
                 .setMessage(options["message"] as String)
                 .setPositiveButton(options["okTitle"] as String, object : DialogInterface.OnClickListener {// 积极
-
                     override fun onClick(dialog: DialogInterface, which: Int) {
                         completionCallback.invoke(Result())
                     }
                 })
                 .setNegativeButton(options["cancelTitle"] as String, object : DialogInterface.OnClickListener {// 消极
-
                     override fun onClick(dialog: DialogInterface, which: Int) {
                         val result = Result()
                         result.status = Result.error
-                        completionCallback.invoke(Result())
+                        completionCallback.invoke(result)
                     }
                 })
         builder.create().show()
