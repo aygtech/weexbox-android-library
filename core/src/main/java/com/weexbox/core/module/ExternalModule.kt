@@ -42,8 +42,8 @@ class ExternalModule : BaseModule() {
         var isCircle = info.isCircle
         var width = info.width
         var height = info.height
-        val listener = SelectImageUtil.MultipleImageCompleteListener {
-            fun onComplete(imgs: Array<out String>?) {
+        val listener = object : SelectImageUtil.MultipleImageCompleteListener {
+            override fun onComplete(imgs: Array<out String>?) {
                 val result = Result()
                 val map = TreeMap<String, Any>()
                 if (imgs != null) {
