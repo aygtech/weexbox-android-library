@@ -42,21 +42,30 @@ class ExternalModule : BaseModule() {
         var isCircle = info.isCircle
         var width = info.width
         var height = info.height
-        val listener = object : SelectImageUtil.MultipleImageCompleteListener {
-            override fun onComplete(imgs: Array<out String>?) {
-                val result = Result()
-                val map = TreeMap<String, Any>()
-                if (imgs != null) {
-                    map.put("urls", imgs)
-                }
-                result.data = map
-                completionCallback.invoke(result)
-            }
-        }
         if (enableCrop) {
-            SelectImageUtil.startImagePickActivity(getActivity(), 100, 100, false, enableCrop, false, listener)
+            SelectImageUtil.startImagePickActivity(getActivity(), 100, 100, false, enableCrop, false, object : SelectImageUtil.MultipleImageCompleteListener {
+                override fun onComplete(imgs: Array<out String>?) {
+                    val result = Result()
+                    val map = TreeMap<String, Any>()
+                    if (imgs != null) {
+                        map.put("urls", imgs)
+                    }
+                    result.data = map
+                    completionCallback.invoke(result)
+                }
+            })
         } else {
-            SelectImageUtil.startImagePickActivity(getActivity(), count, 0, false, listener)
+            SelectImageUtil.startImagePickActivity(getActivity(), count, 0, false, object : SelectImageUtil.MultipleImageCompleteListener {
+                override fun onComplete(imgs: Array<out String>?) {
+                    val result = Result()
+                    val map = TreeMap<String, Any>()
+                    if (imgs != null) {
+                        map.put("urls", imgs)
+                    }
+                    result.data = map
+                    completionCallback.invoke(result)
+                }
+            })
         }
     }
 }
