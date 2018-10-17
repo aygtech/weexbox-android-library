@@ -27,14 +27,14 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // weexSDk依赖
-    api 'com.taobao.android:weex_sdk:0.18.0'
+    api(group: 'com.taobao.android', name: 'weex_sdk', version: '0.19.0.3', ext: 'aar', classifier: 'debug')
     api 'com.android.support:appcompat-v7:27.1.1'
     api 'com.alibaba:fastjson:1.1.70.android'
     api 'com.android.support:recyclerview-v7:27.1.1'
     api 'com.android.support:support-v4:27.1.1'
     //weex debugger
     api 'com.squareup.okhttp:okhttp-ws:2.3.0'
-    api 'com.taobao.android:weex_inspector:0.13.4'
+    api 'com.taobao.android:weex_inspector:0.16.19'
 
     api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.60'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.20'
