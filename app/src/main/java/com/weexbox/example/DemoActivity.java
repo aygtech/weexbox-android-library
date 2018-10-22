@@ -1,14 +1,17 @@
 package com.weexbox.example;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.weexbox.core.WeexBoxEngine;
+import com.weexbox.core.controller.BrowserActivity;
 import com.weexbox.core.controller.WBBaseActivity;
 import com.weexbox.core.router.Router;
 import com.weexbox.core.update.UpdateManager;
@@ -23,6 +26,8 @@ import java.util.TimerTask;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function4;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
 public class DemoActivity extends WBBaseActivity {
 
     @Override
@@ -31,14 +36,21 @@ public class DemoActivity extends WBBaseActivity {
         getRouter().setNavBarHidden(true);
         setContentView(R.layout.activity_demo);
 
-        WeexBoxEngine.INSTANCE.initFloatingBtn(DemoActivity.this, BtnSerivice.class);
+        //WeexBoxEngine.INSTANCE.initFloatingBtn(DemoActivity.this, BtnSerivice.class);
 
         findViewById(R.id.oooo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
-                startActivity(intent);
-
+//                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
+//                startActivity(intent);
+                Router router = new Router();
+                router.setName("web");
+                router.setUrl("https://www.baidu.com");
+                router.open(DemoActivity.this);
+//
+//                Intent intent = new Intent(DemoActivity.this,BrowserActivity.class);
+//                intent.putExtra("param_url","https://www.baidu.com");
+//                startActivity(intent);
 //                Router router = new Router();
 //                router.setUrl("index.js");
 //                router.setName(Router.Companion.getNAME_WEEX());
@@ -119,6 +131,20 @@ public class DemoActivity extends WBBaseActivity {
         }
         if (BuildConfig.DEBUG && !isFinishing()) {
             Toast.makeText(getApplicationContext(), "热更新在" + step + "步骤出错，请重启再试", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if (requestCode == 100) {
+            boolean allow = true;
+            for (int result : grantResults) {
+                if (result != PERMISSION_GRANTED) {
+                    allow = false;
+                    break;
+                }
+            }
         }
     }
 
