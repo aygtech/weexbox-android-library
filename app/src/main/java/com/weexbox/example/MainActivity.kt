@@ -19,9 +19,9 @@ class MainActivity : WBBaseActivity(), WBBaseActivity.HaveFragmentListener {
         initFragment()
         getActionbar().setBackButton(object: View.OnClickListener {
             override fun onClick(v: View?) {
-                refreshWeex()
+//                refreshWeex()
             }
-        })
+        }, "", "#00000000")
         getActionbar().setBackButton2(object: View.OnClickListener{
             override fun onClick(v: View?) {
             }

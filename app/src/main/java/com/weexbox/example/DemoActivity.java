@@ -40,12 +40,13 @@ public class DemoActivity extends WBBaseActivity {
         findViewById(R.id.oooo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
-//                startActivity(intent);
-                Router router = new Router();
-                router.setName("web");
-                router.setUrl("https://www.baidu.com");
-                router.open(DemoActivity.this);
+                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
+                startActivity(intent);
+
+//                Router router = new Router();
+//                router.setName("web");
+//                router.setUrl("https://www.baidu.com");
+//                router.open(DemoActivity.this);
 //
 //                Intent intent = new Intent(DemoActivity.this,BrowserActivity.class);
 //                intent.putExtra("param_url","https://www.baidu.com");
