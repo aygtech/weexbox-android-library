@@ -45,6 +45,9 @@ class Router :Serializable{
     var navBarHidden: Boolean = false
     // 需要传到下一个页面的数据
     var params: Map<String, Any>? = null
+    // 指定关闭堆栈的哪些页面
+    var closeFrom: Int? = null
+    var closeCount: Int? = null
 
     fun open(from: WBBaseActivity) {
         val to = Router.routes[name]
@@ -57,15 +60,20 @@ class Router :Serializable{
             val intent = Intent(from, to)
             intent.putExtra(Router.EXTRA_NAME, this)
             from.startActivity(intent)
+            removeActivitys()
         }
     }
 
-    fun openBrowser(from: WBBaseActivity) {
+    fun removeActivitys() {
+        if (closeFrom != null) {
+            val allActivities = ActivityManager.getInstance().allActivities
+            val closeTo = if (closeCount != null) {closeCount!! + closeFrom!!} else {allActivities.size - 2}
+            val activities = allActivities.subList(closeFrom!!, closeTo)
+            for (activity in activities) {
+                activity.finish()
+            }
+        }
     }
-
-    fun openPhone(from: WBBaseActivity) {
-    }
-
 
     fun close(from: WBBaseActivity, levels: Int? = null) {
         var count = 0

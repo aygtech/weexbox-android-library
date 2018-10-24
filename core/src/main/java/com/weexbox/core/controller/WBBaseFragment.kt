@@ -2,8 +2,6 @@ package com.weexbox.core.controller
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import com.taobao.weex.WXSDKInstance
-import com.taobao.weex.WXSDKManager
 import com.weexbox.core.event.Event
 import com.weexbox.core.event.EventCallback
 import com.weexbox.core.router.Router
@@ -12,9 +10,14 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
+/*
+* Fragment基类
+*/
 open class WBBaseFragment: Fragment() {
 
+    // 路由
     var router: Router? = null
+    // 通用事件
     var events: MutableMap<String, EventCallback> = TreeMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,4 +45,5 @@ open class WBBaseFragment: Fragment() {
     open fun onBackPressed(): Boolean {
         return false
     }
+
 }
