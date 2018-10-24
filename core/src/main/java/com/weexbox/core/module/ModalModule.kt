@@ -91,7 +91,7 @@ class ModalModule : BaseModule() {
         // 创建对话框构建器
         val builder = AlertDialog.Builder(getActivity())
         // 设置参数
-        builder.setTitle(options["title"] as String)
+        builder.setTitle(if (options["title"] == null) {""} else {options["title"] as String})
                 .setItems(items, object : DialogInterface.OnClickListener {
 
                     override fun onClick(dialog: DialogInterface, which: Int) {
