@@ -47,32 +47,49 @@ class Router :Serializable{
     var params: Map<String, Any>? = null
     // 指定关闭堆栈的哪些页面
     var closeFrom: Int? = null
+    var closeFromLeftToRight = true
     var closeCount: Int? = null
+
 
     fun open(from: WBBaseActivity) {
         val to = Router.routes[name]
         if (to == null) {
             Logger.e("该路由名未注册")
         } else {
+            var activities: List<Activity>? = null
+            if (closeFrom != null) {
+                if (closeFromLeftToRight){
+                    val allActivities = ActivityManager.getInstance().allActivities
+                    val closeTo = if (closeCount != null) {closeCount!! + closeFrom!!} else {allActivities.size }
+                    activities = allActivities.subList(closeFrom!!, closeTo)
+                } else{
+                    val allActivities = ActivityManager.getInstance().allActivities
+                    val closeTo = allActivities.size - closeFrom!!
+                    val closeMyFrom = if (closeCount != null) {allActivities.size - closeFrom!! - closeCount!!} else {1}
+                    activities = allActivities.subList(closeMyFrom, closeTo)
+                }
+            }
+
             if (type == Router.TYPE_PRESENT) {
                 from.overridePendingTransition(R.anim.present_enter, R.anim.present_exit)
             }
             val intent = Intent(from, to)
             intent.putExtra(Router.EXTRA_NAME, this)
             from.startActivity(intent)
-            removeActivitys()
+            if (activities != null) {
+                removeActivitys(activities)
+            }
+
         }
     }
 
-    fun removeActivitys() {
-        if (closeFrom != null) {
-            val allActivities = ActivityManager.getInstance().allActivities
-            val closeTo = if (closeCount != null) {closeCount!! + closeFrom!!} else {allActivities.size - 2}
-            val activities = allActivities.subList(closeFrom!!, closeTo)
+    fun removeActivitys(activities: List<Activity>) {
+
+
             for (activity in activities) {
                 activity.finish()
             }
-        }
+
     }
 
     fun close(from: WBBaseActivity, levels: Int? = null) {

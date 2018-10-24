@@ -147,6 +147,21 @@ public class SimpleToolbar extends LinearLayout {
         icon.setBounds(0, 0, getHeight() / 2, getHeight() / 2);
         mTitle.setCompoundDrawables(icon, null, null, null);
     }
+    public void setTitleText(OnClickListener listener, String text) {
+        if (mTitle == null || text == null){
+            return;
+        }
+        mTitle.setText(text);
+        mTitle.setOnClickListener(listener);
+    }
+    public void setTitleText(OnClickListener listener, Drawable icon) {
+        if (mTitle == null || icon == null){
+            return;
+        }
+        icon.setBounds(0, 0, getHeight() / 2, getHeight() / 2);
+        mTitle.setCompoundDrawables(icon, null, null, null);
+        mTitle.setOnClickListener(listener);
+    }
     public void setTitleText(OnClickListener listener, String text, Drawable icon) {
         if (mTitle == null || text == null || icon == null){
             return;

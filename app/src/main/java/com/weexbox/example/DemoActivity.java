@@ -40,8 +40,14 @@ public class DemoActivity extends WBBaseActivity {
         findViewById(R.id.oooo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DemoActivity.this, MainActivity.class);
-                startActivity(intent);
+                Router.Companion.register("aaaa", MainActivity.class);
+
+                Router router = new  Router();
+                router.setName("aaaa");
+                Map<String, Integer> map = new HashMap<>();
+                map.put("xixi", 1);
+                router.setParams(map);
+                router.open(DemoActivity.this);
 
 //                Router router = new Router();
 //                router.setName("web");
