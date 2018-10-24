@@ -22,13 +22,13 @@ class RouterModule : BaseModule() {
     //打开浏览器
     @JSMethod(uiThread = true)
     fun openBrowser(info: Map<String, Any>) {
-        getRouter(info).openBrowser(getActivity())
+//        getRouter(info).openBrowser(getActivity())
     }
 
     //打电话
     @JSMethod(uiThread = true)
     fun openPhone(info: Map<String, Any>) {
-        getRouter(info).openPhone(getActivity())
+//        getRouter(info).openPhone(getActivity())
     }
 
     @JSMethod(uiThread = false)
