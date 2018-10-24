@@ -47,13 +47,13 @@ object UpdateManager {
 
     private lateinit var completion: Completion
 
-    private const val resourceName = "www"
+    private const val resourceName = "weexbox-update"
     private const val oneName = "update-one"
     private const val twoName = "update-two"
     private const val workingNameKey = "update-working-key"
     private const val sharedPreferencesName = "update-sharedPreferences"
     private val workingName = WeexBoxEngine.application.applicationContext.getSharedPreferences(sharedPreferencesName, 0).getString(workingNameKey, oneName)
-    private var cacheName = if (workingName == oneName) twoName else oneName
+    private var backupName = if (workingName == oneName) twoName else oneName
     private const val zipName = "www.zip"
     private const val md5Name = "update-md5.json"
     private const val configName = "update-config.json"
@@ -64,11 +64,12 @@ object UpdateManager {
     private val resourceMd5Url = resourceUrl.appendingPathComponent(md5Name)
     private val resourceZipUrl = resourceUrl.appendingPathComponent(zipName)
 
-    private val workingUrl = WeexBoxEngine.application.applicationContext.getDir(workingName, Context.MODE_PRIVATE)
+    private val cahceUrl = WeexBoxEngine.application.getDir(resourceName, Context.MODE_PRIVATE)
+    private val workingUrl = File(cahceUrl, workingName)
     private val workingConfigUrl = File(workingUrl, configName)
 
-    private var cacheUrl = WeexBoxEngine.application.applicationContext.getDir(cacheName, Context.MODE_PRIVATE)
-    private var cacheConfigUrl = File(cacheUrl, configName)
+    private var backupUrl = File(cahceUrl, backupName)
+    private var backupConfigUrl = File(backupUrl, configName)
 
     private lateinit var serverVersionUrl: String
     private lateinit var serverConfigUrl: String
@@ -90,13 +91,13 @@ object UpdateManager {
 
     private val workingRealmConfig = RealmConfiguration.Builder().name("$workingName.realm").build()
     private val workingRealm = Realm.getInstance(workingRealmConfig)
-    private var cacheRealmConfig = RealmConfiguration.Builder().name("$cacheName.realm").build()
-    private var cacheRealm = Realm.getInstance(cacheRealmConfig)
+    private var backupRealmConfig = RealmConfiguration.Builder().name("$backupName.realm").build()
+    private var backupRealm = Realm.getInstance(backupRealmConfig)
 
     private lateinit var resourceConfig: UpdateConfig
     private lateinit var resourceMd5: List<UpdateMd5>
     private var workingConfig: UpdateConfig? = null
-    private var cacheConfig: UpdateConfig? = null
+    private var backupConfig: UpdateConfig? = null
     private lateinit var serverConfigData: String
 
 //    private interface DownloadService {
@@ -117,11 +118,11 @@ object UpdateManager {
     // 检查更新
     fun update(completion: Completion) {
         if (forceUpdate) {
-            cacheName = workingName
-            cacheUrl = workingUrl
-            cacheConfigUrl = workingConfigUrl
-            cacheRealmConfig = workingRealmConfig
-            cacheRealm = workingRealm
+            backupName = workingName
+            backupUrl = workingUrl
+            backupConfigUrl = workingConfigUrl
+            backupRealmConfig = workingRealmConfig
+            backupRealm = workingRealm
         }
         this.completion = completion
         loadLocalConfig()
@@ -139,20 +140,27 @@ object UpdateManager {
         return workingUrl.resolve(file)
     }
 
+    // 清空缓存
+    fun clear() {
+        workingRealm.executeTransaction { realm -> realm.deleteAll() }
+        backupRealm.executeTransaction { realm -> realm.deleteAll() }
+        FileUtils.deleteDirectory(cahceUrl)
+    }
+
     // 将APP预置包解压到工作目录
     private fun unzipWwwToWorking() {
         unzipWww(workingUrl, resourceMd5, workingRealm)
     }
 
-    private fun unzipWwwToCache() {
-        unzipWww(cacheUrl, resourceMd5, cacheRealm)
+    private fun unzipWwwToBackup() {
+        unzipWww(backupUrl, resourceMd5, backupRealm)
     }
 
     // 静默更新
     private fun update() {
-        if (isWwwFolderNeedsToBeInstalled(cacheConfig)) {
+        if (isWwwFolderNeedsToBeInstalled(backupConfig)) {
             // 将APP预置包解压到缓存目录
-            unzipWwwToCache()
+            unzipWwwToBackup()
         } else {
             getServer()
         }
@@ -191,7 +199,7 @@ object UpdateManager {
         val inputStream = WeexBoxEngine.application.applicationContext.assets.open(resourceConfigUrl)
         resourceConfig = IOUtils.toString(inputStream, "UTF-8").toObject(UpdateConfig::class.java)
         workingConfig = loadConfig(workingConfigUrl)
-        cacheConfig = loadConfig(cacheConfigUrl)
+        backupConfig = loadConfig(backupConfigUrl)
     }
 
     private fun loadConfig(url: File): UpdateConfig? {
@@ -225,7 +233,7 @@ object UpdateManager {
                     if (shouldDownloadWww(serverConfig)) {
                         downloadMd5()
                     } else {
-                        complete(UpdateState.UpdateSuccess, 100, null, cacheUrl)
+                        complete(UpdateState.UpdateSuccess, 100, null, backupUrl)
                     }
                 } else {
                     complete(UpdateState.DownloadConfigError)
@@ -236,7 +244,7 @@ object UpdateManager {
 
     private fun shouldDownloadWww(serverConfig: UpdateConfig): Boolean {
         val appBuild = VersionUtil.appVersionName
-        if (VersionUtil.compareVersion(appBuild, serverConfig.android_min_version) >= 0 && VersionUtil.compareVersion(serverConfig.release, cacheConfig!!.release) > 0) {
+        if (VersionUtil.compareVersion(appBuild, serverConfig.android_min_version) >= 0 && VersionUtil.compareVersion(serverConfig.release, backupConfig!!.release) > 0) {
             return true
         }
         return false
@@ -317,7 +325,7 @@ object UpdateManager {
         val inputStream = WeexBoxEngine.application.applicationContext.assets.open(resourceConfigUrl)
         FileUtils.copyInputStreamToFile(inputStream, File(to, configName))
         loadLocalConfig()
-        if (to == cacheUrl) {
+        if (to == backupUrl) {
             getServer()
         } else {
             // 解压到了工作目录，可以进入App
@@ -360,26 +368,26 @@ object UpdateManager {
                 download(result)
             } else {
                 saveConfig()
-                complete(UpdateState.UpdateSuccess, 0, null, cacheUrl)
+                complete(UpdateState.UpdateSuccess, 0, null, backupUrl)
             }
         }
     }
 
     private fun getDownloadFiles(serverMd5: List<UpdateMd5>): List<UpdateMd5> {
-        val cacheBackgroundRealm = Realm.getInstance(cacheRealmConfig)
-        val cacheMd5 = cacheBackgroundRealm.where(Md5Realm::class.java).findAll()
+        val backupBackgroundRealm = Realm.getInstance(backupRealmConfig)
+        val backupMd5 = backupBackgroundRealm.where(Md5Realm::class.java).findAll()
         val downloadFiles = ArrayList<UpdateMd5>()
         for (file in serverMd5) {
-            if (shouldDownload(file, cacheMd5)) {
+            if (shouldDownload(file, backupMd5)) {
                 downloadFiles.add(file)
             }
         }
         return downloadFiles
     }
 
-    private fun shouldDownload(serverFile: UpdateMd5, cacheMd5: RealmResults<Md5Realm>): Boolean {
-        for (cacheFile in cacheMd5) {
-            if (cacheFile.path == serverFile.path && cacheFile.md5 == serverFile.md5) {
+    private fun shouldDownload(serverFile: UpdateMd5, backupMd5: RealmResults<Md5Realm>): Boolean {
+        for (backupFile in backupMd5) {
+            if (backupFile.path == serverFile.path && backupFile.md5 == serverFile.md5) {
                 return false
             }
         }
@@ -394,7 +402,7 @@ object UpdateManager {
         } else {
             val file = files[index]
             val path = file.path!!
-            val destination = File(cacheUrl, path)
+            val destination = File(backupUrl, path)
             Network.request(serverWwwUrl.appendingPathComponent(path), Network.HTTPMethod.GET, null, null, object: Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                     if (retry == 0) {
@@ -422,16 +430,16 @@ object UpdateManager {
     }
 
     private fun downloadSuccess(file: UpdateMd5) {
-        cacheRealm.executeTransaction { realm -> realm.insertOrUpdate(file.toRealm()) }
+        backupRealm.executeTransaction { realm -> realm.insertOrUpdate(file.toRealm()) }
     }
 
     // 所有下载成功
     private fun downloadSuccess(files: List<UpdateMd5>) {
         complete(UpdateState.DownloadFileSuccess)
-        saveMd5(files, cacheRealm)
+        saveMd5(files, backupRealm)
         saveConfig()
-        WeexBoxEngine.application.applicationContext.getSharedPreferences(sharedPreferencesName, 0).edit().putString(workingNameKey, cacheName).commit()
-        complete(UpdateState.UpdateSuccess, 0, null, cacheUrl)
+        WeexBoxEngine.application.applicationContext.getSharedPreferences(sharedPreferencesName, 0).edit().putString(workingNameKey, backupName).commit()
+        complete(UpdateState.UpdateSuccess, 0, null, backupUrl)
     }
 
     private fun complete(state: UpdateState, progress: Int = 0, error: Throwable? = null, url: File? = null) {
@@ -446,7 +454,7 @@ object UpdateManager {
     }
 
     private fun saveConfig() {
-        FileUtils.writeStringToFile(cacheConfigUrl, serverConfigData)
+        FileUtils.writeStringToFile(backupConfigUrl, serverConfigData)
     }
 
     private fun saveMd5(files: List<UpdateMd5>, db: Realm) {
