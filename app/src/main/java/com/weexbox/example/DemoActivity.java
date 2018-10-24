@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.weexbox.core.WeexBoxEngine;
-import com.weexbox.core.controller.BrowserActivity;
 import com.weexbox.core.controller.WBBaseActivity;
 import com.weexbox.core.router.Router;
 import com.weexbox.core.update.UpdateManager;

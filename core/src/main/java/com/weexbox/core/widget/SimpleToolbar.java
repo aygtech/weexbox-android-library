@@ -197,7 +197,7 @@ public class SimpleToolbar extends LinearLayout {
         mBackBtn.setOnClickListener(listener);
     }
     public void setBackButton(OnClickListener listener, String text, Drawable icon) {
-        if (mBackBtn == null || text == null || icon == null){
+        if (mBackBtn == null || text == null){
             return;
         }
         mBackBtn.setVisibility(View.VISIBLE);
