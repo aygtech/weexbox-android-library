@@ -47,7 +47,7 @@ class Router :Serializable{
     var params: Map<String, Any>? = null
     // 指定关闭堆栈的哪些页面
     var closeFrom: Int? = null
-    var closeFromLeftToRight = true
+    var closeFromBottomToTop = true
     var closeCount: Int? = null
 
 
@@ -58,7 +58,7 @@ class Router :Serializable{
         } else {
             var activities: List<Activity>? = null
             if (closeFrom != null) {
-                if (closeFromLeftToRight){
+                if (closeFromBottomToTop){
                     val allActivities = ActivityManager.getInstance().allActivities
                     val closeTo = if (closeCount != null) {closeCount!! + closeFrom!!} else {allActivities.size }
                     activities = allActivities.subList(closeFrom!!, closeTo)
