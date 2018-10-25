@@ -1,0 +1,290 @@
+[
+  {
+    "path": "demo/aMap.js",
+    "md5": "835b35dbb63cb8896b8e2c1796bb765c"
+  },
+  {
+    "path": "demo/pieChart.js",
+    "md5": "8b86d36418c862f36f5e424087015c6c"
+  },
+  {
+    "path": "im/applyTask.js",
+    "md5": "1d4795313b62ed4a586702dcc90743ae"
+  },
+  {
+    "path": "im/giveScore.js",
+    "md5": "3c0d36f8cb91e1a8428845d3367a0a32"
+  },
+  {
+    "path": "im/invation.js",
+    "md5": "dc7d923ec888ea80dc3e467cc6a53814"
+  },
+  {
+    "path": "im/invationScore.js",
+    "md5": "ed07813b268176707aef24ae75004dc8"
+  },
+  {
+    "path": "im/sureComplete.js",
+    "md5": "0c2ffaeab00929b94a3a35cff41a7592"
+  },
+  {
+    "path": "im/sureCompleteList.js",
+    "md5": "830510e85663d46a1cec13b49a1c1f2e"
+  },
+  {
+    "path": "im/taskList.js",
+    "md5": "8250c722eb4a4ffb1bc7c01ed835bbdb"
+  },
+  {
+    "path": "income/detail.js",
+    "md5": "fb6b9087eecf5408be61fccebb77f7b3"
+  },
+  {
+    "path": "income/home.js",
+    "md5": "566293060f3d977b78b519e8a233c053"
+  },
+  {
+    "path": "income/news.js",
+    "md5": "498f199a40075a8a8fd05101dd6f9f49"
+  },
+  {
+    "path": "income/strategy.js",
+    "md5": "eae3ccc62478edddca637b72b2ef18e8"
+  },
+  {
+    "path": "income/task.js",
+    "md5": "6e5b9e16c3591039131d5f49ae1b54b6"
+  },
+  {
+    "path": "login/page1.js",
+    "md5": "3535d6dc5fe6075cb08c28189595f8d7"
+  },
+  {
+    "path": "module1/page1.js",
+    "md5": "9d3715d139b07ce8678e9234387f265c"
+  },
+  {
+    "path": "module1/page2.js",
+    "md5": "f85fee2e4a148107ea5374758c2fca27"
+  },
+  {
+    "path": "others/another.js",
+    "md5": "81613c91b0fef9fa09c8b0f87d361387"
+  },
+  {
+    "path": "others/creditquest.js",
+    "md5": "589c3aca9af7c196aad7be97ddb88e98"
+  },
+  {
+    "path": "others/identify.js",
+    "md5": "40dcb145602a10ba656e08a0a4181cb9"
+  },
+  {
+    "path": "others/payquest.js",
+    "md5": "1c36508f4cca2c521aef290daf38e9a6"
+  },
+  {
+    "path": "others/protocol.js",
+    "md5": "97e46ccf148bd1198ccfc67b452e0a0d"
+  },
+  {
+    "path": "others/protocolOld.js",
+    "md5": "e9dde1ea5e211ba8f278f43c9e8ad24c"
+  },
+  {
+    "path": "others/question.js",
+    "md5": "fc361605bf3eeae3eb52467e254df5af"
+  },
+  {
+    "path": "others/service.js",
+    "md5": "73dc43f77493d582fc338c8b01d013d5"
+  },
+  {
+    "path": "others/taskquest.js",
+    "md5": "33566a9f6c44e6ea13b49c64c46a7be6"
+  },
+  {
+    "path": "others/welcome.js",
+    "md5": "fb83123d66ea08b07681add52c7e0e4c"
+  },
+  {
+    "path": "pay/index.js",
+    "md5": "3bb690c53046a3863f90a55cd00f6f09"
+  },
+  {
+    "path": "pay/way.js",
+    "md5": "bc08e24c3ebd5e03c8f1dce8a5809763"
+  },
+  {
+    "path": "search/index.js",
+    "md5": "36a000eae425d3dc6fa5e4c329ad68fd"
+  },
+  {
+    "path": "search/location.js",
+    "md5": "a5290fa15eb08ab1522e66a23bb67c1f"
+  },
+  {
+    "path": "search/searchFriends.js",
+    "md5": "340b4cc0b2fa252de180b5a0aeee8612"
+  },
+  {
+    "path": "search/searching.js",
+    "md5": "6051743c14f85ac91793a750a67dea67"
+  },
+  {
+    "path": "search/searchPeople.js",
+    "md5": "cf2415291042bdd5c71393577931062e"
+  },
+  {
+    "path": "search/searchTask.js",
+    "md5": "46eb7653d198fb22fc2aafd430577519"
+  },
+  {
+    "path": "search/searchVideo.js",
+    "md5": "f9f11f55c13547b9db98b99fb546aa11"
+  },
+  {
+    "path": "task/add.js",
+    "md5": "0fa57407a774208d3b198478566ff27f"
+  },
+  {
+    "path": "task/address.js",
+    "md5": "9393d94a94b3c5552f0f679b9bc64ca1"
+  },
+  {
+    "path": "task/detail.js",
+    "md5": "2ee1af0ea56e99bf4529c915648bcc9b"
+  },
+  {
+    "path": "task/fee.js",
+    "md5": "2baab4423ab00abf7a1bce4686b96f69"
+  },
+  {
+    "path": "task/finish.js",
+    "md5": "21d04b06efc54f9b6f49911faf9db52a"
+  },
+  {
+    "path": "task/friends.js",
+    "md5": "d69856ec829bb5568e10e365dbcb807b"
+  },
+  {
+    "path": "task/group.js",
+    "md5": "f176078f4a4afc0915b14b31128ade51"
+  },
+  {
+    "path": "task/help.js",
+    "md5": "2feb93ad0a5310ee1851b0b27504380f"
+  },
+  {
+    "path": "task/index.js",
+    "md5": "3cb372cc74a4cd4ebd3d7f5e46258dc1"
+  },
+  {
+    "path": "task/progress.js",
+    "md5": "907d0f44dcc1d361c5cb3d3d2a11a4b0"
+  },
+  {
+    "path": "task/video.js",
+    "md5": "70d85a94fe0cb5931538d9657b3e8f7d"
+  },
+  {
+    "path": "test/bairdtest.js",
+    "md5": "f59e3c77b31f7be5ee7935ed9181afe0"
+  },
+  {
+    "path": "user/attentionlist.js",
+    "md5": "078029e7c4d96b9303d1b424f4cb3d13"
+  },
+  {
+    "path": "user/credit.js",
+    "md5": "7103db018c6d25d619a9bec254895478"
+  },
+  {
+    "path": "user/creditList.js",
+    "md5": "12d7e8c95474b4f3bcdaa494bfdff6d3"
+  },
+  {
+    "path": "user/editGroupInfo.js",
+    "md5": "88edc2dc3b8be043238b9119b76f5ace"
+  },
+  {
+    "path": "user/editorInfo.js",
+    "md5": "16404097a0063a51bea928a1a6ed7c69"
+  },
+  {
+    "path": "user/groupDetail.js",
+    "md5": "4e2372f4dad4e6f03846bafec3db64ff"
+  },
+  {
+    "path": "user/grouplist.js",
+    "md5": "5f2c17ffb04f137093c1545b8ba1092e"
+  },
+  {
+    "path": "user/groupMemberlist.js",
+    "md5": "4c5695010a431182b7768d7e0bd016b5"
+  },
+  {
+    "path": "user/help.js",
+    "md5": "7d132f8412a6b557d4291158ddb1ef2f"
+  },
+  {
+    "path": "user/index.js",
+    "md5": "64949cab84593317a865c4fc30bb641d"
+  },
+  {
+    "path": "user/info.js",
+    "md5": "4b5d4fdf4bb62d6ea6f97ae76c84ce7b"
+  },
+  {
+    "path": "user/list.js",
+    "md5": "ba160e3b46241f34047255c0ecb01edd"
+  },
+  {
+    "path": "user/replace.js",
+    "md5": "84fb51c456c0a516ea0be0571b53d9f0"
+  },
+  {
+    "path": "user/rulesShow.js",
+    "md5": "bd90611f857fd7e5fcccd254bceb2d63"
+  },
+  {
+    "path": "user/set.js",
+    "md5": "4a898031b48e177b26e6c7a44e244347"
+  },
+  {
+    "path": "wallet/commonProblems.js",
+    "md5": "e8afe85dfd51f0c66cef44580a573930"
+  },
+  {
+    "path": "wallet/freezingPoints.js",
+    "md5": "d0c46b05fae46e8800220a38207b97ff"
+  },
+  {
+    "path": "wallet/IDAuthentication.js",
+    "md5": "356d9958221b587b12b269ff531140df"
+  },
+  {
+    "path": "wallet/index.js",
+    "md5": "5323b3b6aaeb02154f4d6d1fd0038ee1"
+  },
+  {
+    "path": "wallet/walletRecord.js",
+    "md5": "edda05d7c9f68aaed40b03943c556384"
+  },
+  {
+    "path": "withdrawal/detail.js",
+    "md5": "494af25c95a0a1181ca303175f337317"
+  },
+  {
+    "path": "withdrawal/index.js",
+    "md5": "f2bea6124bbe33c7a8ed3aa855995a4a"
+  },
+  {
+    "path": "withdrawal/record.js",
+    "md5": "73fdab17103d1e26a6d51af5caa5902e"
+  },
+  {
+    "path": "withdrawal/way.js",
+    "md5": "84e3a796c165319b2245efd562c40a18"
+  }
+]

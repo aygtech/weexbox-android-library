@@ -45,7 +45,7 @@ class MainActivity : WBBaseActivity(), WBBaseActivity.HaveFragmentListener {
                 var router = Router()
                 router.closeFrom = 1
                 router.closeCount = 2
-                router.closeFromLeftToRight = false
+                router.closeFromBottomToTop = false
                 router.name = "aaaa"
                 val map = HashMap<String, Int>()
                 map.put("xixi", xixi + 1)
