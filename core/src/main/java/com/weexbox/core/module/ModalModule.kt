@@ -104,7 +104,7 @@ class ModalModule : BaseModule() {
         if (options["title"] != null){
             builder.setTitle(options["title"] as String)
         }
-       
+
         builder.create().show()
     }
 
