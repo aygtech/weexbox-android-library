@@ -8,6 +8,7 @@ import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
 import com.weexbox.core.model.Result
 import com.weexbox.core.util.LoadDialogUtil
+import java.math.BigDecimal
 import java.util.*
 
 
@@ -110,7 +111,11 @@ class ModalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun showToast(options: Map<String, Any>) {
-        Toast.makeText(getActivity().applicationContext, options["text"] as String, options["duration"] as Int * 1000).show()
+        if (options["duration"] is Int){
+            Toast.makeText(getActivity().applicationContext, options["text"] as String, options["duration"] as Int * 1000).show()
+        } else if (options["duration"] is BigDecimal){
+            Toast.makeText(getActivity().applicationContext, options["text"] as String, ((options["duration"] as BigDecimal).toDouble() * 1000) as Int).show()
+        }
     }
 
     @JSMethod(uiThread = true)
