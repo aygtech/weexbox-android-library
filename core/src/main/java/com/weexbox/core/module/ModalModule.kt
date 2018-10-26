@@ -114,7 +114,7 @@ class ModalModule : BaseModule() {
         if (options["duration"] is Int){
             Toast.makeText(getActivity().applicationContext, options["text"] as String, options["duration"] as Int * 1000).show()
         } else if (options["duration"] is BigDecimal){
-            Toast.makeText(getActivity().applicationContext, options["text"] as String, ((options["duration"] as BigDecimal).toDouble() * 1000) as Int).show()
+            Toast.makeText(getActivity().applicationContext, options["text"] as String, ((options["duration"] as BigDecimal).toDouble() * 1000).toInt()).show()
         }
     }
 
