@@ -45,14 +45,14 @@ object UpdateManager {
         UpdateSuccess, // "更新成功"
     }
 
-    private lateinit var completion: Completion
+    private var completion: Completion? = null
 
     private const val resourceName = "weexbox-update"
     private const val oneName = "update-one"
     private const val twoName = "update-two"
     private const val workingNameKey = "update-working-key"
     private const val sharedPreferencesName = "update-sharedPreferences"
-    private val workingName = WeexBoxEngine.application.applicationContext.getSharedPreferences(sharedPreferencesName, 0).getString(workingNameKey, oneName)
+    private val workingName = WeexBoxEngine.application.getSharedPreferences(sharedPreferencesName, 0).getString(workingNameKey, oneName)
     private var backupName = if (workingName == oneName) twoName else oneName
     private const val zipName = "www.zip"
     private const val md5Name = "update-md5.json"
@@ -196,7 +196,7 @@ object UpdateManager {
 
     /// 加载本地的config
     private fun loadLocalConfig() {
-        val inputStream = WeexBoxEngine.application.applicationContext.assets.open(resourceConfigUrl)
+        val inputStream = WeexBoxEngine.application.assets.open(resourceConfigUrl)
         resourceConfig = IOUtils.toString(inputStream, "UTF-8").toObject(UpdateConfig::class.java)
         workingConfig = loadConfig(workingConfigUrl)
         backupConfig = loadConfig(backupConfigUrl)
@@ -212,7 +212,7 @@ object UpdateManager {
 
     /// 加载本地的Md5
     private fun loadLocalMd5() {
-        val inputStream = WeexBoxEngine.application.applicationContext.assets.open(resourceMd5Url)
+        val inputStream = WeexBoxEngine.application.assets.open(resourceMd5Url)
         resourceMd5 = IOUtils.toString(inputStream, "UTF-8").toObject(object : TypeReference<List<UpdateMd5>>() {})
     }
 
@@ -269,7 +269,7 @@ object UpdateManager {
             try {
                 FileUtils.deleteDirectory(to)
                 var unzipFilesCount = 0
-                val inputStream = WeexBoxEngine.application.applicationContext.assets.open(resourceZipUrl)
+                val inputStream = WeexBoxEngine.application.assets.open(resourceZipUrl)
                 ZipUtil.iterate(inputStream) { `in`, zipEntry ->
                     val name = zipEntry.name
                     if (name != null) {
@@ -322,14 +322,14 @@ object UpdateManager {
         // 保存Md5到数据库中
         saveMd5(md5, db)
         // 保存config
-        val inputStream = WeexBoxEngine.application.applicationContext.assets.open(resourceConfigUrl)
+        val inputStream = WeexBoxEngine.application.assets.open(resourceConfigUrl)
         FileUtils.copyInputStreamToFile(inputStream, File(to, configName))
         loadLocalConfig()
         if (to == backupUrl) {
             getServer()
         } else {
             // 解压到了工作目录，可以进入App
-            WeexBoxEngine.application.applicationContext.getSharedPreferences(sharedPreferencesName, 0).edit().putString(workingNameKey, workingName).commit()
+            WeexBoxEngine.application.getSharedPreferences(sharedPreferencesName, 0).edit().putString(workingNameKey, workingName).commit()
             enterApp()
         }
     }
@@ -438,18 +438,21 @@ object UpdateManager {
         complete(UpdateState.DownloadFileSuccess)
         saveMd5(files, backupRealm)
         saveConfig()
-        WeexBoxEngine.application.applicationContext.getSharedPreferences(sharedPreferencesName, 0).edit().putString(workingNameKey, backupName).commit()
+        WeexBoxEngine.application.getSharedPreferences(sharedPreferencesName, 0).edit().putString(workingNameKey, backupName).commit()
         complete(UpdateState.UpdateSuccess, 0, null, backupUrl)
     }
 
     private fun complete(state: UpdateState, progress: Int = 0, error: Throwable? = null, url: File? = null) {
         if (state == UpdateState.UpdateSuccess) {
             if (forceUpdate || (!forceUpdate && url == workingUrl)) {
-                completion(state, progress, error, url)
+                completion?.invoke(state, progress, error, url)
             }
         }
         else {
-            completion(state, progress, error, url)
+            completion?.invoke(state, progress, error, url)
+        }
+        if (state == UpdateState.UpdateSuccess || error != null) {
+            completion = null
         }
     }
 
