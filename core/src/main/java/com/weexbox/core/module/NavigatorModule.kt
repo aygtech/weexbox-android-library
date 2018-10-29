@@ -71,6 +71,12 @@ class NavigatorModule : BaseModule() {
                         getActionbar().setBackButtonDrawable(View.OnClickListener {
                             completionCallback.invokeAndKeepAlive(result)
                         }, info.get("image") as String?)
+                    } else {
+                        getActionbar().setBackButton (object : View.OnClickListener{
+                            override fun onClick(v: View?) {
+                                completionCallback.invokeAndKeepAlive(result)
+                            }
+                        })
                     }
                 } else if (i == 1){
                     info = items[1]
