@@ -19,6 +19,8 @@ open class WBBaseFragment: Fragment() {
     var router: Router? = null
     // 通用事件
     var events: MutableMap<String, EventCallback> = TreeMap()
+    // 返回键操作
+    var backPressed: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +45,7 @@ open class WBBaseFragment: Fragment() {
     open fun doFragmentPause() {}
 
     open fun onBackPressed(): Boolean {
-        return false
+        return backPressed
     }
 
     open fun onBackPressedAction() {

@@ -163,6 +163,7 @@ class NavigatorModule : BaseModule() {
     //物理返回键
     @JSMethod(uiThread = true)
     fun onBackPressed(completionCallback: JSCallback) {
+        getFragment()!!.backPressed = true
         Event.register(this!!.getFragment()!!, getFragment()!!.getFragmentSimpleName()!!, object : EventCallback{
             override fun invoke(p1: Map<String, Any>?) {
                 completionCallback.invokeAndKeepAlive(null)
