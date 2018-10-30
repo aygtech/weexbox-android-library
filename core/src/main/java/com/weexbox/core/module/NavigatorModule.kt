@@ -7,6 +7,8 @@ import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
 import com.taobao.weex.common.WXModule
 import com.weexbox.core.controller.WBBaseActivity
+import com.weexbox.core.event.Event
+import com.weexbox.core.event.EventCallback
 import com.weexbox.core.model.Result
 import com.weexbox.core.widget.SimpleToolbar
 import java.util.*
@@ -156,6 +158,16 @@ class NavigatorModule : BaseModule() {
         if (getActionbar() != null){
             getActionbar().setAcitionbarAndStatusbarBackground("#" + color)
         }
+    }
+
+    //物理返回键
+    @JSMethod(uiThread = true)
+    fun onBackPressed(completionCallback: JSCallback) {
+        Event.register(this!!.getFragment()!!, getFragment()!!.getFragmentSimpleName()!!, object : EventCallback{
+            override fun invoke(p1: Map<String, Any>?) {
+                completionCallback.invokeAndKeepAlive(null)
+            }
+        })
     }
 
     fun getActionbar(): SimpleToolbar {

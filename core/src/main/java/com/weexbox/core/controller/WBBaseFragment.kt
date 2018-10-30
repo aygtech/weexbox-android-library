@@ -46,4 +46,7 @@ open class WBBaseFragment: Fragment() {
         return false
     }
 
+    open fun onBackPressedAction() {
+
+    }
 }

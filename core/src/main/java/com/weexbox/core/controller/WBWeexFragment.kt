@@ -23,6 +23,7 @@ import com.taobao.weex.common.IWXDebugProxy
 import com.taobao.weex.common.WXRenderStrategy
 import com.taobao.weex.ui.component.NestedContainer
 import com.taobao.weex.utils.WXFileUtils
+import com.weexbox.core.event.Event
 import com.weexbox.core.https.HotRefreshManager
 import com.weexbox.core.update.UpdateManager
 import com.weexbox.core.util.WXAnalyzerDelegate
@@ -240,5 +241,21 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
                     .unregisterReceiver(mBroadcastReceiver!!)
             mBroadcastReceiver = null
         }
+    }
+
+    /**
+     * 获取页面名称
+     * 代码混淆后不能对应上
+     * @return
+     */
+    open fun getFragmentSimpleName(): String? {
+        return if (router != null && router!!.url != null) {
+            router!!.url + id
+        } else "WBWeexFragment" + id
+    }
+
+    override fun onBackPressedAction() {
+        super.onBackPressedAction()
+        Event.emit(this!!.getFragmentSimpleName()!!, null)
     }
 }
