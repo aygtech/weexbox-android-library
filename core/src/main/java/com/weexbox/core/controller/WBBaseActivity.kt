@@ -19,6 +19,7 @@ import com.weexbox.core.event.EventCallback
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.ActivityManager
 import com.weexbox.core.util.EventBusUtil
+import com.weexbox.core.util.LoadDialogUtil
 import com.weexbox.core.util.SelectImageUtil
 import com.weexbox.core.widget.SimpleToolbar
 import org.greenrobot.eventbus.Subscribe
@@ -65,6 +66,7 @@ open class WBBaseActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        LoadDialogUtil.clear()
         ActivityManager.getInstance().removeActivity(this)
         if (isRegisterEventBus() && inCreateRegisterEventBus()) {
             EventBusUtil.unregister(this)

@@ -17,6 +17,15 @@ public class LoadDialogUtil {
     public static int height = 68;
     public static boolean isCancel = true;
 
+    public static void clear() {
+        if (hud != null) {
+            hud.dismiss();
+        }
+        if (progressHUD != null){
+            progressHUD.dismiss();
+        }
+    }
+
     public static void close() {
         if (hud != null) {
             hud.dismiss();
