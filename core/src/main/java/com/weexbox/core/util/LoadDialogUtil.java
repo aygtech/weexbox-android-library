@@ -20,9 +20,11 @@ public class LoadDialogUtil {
     public static void clear() {
         if (hud != null) {
             hud.dismiss();
+            hud = null;
         }
         if (progressHUD != null){
             progressHUD.dismiss();
+            progressHUD = null;
         }
     }
 
