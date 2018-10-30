@@ -4,20 +4,20 @@ import android.content.Context;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-/**
- * Author:leon.wen
- * Time:2018/9/10   14:45
- * Description:This is LoadDialogUtil
- */
-public class LoadDialogUtil {
+public class LoadDialogHelper {
 
-    private static KProgressHUD hud;
-    private static KProgressHUD progressHUD;
-    public static int width = 68;
-    public static int height = 68;
-    public static boolean isCancel = true;
+    private KProgressHUD hud;
+    private KProgressHUD progressHUD;
+    private Context mConetxt;
+    public int width = 68;
+    public int height = 68;
+    public boolean isCancel = true;
 
-    public static void clear() {
+    public LoadDialogHelper(Context mConetxt){
+        this.mConetxt = mConetxt;
+    }
+
+    public void clear() {
         if (hud != null) {
             hud.dismiss();
             hud = null;
@@ -28,13 +28,13 @@ public class LoadDialogUtil {
         }
     }
 
-    public static void close() {
+    public void close() {
         if (hud != null) {
             hud.dismiss();
         }
     }
 
-    public static void showLoad(Context context, boolean setTransparent) {
+    public void showLoad(Context context, boolean setTransparent) {
         close();
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -45,7 +45,7 @@ public class LoadDialogUtil {
         hud.show();
     }
 
-    public static void showLoadWithText(Context context, String text) {
+    public void showLoadWithText(Context context, String text) {
         close();
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -55,7 +55,7 @@ public class LoadDialogUtil {
         hud.show();
     }
 
-    public static void showLoadWithText(Context context, String text, boolean setTransparent) {
+    public void showLoadWithText(Context context, String text, boolean setTransparent) {
         close();
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -66,7 +66,7 @@ public class LoadDialogUtil {
         hud.show();
     }
 
-    public static void showLoadWithTextAndDetail(Context context, String text, String detail) {
+    public void showLoadWithTextAndDetail(Context context, String text, String detail) {
         close();
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -78,7 +78,7 @@ public class LoadDialogUtil {
         hud.show();
     }
 
-    public static void showLoadWithTextAndDetail(Context context, String text, String detail, boolean setTransparent) {
+    public void showLoadWithTextAndDetail(Context context, String text, String detail, boolean setTransparent) {
         close();
         hud = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -90,7 +90,7 @@ public class LoadDialogUtil {
         hud.show();
     }
 
-    public static void showProgress(Context context) {
+    public void showProgress(Context context) {
         progressHUD = KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
                 .setSize(width, height)
@@ -98,7 +98,7 @@ public class LoadDialogUtil {
                 .show();
     }
 
-    public static void showProgressWithText(Context context, String text, int progress) {
+    public void showProgressWithText(Context context, String text, int progress) {
         if (progressHUD == null) {
             progressHUD = KProgressHUD.create(context)
                     .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)

@@ -139,6 +139,8 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
         super.onDestroy()
         mInstance?.onActivityDestroy()
         mWXHandler?.obtainMessage(HotRefreshManager.HOT_REFRESH_DISCONNECT)?.sendToTarget()
+        mWXHandler?.removeCallbacksAndMessages(null)
+        HotRefreshManager.getInstance().setHandler(null)
 //        unregisterBroadcastReceiver()
         mWxAnalyzerDelegate?.onDestroy()
     }

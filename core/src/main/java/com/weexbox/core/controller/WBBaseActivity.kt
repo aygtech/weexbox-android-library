@@ -12,20 +12,13 @@ import android.widget.Toast
 import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
-import com.taobao.weex.WXSDKInstance
 import com.weexbox.core.R
-import com.weexbox.core.event.Event
-import com.weexbox.core.event.EventCallback
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.ActivityManager
 import com.weexbox.core.util.EventBusUtil
-import com.weexbox.core.util.LoadDialogUtil
+import com.weexbox.core.util.LoadDialogHelper
 import com.weexbox.core.util.SelectImageUtil
 import com.weexbox.core.widget.SimpleToolbar
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Author: Mario
@@ -37,6 +30,7 @@ open class WBBaseActivity : AppCompatActivity() {
 
     var router: Router? = null
     lateinit var toolbar: SimpleToolbar
+    var loadDialogHelper: LoadDialogHelper = LoadDialogHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +60,7 @@ open class WBBaseActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        LoadDialogUtil.clear()
+        loadDialogHelper.clear()
         ActivityManager.getInstance().removeActivity(this)
         if (isRegisterEventBus() && inCreateRegisterEventBus()) {
             EventBusUtil.unregister(this)

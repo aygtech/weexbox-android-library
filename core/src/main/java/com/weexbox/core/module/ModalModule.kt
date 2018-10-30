@@ -7,7 +7,6 @@ import android.widget.Toast
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
 import com.weexbox.core.model.Result
-import com.weexbox.core.util.LoadDialogUtil
 import java.math.BigDecimal
 import java.util.*
 
@@ -120,7 +119,7 @@ class ModalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun showLoading(text: String) {
-        LoadDialogUtil.showLoadWithText(getActivity(), text)
+        getActivity().loadDialogHelper.showLoadWithText(getActivity(), text)
     }
 
 //    @JSMethod(uiThread = true)
@@ -134,11 +133,11 @@ class ModalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun showProgress(options: Map<String, Any>) {
-        LoadDialogUtil.showProgressWithText(getActivity(), options["text"] as String, options["progress"] as Int)
+        getActivity().loadDialogHelper.showProgressWithText(getActivity(), options["text"] as String, options["progress"] as Int)
     }
 
     @JSMethod(uiThread = true)
     fun dismiss() {
-        LoadDialogUtil.close()
+        getActivity().loadDialogHelper.close()
     }
 }
