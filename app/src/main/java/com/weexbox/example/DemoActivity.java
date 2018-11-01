@@ -14,7 +14,6 @@ import com.weexbox.core.WeexBoxEngine;
 import com.weexbox.core.controller.WBBaseActivity;
 import com.weexbox.core.router.Router;
 import com.weexbox.core.update.UpdateManager;
-import com.weexbox.core.util.LoadDialogUtil;
 
 import java.io.File;
 import java.util.HashMap;

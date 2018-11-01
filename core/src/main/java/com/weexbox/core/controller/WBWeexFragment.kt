@@ -252,12 +252,12 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
      */
     open fun getFragmentSimpleName(): String? {
         return if (router != null && router!!.url != null) {
-            router!!.url + id
-        } else "WBWeexFragment" + id
+            router!!.url
+        } else "WBWeexFragment"
     }
 
     override fun onBackPressedAction() {
         super.onBackPressedAction()
-        Event.emit(this!!.getFragmentSimpleName()!!, null)
+        Event.emit(this!!.getFragmentSimpleName()!! + id, null)
     }
 }
