@@ -260,5 +260,5 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
         super.onBackPressedAction()
         Event.emit(this!!.getFragmentSimpleName()!! + id, null)
     }
-    
+
 }
