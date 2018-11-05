@@ -28,7 +28,7 @@ object WeexBoxEngine {
 
     lateinit var application: Application
 
-    fun setup(application: Application, weexConfig: InitConfig?) {
+    fun setup(application: Application, weexConfig: InitConfig? = null) {
         this.application = application
 
         //初始化图片框架
