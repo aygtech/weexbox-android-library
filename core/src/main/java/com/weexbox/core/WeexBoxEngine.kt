@@ -7,9 +7,7 @@ import com.alibaba.android.bindingx.plugin.weex.BindingX
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.taobao.weex.InitConfig
-import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
-import com.taobao.weex.bridge.WXBridgeManager
 import com.weexbox.core.adapter.ImageAdapter
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
@@ -30,7 +28,7 @@ object WeexBoxEngine {
 
     lateinit var application: Application
 
-    fun setup(application: Application) {
+    fun setup(application: Application, weexConfig: InitConfig?) {
         this.application = application
 
         //初始化图片框架
@@ -38,7 +36,7 @@ object WeexBoxEngine {
 
         Realm.init(application)
         Logger.addLogAdapter(AndroidLogAdapter())
-        initWeex()
+        initWeex(weexConfig)
     }
 
     /**
@@ -56,12 +54,11 @@ object WeexBoxEngine {
     }
 
 
-    private fun initWeex() {
+    private fun initWeex(config: InitConfig?) {
 //        WXBridgeManager.updateGlobalConfig("wson_on")
 //        WXEnvironment.setOpenDebugLog(true)
 //        WXEnvironment.setApkDebugable(true)
-        val config = InitConfig.Builder().setImgAdapter(ImageAdapter()).build()
-        WXSDKEngine.initialize(application, config)
+        WXSDKEngine.initialize(application, config ?: InitConfig.Builder().setImgAdapter(ImageAdapter()).build())
         BindingX.register()
         registerModule()
         registerRouter()
