@@ -34,7 +34,7 @@ public class DemoActivity extends WBBaseActivity {
         getRouter().setNavBarHidden(true);
         setContentView(R.layout.activity_demo);
 
-        //WeexBoxEngine.INSTANCE.initFloatingBtn(DemoActivity.this, BtnSerivice.class);
+        WeexBoxEngine.INSTANCE.initFloatingBtn(DemoActivity.this, BtnSerivice.class);
 
         findViewById(R.id.oooo).setOnClickListener(new View.OnClickListener() {
             @Override

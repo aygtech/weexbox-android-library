@@ -13,6 +13,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.R
+import com.weexbox.core.extension.getParameters
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.ActivityManager
 import com.weexbox.core.util.EventBusUtil
@@ -123,75 +124,65 @@ open class WBBaseActivity : AppCompatActivity() {
      * @param code
      */
     private fun handleDecodeInternally(url: String) {
-        val code = url.replace("\\", "/")
-        if (!TextUtils.isEmpty(code)) {
-            var uri = Uri.parse(code)
-            if (uri.queryParameterNames.contains("bundle")) {
-                WXEnvironment.sDynamicMode = uri.getBooleanQueryParameter("debug", false)
-                WXEnvironment.sDynamicUrl = uri.getQueryParameter("bundle")
-                val tip = if (WXEnvironment.sDynamicMode) "Has switched to Dynamic Mode" else "Has switched to Normal Mode"
-                Toast.makeText(applicationContext, tip, Toast.LENGTH_SHORT).show()
-                finish()
-                return
-            } else if (uri.queryParameterNames.contains("_wx_devtool")) {   //调试debug（当前页面是weex页面）
-                WXEnvironment.sRemoteDebugProxyUrl = uri.getQueryParameter("_wx_devtool")
-                WXEnvironment.sDebugServerConnectable = true
-                WXSDKEngine.reload()
-                Toast.makeText(applicationContext, "devtool", Toast.LENGTH_SHORT).show()
-                return
-            } else if (code.contains("_wx_debug")) {
-                uri = Uri.parse(code)
-                val debug_url = uri.getQueryParameter("_wx_debug")
-                // todo 新的weexCore没有这个方法
-                switchDebugModel(true, debug_url)
-                finish()
-            } else {    //调试debug（当前页面是原生页面）
-                refreshWeexUrl(code)
-            }
+        // 处理windows上的dev路径带有"\\"
+        val parameters = url.replace("\\", "/").getParameters()
+        val devtoolUrl = parameters["_wx_devtool"]
+        val tplUrl = parameters["_wx_tpl"]
+        if (devtoolUrl != null) {
+            // 连服务
+            WXEnvironment.sRemoteDebugProxyUrl = devtoolUrl
+            WXEnvironment.sDebugServerConnectable = true
+            WXSDKEngine.reload()
+        } else if (tplUrl != null) {
+            // 连页面
+            val router = Router()
+            router.name = Router.NAME_WEEX
+            router.url = tplUrl
+            router.open(this)
         }
     }
 
-    /**
-     * 处理weexdebug 模式下，扫描单个weex.vue时的刷新界面
-     * @param code vue的路径
-     */
-    fun refreshWeexUrl(code: String) {
-        Toast.makeText(applicationContext, code, Toast.LENGTH_SHORT).show()
-        val intent = Intent("com.weexbox.core.controller.openurl")
-        intent.setPackage(applicationContext!!.packageName)
-        var router = Router()
-        router.url = code
-        intent.putExtra(Router.EXTRA_NAME, router);
-        startActivity(intent)
-    }
+//    /**
+//     * 处理weexdebug 模式下，扫描单个weex.vue时的刷新界面
+//     * @param code vue的路径
+//     */
+//    fun refreshWeexUrl(code: String) {
+//        Toast.makeText(applicationContext, code, Toast.LENGTH_SHORT).show()
+//        val intent = Intent("com.weexbox.core.controller.openurl")
+//        intent.setPackage(applicationContext!!.packageName)
+//        var router = Router()
+//        router.url = code
+//        intent.putExtra(Router.EXTRA_NAME, router);
+//        startActivity(intent)
+//    }
 
-    fun switchDebugModel(debug: Boolean, debugUrl: String) {
-        if (!WXEnvironment.isApkDebugable()) {
-            return
-        }
-        if (debug) {
-            WXEnvironment.sDebugMode = true
-            WXEnvironment.sDebugWsUrl = debugUrl
-            try {
-                val cls = Class.forName("com.taobao.weex.WXDebugTool")
-                val m = cls.getMethod("connect", String::class.java)
-                m.invoke(cls, debugUrl)
-            } catch (e: Exception) {
-                Log.d("weex", "WXDebugTool not found!")
-            }
-
-        } else {
-            WXEnvironment.sDebugMode = false
-            WXEnvironment.sDebugWsUrl = null
-            try {
-                val cls = Class.forName("com.taobao.weex.WXDebugTool")
-                val m = cls.getMethod("close")
-                m.invoke(cls)
-            } catch (e: Exception) {
-                Log.d("weex", "WXDebugTool not found!")
-            }
-        }
-    }
+//    fun switchDebugModel(debug: Boolean, debugUrl: String) {
+//        if (!WXEnvironment.isApkDebugable()) {
+//            return
+//        }
+//        if (debug) {
+//            WXEnvironment.sDebugMode = true
+//            WXEnvironment.sDebugWsUrl = debugUrl
+//            try {
+//                val cls = Class.forName("com.taobao.weex.WXDebugTool")
+//                val m = cls.getMethod("connect", String::class.java)
+//                m.invoke(cls, debugUrl)
+//            } catch (e: Exception) {
+//                Log.d("weex", "WXDebugTool not found!")
+//            }
+//
+//        } else {
+//            WXEnvironment.sDebugMode = false
+//            WXEnvironment.sDebugWsUrl = null
+//            try {
+//                val cls = Class.forName("com.taobao.weex.WXDebugTool")
+//                val m = cls.getMethod("close")
+//                m.invoke(cls)
+//            } catch (e: Exception) {
+//                Log.d("weex", "WXDebugTool not found!")
+//            }
+//        }
+//    }
 
 
 

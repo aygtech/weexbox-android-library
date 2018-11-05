@@ -7,7 +7,9 @@ import com.alibaba.android.bindingx.plugin.weex.BindingX
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.taobao.weex.InitConfig
+import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
+import com.taobao.weex.bridge.WXBridgeManager
 import com.weexbox.core.adapter.ImageAdapter
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
@@ -28,7 +30,7 @@ object WeexBoxEngine {
 
     lateinit var application: Application
 
-    fun initialize(application: Application) {
+    fun setup(application: Application) {
         this.application = application
 
         //初始化图片框架
@@ -54,16 +56,10 @@ object WeexBoxEngine {
     }
 
 
-
-
-
-
-
-
-
-
-
     private fun initWeex() {
+//        WXBridgeManager.updateGlobalConfig("wson_on")
+//        WXEnvironment.setOpenDebugLog(true)
+//        WXEnvironment.setApkDebugable(true)
         val config = InitConfig.Builder().setImgAdapter(ImageAdapter()).build()
         WXSDKEngine.initialize(application, config)
         BindingX.register()
