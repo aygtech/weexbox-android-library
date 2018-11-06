@@ -24,12 +24,13 @@ import okhttp3.Response;
  * Created by freeson on 16/7/28.
  */
 public abstract class HttpCallback<T> extends Callback<T> {
+    public static final int NO_BACK_CODE = -1;
 
-    protected static final int NET_ERROR = -22;
-    protected static final int JSON_EXCEPTION = -33;
-    protected static final int CANCEL = -44;
+    public static final int NET_ERROR = -22;
+    public static final int JSON_EXCEPTION = -33;
+    public static final int CANCEL = -44;
 
-    protected static final int RIGHT_CODE = 200;
+    public static final int RIGHT_CODE = 200;
     private static String keyCode = "code";
     private static String keyData = "data";
     private static String keyMessage = "message";
@@ -88,12 +89,15 @@ public abstract class HttpCallback<T> extends Callback<T> {
     @Override
     public final void onError(Call call, final Exception e, int requestId) {
         if (call.isCanceled()) {
-            onFail(requestId, CANCEL, e.getMessage());
+            onFail(requestId, CANCEL, NO_BACK_CODE, e.getMessage());
         } else {
-            if (this.errorCode == RIGHT_CODE) {
-                this.errorCode = NET_ERROR;
+            if (this.errorCode == RIGHT_CODE){
+                onFail(requestId, NET_ERROR, NO_BACK_CODE, e.getMessage());
+            } else if (this.errorCode == JSON_EXCEPTION) {
+                onFail(requestId, this.errorCode, NO_BACK_CODE, e.getMessage());
+            } else {
+                onFail(requestId, RIGHT_CODE, this.errorCode, e.getMessage());
             }
-            onFail(requestId, this.errorCode, e.getMessage());
         }
     }
 
@@ -148,7 +152,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
 
     public abstract void onSuccess(T entity, int requestId);
 
-    public abstract void onFail(int requestId, int errorCode, String errorMessage);
+    public abstract void onFail(int requestId, int errorMyCode, int errorBackCode, String errorMessage);
 
     /***
      * @param status the http request status, the value maybe

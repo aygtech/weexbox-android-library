@@ -592,7 +592,7 @@ public final class ImageUtil {
             }
 
             @Override
-            public void onFail(int requestId, int errorCode, String errorMessage) {
+            public void onFail(int requestId, int errorMyCode, int errorBackCode, String errorMessage) {
                 ToastUtil.showLongToast(context, "保存失败，请重试～");
             }
         });
