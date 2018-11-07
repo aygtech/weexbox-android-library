@@ -89,14 +89,20 @@ public abstract class HttpCallback<T> extends Callback<T> {
     @Override
     public final void onError(Call call, final Exception e, int requestId) {
         if (call.isCanceled()) {
-            onFail(requestId, CANCEL, e.getMessage(), null);
+            onFail(requestId, CANCEL, NO_BACK_CODE, e.getMessage(), null);
         } else {
             if (this.errorCode == RIGHT_CODE){
-                onFail(requestId, NET_ERROR, e.getMessage(), null);
+                onFail(requestId, NET_ERROR, NO_BACK_CODE, e.getMessage(), null);
             } else if (this.errorCode == JSON_EXCEPTION) {
-                onFail(requestId, this.errorCode, e.getMessage(), null);
+                onFail(requestId, this.errorCode, NO_BACK_CODE, e.getMessage(), null);
             } else {
-                onFail(requestId, RIGHT_CODE, "请求成功，业务上返回错误码", e.getMessage());
+                try {
+                    JSONObject jsonObject = new JSONObject(e.getMessage());
+                    this.msg = jsonObject.optString(keyMessage);
+                    onFail(requestId, RIGHT_CODE, this.errorCode, this.msg, e.getMessage());
+                } catch (JSONException e1) {
+                    onFail(requestId, RIGHT_CODE, this.errorCode, null, e.getMessage());
+                }
             }
         }
     }
@@ -128,7 +134,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
                 this.msg = jsonObject.optString(keyMessage);
                 if (code != rightCode && code != rightCode2) {
                     this.errorCode = code;
-                    throw new Exception(string);
+                    throw new Exception(this.msg);
                 }
                 final String data = jsonObject.optString(keyData);
                 t = parseEntity(data, requestId);
@@ -152,7 +158,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
 
     public abstract void onSuccess(T entity, int requestId);
 
-    public abstract void onFail(int requestId, int errorCode, String errorMessage, String data);
+    public abstract void onFail(int requestId, int errorMyCode, int errorBackCode, String errorMessage, String data);
 
     /***
      * @param status the http request status, the value maybe
