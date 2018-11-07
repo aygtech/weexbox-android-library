@@ -113,10 +113,10 @@ public class OkHttpUtils {
                         return;
                     }
 
-                    if (!finalCallback.validateReponse(response, id)) {
-                        sendFailResultCallback(call, new IOException("request failed , reponse's code is : " + response.code()), finalCallback, id);
-                        return;
-                    }
+//                    if (!finalCallback.validateReponse(response, id)) {
+//                        sendFailResultCallback(call, new IOException("request failed , reponse's code is : " + response.code()), finalCallback, id);
+//                        return;
+//                    }
 
                     Object o = finalCallback.parseNetworkResponse(response, id);
                     sendSuccessResultCallback(o, finalCallback, id);
