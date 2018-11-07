@@ -89,14 +89,14 @@ public abstract class HttpCallback<T> extends Callback<T> {
     @Override
     public final void onError(Call call, final Exception e, int requestId) {
         if (call.isCanceled()) {
-            onFail(requestId, CANCEL, NO_BACK_CODE, e.getMessage());
+            onFail(requestId, CANCEL, e.getMessage(), null);
         } else {
             if (this.errorCode == RIGHT_CODE){
-                onFail(requestId, NET_ERROR, NO_BACK_CODE, e.getMessage());
+                onFail(requestId, NET_ERROR, e.getMessage(), null);
             } else if (this.errorCode == JSON_EXCEPTION) {
-                onFail(requestId, this.errorCode, NO_BACK_CODE, e.getMessage());
+                onFail(requestId, this.errorCode, e.getMessage(), null);
             } else {
-                onFail(requestId, RIGHT_CODE, this.errorCode, e.getMessage());
+                onFail(requestId, RIGHT_CODE, "请求成功，业务上返回错误码", e.getMessage());
             }
         }
     }
@@ -152,7 +152,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
 
     public abstract void onSuccess(T entity, int requestId);
 
-    public abstract void onFail(int requestId, int errorMyCode, int errorBackCode, String errorMessage);
+    public abstract void onFail(int requestId, int errorCode, String errorMessage, String data);
 
     /***
      * @param status the http request status, the value maybe
