@@ -3,6 +3,7 @@ package com.weexbox.example;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -72,8 +73,13 @@ public class DemoActivity extends WBBaseActivity {
 //                router.setParams(params);
 //                router.open(DemoActivity.this);
 
-                String data = "{\"message\":\"哈哈\",\"data\":\"\",\"code\":400204}";
-                ToastUtil.showShortToast(getApplicationContext(), ((Map<String, String>)JSON.parse(data)).get("message"));
+//                String data = "{\"message\":\"哈哈\",\"data\":\"\",\"code\":400204}";
+//                ToastUtil.showShortToast(getApplicationContext(), ((Map<String, String>)JSON.parse(data)).get("message"));
+
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("iquest://videodetails?id=39&source=web"));
+                startActivity(intent);
             }
         });
 
