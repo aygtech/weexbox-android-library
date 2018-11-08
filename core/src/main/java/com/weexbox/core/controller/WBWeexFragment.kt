@@ -113,13 +113,22 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
     override fun onStart() {
         super.onStart()
         mWxAnalyzerDelegate?.onStart()
-        mInstance?.fireGlobalEventCallback("viewDidAppear", null)
     }
 
     override fun onResume() {
         super.onResume()
         mInstance?.onActivityResume()
         mWxAnalyzerDelegate?.onResume()
+    }
+
+    override fun onFragmentResume() {
+        super.onFragmentResume()
+        mInstance?.fireGlobalEventCallback("viewDidAppear", null)
+    }
+
+    override fun onFragmentPause() {
+        super.onFragmentPause()
+        mInstance?.fireGlobalEventCallback("viewDidDisappear", null)
     }
 
     override fun onPause() {
@@ -132,7 +141,6 @@ open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRend
         super.onStop()
         mInstance?.onActivityStop()
         mWxAnalyzerDelegate?.onStop()
-        mInstance?.fireGlobalEventCallback("viewDidDisappear", null)
     }
 
     override fun onDestroy() {

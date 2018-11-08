@@ -44,6 +44,16 @@ open class WBBaseFragment: Fragment() {
 
     open fun doFragmentPause() {}
 
+    /**
+     * Fragment当前正在显示调用
+     */
+    open fun onFragmentResume() {}
+
+    /**
+     * Fragment当前不显示时调用
+     */
+    open fun onFragmentPause() {}
+
     open fun onBackPressed(): Boolean {
         return backPressed
     }
