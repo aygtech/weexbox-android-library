@@ -84,14 +84,22 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         super.onResume()
 
         registerWeexDebugBroadcast()
+    }
+
+    override fun onFragmentResume() {
+        super.onFragmentResume()
         mInstance?.fireGlobalEventCallback("viewDidAppear", null)
+    }
+
+    override fun onFragmentPause() {
+        super.onFragmentPause()
+        mInstance?.fireGlobalEventCallback("viewDidDisappear", null)
     }
 
     override fun onPause() {
         super.onPause()
 
         unregisterWeexDebugBroadcast()
-        mInstance?.fireGlobalEventCallback("viewDidDisappear", null)
     }
 
     override fun onException(instance: WXSDKInstance?, errCode: String?, msg: String?) {

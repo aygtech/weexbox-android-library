@@ -15,12 +15,17 @@ import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.R
 import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.extension.getParameters
+import com.weexbox.core.event.Event
+import com.weexbox.core.event.EventCallback
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.ActivityManager
 import com.weexbox.core.util.EventBusUtil
 import com.weexbox.core.util.LoadDialogHelper
 import com.weexbox.core.util.SelectImageUtil
 import com.weexbox.core.widget.SimpleToolbar
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 /**
  * Author: Mario
@@ -30,9 +35,21 @@ import com.weexbox.core.widget.SimpleToolbar
 
 open class WBBaseActivity : AppCompatActivity() {
 
+    // 路由
     var router: Router? = null
+    // 通用事件
+    var events: MutableMap<String, EventCallback> = TreeMap()
+    //导航栏
     lateinit var toolbar: SimpleToolbar
+    //hud
     var loadDialogHelper: LoadDialogHelper = LoadDialogHelper(this)
+
+    // 通用事件
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: Event) {
+        val callback = events[event.name]
+        callback?.invoke(event.info)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
