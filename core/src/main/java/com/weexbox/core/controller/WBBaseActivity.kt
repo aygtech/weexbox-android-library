@@ -13,6 +13,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.R
+import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.extension.getParameters
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.ActivityManager

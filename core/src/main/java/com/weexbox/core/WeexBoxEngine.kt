@@ -27,6 +27,13 @@ import io.realm.Realm
 object WeexBoxEngine {
 
     lateinit var application: Application
+    var isDebug = false
+        set(value) {
+            field = value
+            if (value) {
+//                initFloatingBtn(application, FloatingBtnService::class.java)
+            }
+        }
 
     fun setup(application: Application, weexConfig: InitConfig? = null) {
         this.application = application
@@ -43,22 +50,16 @@ object WeexBoxEngine {
      * 启动全局悬浮按钮service
      */
     fun initFloatingBtn(context: Context, service: Class<out FloatingBtnService>) {
-        if (FloatingBtnService.STATAG.equals("stop")) {
+        if (FloatingBtnService.STATAG == "stop") {
             val serviceIntent = Intent(context, service)
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                context.startForegroundService(serviceIntent)
-//            } else {
             context.startService(serviceIntent)
-//            }
         }
     }
 
 
     private fun initWeex(config: InitConfig?) {
-//        WXBridgeManager.updateGlobalConfig("wson_on")
-//        WXEnvironment.setOpenDebugLog(true)
-//        WXEnvironment.setApkDebugable(true)
-        WXSDKEngine.initialize(application, config ?: InitConfig.Builder().setImgAdapter(ImageAdapter()).build())
+        WXSDKEngine.initialize(application, config
+                ?: InitConfig.Builder().setImgAdapter(ImageAdapter()).build())
         BindingX.register()
         registerModule()
         registerRouter()

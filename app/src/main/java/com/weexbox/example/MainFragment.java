@@ -51,16 +51,4 @@ public class MainFragment extends WBWeexFragment {
             mRootView.requestLayout();
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        registerWeexDebugBroadcast();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        unregisterWeexDebugBroadcast();
-    }
 }

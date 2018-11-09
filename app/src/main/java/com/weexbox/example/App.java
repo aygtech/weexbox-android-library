@@ -17,7 +17,9 @@ public class App extends Application implements Application.ActivityLifecycleCal
         super.onCreate();
         application = this;
 
-        WeexBoxEngine.INSTANCE.setup(this);
+        WeexBoxEngine.INSTANCE.setup(this, null);
+        WeexBoxEngine.INSTANCE.setDebug(true);
+
         registerActivityLifecycleCallbacks(this);
 
         Router.Companion.register(Router.Companion.getNAME_WEEX(), MainActivity.class);
