@@ -79,15 +79,15 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onFragmentResume() {
+        super.onFragmentResume()
 
         registerWeexDebugBroadcast()
         sendViewDidAppear()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onFragmentPause() {
+        super.onFragmentPause()
 
         unregisterWeexDebugBroadcast()
         sendViewDidDisappear()

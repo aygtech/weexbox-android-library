@@ -17,9 +17,9 @@ class ModalModule : BaseModule() {
     fun alert(options: Map<String, Any>, completionCallback: JSCallback) {
         val builder = AlertDialog.Builder(getActivity())
         // 设置参数
-        builder.setTitle(options["title"] as String)
-                .setMessage(options["message"] as String)
-                .setPositiveButton(options["okTitle"] as String, object : DialogInterface.OnClickListener {// 积极
+        builder.setTitle(options["title"] as String?)
+                .setMessage(options["message"] as String?)
+                .setPositiveButton(options["okTitle"] as String?, object : DialogInterface.OnClickListener {// 积极
 
                     override fun onClick(dialog: DialogInterface, which: Int) {
                         completionCallback.invoke(Result())
@@ -32,14 +32,14 @@ class ModalModule : BaseModule() {
     fun confirm(options: Map<String, Any>, completionCallback: JSCallback) {
         val builder = AlertDialog.Builder(getActivity())
         // 设置参数
-        builder.setTitle(options["title"] as String)
-                .setMessage(options["message"] as String)
-                .setPositiveButton(options["okTitle"] as String, object : DialogInterface.OnClickListener {// 积极
+        builder.setTitle(options["title"] as String?)
+                .setMessage(options["message"] as String?)
+                .setPositiveButton(options["okTitle"] as String?, object : DialogInterface.OnClickListener {// 积极
                     override fun onClick(dialog: DialogInterface, which: Int) {
                         completionCallback.invoke(Result())
                     }
                 })
-                .setNegativeButton(options["cancelTitle"] as String, object : DialogInterface.OnClickListener {// 消极
+                .setNegativeButton(options["cancelTitle"] as String?, object : DialogInterface.OnClickListener {// 消极
                     override fun onClick(dialog: DialogInterface, which: Int) {
                         val result = Result()
                         result.status = Result.error
@@ -52,13 +52,13 @@ class ModalModule : BaseModule() {
     @JSMethod(uiThread = true)
     fun prompt(options: Map<String, Any>, completionCallback: JSCallback) {
         val edit = EditText(getActivity())
-        edit.setText(options["placeholder"] as String)
+        edit.setText(options["placeholder"] as String?)
 
         val builder = AlertDialog.Builder(getActivity())
                 .setView(edit)
-                .setTitle(options["title"] as String)
-                .setMessage(options["message"] as String)
-                .setPositiveButton(options["okTitle"] as String, object : DialogInterface.OnClickListener {// 积极
+                .setTitle(options["title"] as String?)
+                .setMessage(options["message"] as String?)
+                .setPositiveButton(options["okTitle"] as String?, object : DialogInterface.OnClickListener {// 积极
 
                     override fun onClick(dialog: DialogInterface, which: Int) {
                         val result = Result()
@@ -68,7 +68,7 @@ class ModalModule : BaseModule() {
                         completionCallback.invoke(result)
                     }
                 })
-                .setNegativeButton(options["cancelTitle"] as String, object : DialogInterface.OnClickListener {// 消极
+                .setNegativeButton(options["cancelTitle"] as String?, object : DialogInterface.OnClickListener {// 消极
 
                     override fun onClick(dialog: DialogInterface, which: Int) {
                         val result = Result()
@@ -102,7 +102,7 @@ class ModalModule : BaseModule() {
                     }
                 })
         if (options["title"] != null){
-            builder.setTitle(options["title"] as String)
+            builder.setTitle(options["title"] as String?)
         }
 
         builder.create().show()
@@ -111,9 +111,9 @@ class ModalModule : BaseModule() {
     @JSMethod(uiThread = true)
     fun showToast(options: Map<String, Any>) {
         if (options["duration"] is Int){
-            Toast.makeText(getActivity().applicationContext, options["text"] as String, options["duration"] as Int * 1000).show()
+            Toast.makeText(getActivity().applicationContext, options["text"] as String?, options["duration"] as Int * 1000).show()
         } else if (options["duration"] is BigDecimal){
-            Toast.makeText(getActivity().applicationContext, options["text"] as String, ((options["duration"] as BigDecimal).toDouble() * 1000).toInt()).show()
+            Toast.makeText(getActivity().applicationContext, options["text"] as String?, ((options["duration"] as BigDecimal).toDouble() * 1000).toInt()).show()
         }
     }
 
@@ -133,7 +133,7 @@ class ModalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun showProgress(options: Map<String, Any>) {
-        getActivity().loadDialogHelper.showProgressWithText(getActivity(), options["text"] as String, options["progress"] as Int)
+        getActivity().loadDialogHelper.showProgressWithText(getActivity(), options["text"] as String?, options["progress"] as Int)
     }
 
     @JSMethod(uiThread = true)
