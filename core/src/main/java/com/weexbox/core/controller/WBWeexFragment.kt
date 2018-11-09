@@ -38,30 +38,29 @@ import kotlin.math.log
 abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
 
     lateinit var url: String
-    var mInstance: WXSDKInstance? = null
-
-    //调试广播
-    private var mBroadcastReceiver: BroadcastReceiver? = null
+    var instance: WXSDKInstance? = null
+    private var broadcastReceiver: BroadcastReceiver? = null
+    private var hasSendViewDidAppear = false
 
     fun refreshWeex() {
         render()
     }
 
     private fun render() {
-        mInstance?.destroy()
+        instance?.destroy()
         val renderContainer = RenderContainer(activity)
-        mInstance = WXSDKInstance(activity)
-        mInstance?.setRenderContainer(renderContainer)
-        mInstance?.registerRenderListener(this)
-        mInstance?.isTrackComponent = false
+        instance = WXSDKInstance(activity)
+        instance?.setRenderContainer(renderContainer)
+        instance?.registerRenderListener(this)
+        instance?.isTrackComponent = false
         try {
             if (url.startsWith("http")) {
                 // 下载
-                mInstance?.renderByUrl(url, url, null, null, WXRenderStrategy.APPEND_ASYNC)
+                instance?.renderByUrl(url, url, null, null, WXRenderStrategy.APPEND_ASYNC)
             } else {
                 val file = UpdateManager.getFullUrl(url)
                 val template = FileUtils.readFileToString(file)
-                mInstance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
+                instance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
             }
         } catch (e: IOException) {
             Logger.e(e, "文件不存在")
@@ -84,14 +83,14 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         super.onResume()
 
         registerWeexDebugBroadcast()
-        mInstance?.fireGlobalEventCallback("viewDidAppear", null)
+        sendViewDidAppear()
     }
 
     override fun onPause() {
         super.onPause()
 
         unregisterWeexDebugBroadcast()
-        mInstance?.fireGlobalEventCallback("viewDidDisappear", null)
+        sendViewDidDisappear()
     }
 
     override fun onException(instance: WXSDKInstance?, errCode: String?, msg: String?) {
@@ -111,10 +110,10 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     }
 
     override fun onRenderSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
-        mInstance?.fireGlobalEventCallback("viewDidAppear", null)
+        sendViewDidAppear()
     }
 
-    override fun onRefreshSuccess(p0: WXSDKInstance?, p1: Int, p2: Int) {
+    override fun onRefreshSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
 
     }
 
@@ -142,19 +141,31 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
 
     private fun registerWeexDebugBroadcast() {
         if (WeexBoxEngine.isDebug) {
-            mBroadcastReceiver = RefreshBroadcastReceiver()
+            broadcastReceiver = RefreshBroadcastReceiver()
             val filter = IntentFilter()
             filter.addAction(IWXDebugProxy.ACTION_DEBUG_INSTANCE_REFRESH)
             filter.addAction(IWXDebugProxy.ACTION_INSTANCE_RELOAD)
-            activity!!.registerReceiver(mBroadcastReceiver, filter)
+            activity!!.registerReceiver(broadcastReceiver, filter)
         }
     }
 
     private fun unregisterWeexDebugBroadcast() {
-        if (mBroadcastReceiver != null) {
-            activity!!.unregisterReceiver(mBroadcastReceiver)
-            mBroadcastReceiver = null
+        if (broadcastReceiver != null) {
+            activity!!.unregisterReceiver(broadcastReceiver)
+            broadcastReceiver = null
         }
+    }
+
+    private fun sendViewDidAppear() {
+        if (!hasSendViewDidAppear) {
+            instance?.fireGlobalEventCallback("viewDidAppear", null)
+            hasSendViewDidAppear = true
+        }
+    }
+
+    private fun sendViewDidDisappear() {
+        instance?.fireGlobalEventCallback("viewDidDisappear", null)
+        hasSendViewDidAppear = false
     }
 
     /**
