@@ -43,7 +43,7 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     //调试广播
     private var mBroadcastReceiver: BroadcastReceiver? = null
 
-    open fun refreshWeex() {
+    fun refreshWeex() {
         render()
     }
 
@@ -53,7 +53,6 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         mInstance = WXSDKInstance(activity)
         mInstance?.setRenderContainer(renderContainer)
         mInstance?.registerRenderListener(this)
-//        mInstance?.setNestedInstanceInterceptor(this)
         mInstance?.isTrackComponent = false
         try {
             if (url.startsWith("http")) {
@@ -78,13 +77,18 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         } else {
             url = u
             render()
-            registerWeexDebugBroadcast()
-            mInstance?.fireGlobalEventCallback("viewDidAppear", null)
         }
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onResume() {
+        super.onResume()
+
+        registerWeexDebugBroadcast()
+        mInstance?.fireGlobalEventCallback("viewDidAppear", null)
+    }
+
+    override fun onPause() {
+        super.onPause()
 
         unregisterWeexDebugBroadcast()
         mInstance?.fireGlobalEventCallback("viewDidDisappear", null)
