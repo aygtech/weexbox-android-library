@@ -150,9 +150,11 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     }
 
     private fun unregisterWeexDebugBroadcast() {
-        if (broadcastReceiver != null) {
-            activity!!.unregisterReceiver(broadcastReceiver)
-            broadcastReceiver = null
+        if (WeexBoxEngine.isDebug) {
+            if (broadcastReceiver != null) {
+                activity!!.unregisterReceiver(broadcastReceiver)
+                broadcastReceiver = null
+            }
         }
     }
 
