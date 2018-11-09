@@ -34,6 +34,10 @@ object WeexBoxEngine {
             if (value) {
 //                initFloatingBtn(application, FloatingBtnService::class.java)
                 WXEnvironment.setOpenDebugLog(true)
+                WXEnvironment.setApkDebugable(true)
+            } else {
+                WXEnvironment.setOpenDebugLog(false)
+                WXEnvironment.setApkDebugable(false)
             }
         }
 
@@ -60,7 +64,6 @@ object WeexBoxEngine {
 
 
     private fun initWeex(config: InitConfig?) {
-        WXEnvironment.setApkDebugable(false)
         WXSDKEngine.initialize(application, config
                 ?: InitConfig.Builder().setImgAdapter(ImageAdapter()).build())
         BindingX.register()
