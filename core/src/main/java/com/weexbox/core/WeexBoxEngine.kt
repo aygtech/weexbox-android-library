@@ -7,6 +7,7 @@ import com.alibaba.android.bindingx.plugin.weex.BindingX
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.taobao.weex.InitConfig
+import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.adapter.ImageAdapter
 import com.weexbox.core.controller.WBWebViewActivity
@@ -32,6 +33,7 @@ object WeexBoxEngine {
             field = value
             if (value) {
 //                initFloatingBtn(application, FloatingBtnService::class.java)
+                WXEnvironment.setOpenDebugLog(true)
             }
         }
 
@@ -58,6 +60,7 @@ object WeexBoxEngine {
 
 
     private fun initWeex(config: InitConfig?) {
+        WXEnvironment.setApkDebugable(false)
         WXSDKEngine.initialize(application, config
                 ?: InitConfig.Builder().setImgAdapter(ImageAdapter()).build())
         BindingX.register()
