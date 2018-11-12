@@ -40,7 +40,7 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     lateinit var url: String
     var instance: WXSDKInstance? = null
     private var broadcastReceiver: BroadcastReceiver? = null
-    private var isFristEnter = true
+    private var isFirstSendDidAppear = true
 
     fun refreshWeex() {
         render()
@@ -82,8 +82,12 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     override fun onFragmentResume() {
         super.onFragmentResume()
 
-        registerWeexDebugBroadcast()
-        sendViewDidAppear()
+        if (WeexBoxEngine.isDebug) {
+            registerWeexDebugBroadcast()
+        }
+        if (!isFirstSendDidAppear) {
+            sendViewDidAppear()
+        }
     }
 
     override fun onFragmentPause() {
@@ -110,7 +114,6 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     }
 
     override fun onRenderSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
-        isFristEnter = false
         sendViewDidAppear()
     }
 
@@ -141,31 +144,26 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     }
 
     private fun registerWeexDebugBroadcast() {
-        if (WeexBoxEngine.isDebug) {
-            broadcastReceiver = RefreshBroadcastReceiver()
-            val filter = IntentFilter()
-            filter.addAction(IWXDebugProxy.ACTION_DEBUG_INSTANCE_REFRESH)
-            filter.addAction(IWXDebugProxy.ACTION_INSTANCE_RELOAD)
-            activity!!.registerReceiver(broadcastReceiver, filter)
-        }
+        broadcastReceiver = RefreshBroadcastReceiver()
+        val filter = IntentFilter()
+        filter.addAction(IWXDebugProxy.ACTION_DEBUG_INSTANCE_REFRESH)
+        filter.addAction(IWXDebugProxy.ACTION_INSTANCE_RELOAD)
+        activity!!.registerReceiver(broadcastReceiver, filter)
     }
 
     private fun unregisterWeexDebugBroadcast() {
-        if (WeexBoxEngine.isDebug) {
-            if (broadcastReceiver != null) {
-                activity!!.unregisterReceiver(broadcastReceiver)
-                broadcastReceiver = null
-            }
+        if (broadcastReceiver != null) {
+            activity!!.unregisterReceiver(broadcastReceiver)
+            broadcastReceiver = null
         }
     }
 
     private fun sendViewDidAppear() {
-        if (!isFristEnter) {
-            instance?.fireGlobalEventCallback("viewDidAppear", null)
-        }
+        instance?.fireGlobalEventCallback("viewDidAppear", null)
     }
 
     private fun sendViewDidDisappear() {
+        isFirstSendDidAppear = false
         instance?.fireGlobalEventCallback("viewDidDisappear", null)
     }
 
