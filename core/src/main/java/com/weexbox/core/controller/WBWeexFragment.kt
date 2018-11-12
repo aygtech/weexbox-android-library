@@ -40,7 +40,7 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     lateinit var url: String
     var instance: WXSDKInstance? = null
     private var broadcastReceiver: BroadcastReceiver? = null
-    private var hasSendViewDidAppear = false
+    private var isFristEnter = true
 
     fun refreshWeex() {
         render()
@@ -67,8 +67,8 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         val u = router?.url
         if (u == null) {
@@ -110,6 +110,7 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     }
 
     override fun onRenderSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
+        isFristEnter = false
         sendViewDidAppear()
     }
 
@@ -159,15 +160,13 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     }
 
     private fun sendViewDidAppear() {
-        if (!hasSendViewDidAppear) {
+        if (!isFristEnter) {
             instance?.fireGlobalEventCallback("viewDidAppear", null)
-            hasSendViewDidAppear = true
         }
     }
 
     private fun sendViewDidDisappear() {
         instance?.fireGlobalEventCallback("viewDidDisappear", null)
-        hasSendViewDidAppear = false
     }
 
     /**
