@@ -22,13 +22,13 @@ class MainActivity : WBBaseActivity(), WBBaseActivity.HaveFragmentListener {
 //        findViewById<TextView>(R.id.xixi).setText(xixi.toString())
 
         initFragment()
-//        getActionbar().setBackButton(object: View.OnClickListener {
-//            override fun onClick(v: View?) {
-////                refreshWeex()
-//                val intent = Intent(this@MainActivity, MainActivity::class.java)
-//                startActivity(intent)
-//            }
-//        })
+        getActionbar().setBackButton(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+//                refreshWeex()
+                val intent = Intent(this@MainActivity, MainActivity::class.java)
+                startActivity(intent)
+            }
+        })
 //        getActionbar().setBackButton2(object: View.OnClickListener{
 //            override fun onClick(v: View?) {
 //                var router = Router()
@@ -71,5 +71,21 @@ class MainActivity : WBBaseActivity(), WBBaseActivity.HaveFragmentListener {
 
     override fun refreshFragmentWeex() {
         weexFragment?.refreshWeex()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (weexFragment != null) {
+            weexFragment!!.doFragmentResume()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        if (weexFragment != null) {
+            weexFragment!!.doFragmentPause()
+        }
     }
 }

@@ -42,14 +42,14 @@ public class DemoActivity extends WBBaseActivity {
         findViewById(R.id.oooo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Router.Companion.register("aaaa", MainActivity.class);
-
-                Router router = new  Router();
-                router.setName("aaaa");
-                Map<String, Integer> map = new HashMap<>();
-                map.put("xixi", 1);
-                router.setParams(map);
-                router.open(DemoActivity.this);
+//                Router.Companion.register("aaaa", MainActivity.class);
+//
+//                Router router = new  Router();
+//                router.setName("aaaa");
+//                Map<String, Integer> map = new HashMap<>();
+//                map.put("xixi", 1);
+//                router.setParams(map);
+//                router.open(DemoActivity.this);
 
 //                Router router = new Router();
 //                router.setName("web");
@@ -64,14 +64,14 @@ public class DemoActivity extends WBBaseActivity {
 //                router.setName(Router.Companion.getNAME_WEEX());
 //                router.open(DemoActivity.this);
 
-//                Router router = new Router();
-//                router.setNavBarHidden(true);
-//                router.setUrl("login/page1.js");
-//                router.setName("weex");
-//                Map<String, Integer> params = new HashMap<String, Integer>();
-//                params.put("id", 20);
-//                router.setParams(params);
-//                router.open(DemoActivity.this);
+                Router router = new Router();
+                router.setNavBarHidden(false);
+                router.setUrl("login/page1.js");
+                router.setName("weex");
+                Map<String, Integer> params = new HashMap<String, Integer>();
+                params.put("id", 20);
+                router.setParams(params);
+                router.open(DemoActivity.this);
 
 //                String data = "{\"message\":\"哈哈\",\"data\":\"\",\"code\":400204}";
 //                ToastUtil.showShortToast(getApplicationContext(), ((Map<String, String>)JSON.parse(data)).get("message"));

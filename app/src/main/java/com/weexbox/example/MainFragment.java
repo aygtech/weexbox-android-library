@@ -30,7 +30,11 @@ public class MainFragment extends WBWeexFragment {
         if (null == mRootView) {
             mRootView = new FrameLayout(container.getContext());
         }
-
+        mOnCreate = true;
+        if (mOnResume) {
+            mOnResume = false;
+            doFragmentResume();
+        }
         return mRootView;
     }
 
@@ -49,6 +53,28 @@ public class MainFragment extends WBWeexFragment {
                 mRootView.addView(view);
             }
             mRootView.requestLayout();
+        }
+    }
+
+    @Override
+    public void doFragmentResume() {
+        super.doFragmentResume();
+        if (!mOnResume) {
+            mOnResume = true;
+            if (mOnCreate) {
+                onFragmentResume();
+            }
+        }
+    }
+
+    @Override
+    public void doFragmentPause() {
+        super.doFragmentPause();
+        if (mOnResume) {
+            mOnResume = false;
+            if (mOnCreate) {
+                onFragmentPause();
+            }
         }
     }
 }

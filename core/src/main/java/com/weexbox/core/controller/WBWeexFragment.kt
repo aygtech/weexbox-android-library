@@ -40,6 +40,7 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     lateinit var url: String
     var instance: WXSDKInstance? = null
     private var broadcastReceiver: BroadcastReceiver? = null
+    private var hasSendViewDidAppear = false
 
     fun refreshWeex() {
         render()
@@ -158,15 +159,15 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     }
 
     private fun sendViewDidAppear() {
-//        if (!hasSendViewDidAppear) {
+        if (!hasSendViewDidAppear) {
             instance?.fireGlobalEventCallback("viewDidAppear", null)
-//            hasSendViewDidAppear = true
-//        }
+            hasSendViewDidAppear = true
+        }
     }
 
     private fun sendViewDidDisappear() {
         instance?.fireGlobalEventCallback("viewDidDisappear", null)
-//        hasSendViewDidAppear = false
+        hasSendViewDidAppear = false
     }
 
     /**
