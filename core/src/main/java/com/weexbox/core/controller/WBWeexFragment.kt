@@ -11,7 +11,7 @@ import android.os.Message
 import android.support.v4.content.LocalBroadcastManager
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
+import android.view.*
 import android.widget.Toast
 import com.litesuits.common.io.FileUtils
 import com.orhanobut.logger.Logger
@@ -23,6 +23,7 @@ import com.taobao.weex.common.IWXDebugProxy
 import com.taobao.weex.common.WXRenderStrategy
 import com.taobao.weex.ui.component.NestedContainer
 import com.taobao.weex.utils.WXFileUtils
+import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.event.Event
 import com.weexbox.core.update.UpdateManager
 import com.weexbox.core.util.WXAnalyzerDelegate
@@ -34,15 +35,37 @@ import kotlin.math.log
  * Time: 2018/8/16 下午4:38
  */
 
-open abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener , WXSDKInstance.NestedInstanceInterceptor {
+abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
 
-    open lateinit var url: String
-    var mInstance: WXSDKInstance? = null
-    private var mWxAnalyzerDelegate: WXAnalyzerDelegate? = null
+    lateinit var url: String
+    var instance: WXSDKInstance? = null
+    private var broadcastReceiver: BroadcastReceiver? = null
+    private var hasSendViewDidAppear = false
 
-    //调试广播
-    private var mBroadcastReceiver: BroadcastReceiver? = null
-    private var filter: IntentFilter? = null
+    fun refreshWeex() {
+        render()
+    }
+
+    private fun render() {
+        instance?.destroy()
+        val renderContainer = RenderContainer(activity)
+        instance = WXSDKInstance(activity)
+        instance?.setRenderContainer(renderContainer)
+        instance?.registerRenderListener(this)
+        instance?.isTrackComponent = false
+        try {
+            if (url.startsWith("http")) {
+                // 下载
+                instance?.renderByUrl(url, url, null, null, WXRenderStrategy.APPEND_ASYNC)
+            } else {
+                val file = UpdateManager.getFullUrl(url)
+                val template = FileUtils.readFileToString(file)
+                instance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
+            }
+        } catch (e: IOException) {
+            Logger.e(e, "文件不存在")
+        }
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -53,90 +76,28 @@ open abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener , WXSDKI
         } else {
             url = u
             render()
-            mInstance?.onActivityCreate()
-//            registerBroadcastReceiver()
-
-            mWxAnalyzerDelegate = WXAnalyzerDelegate(activity)
-            mWxAnalyzerDelegate?.onCreate()
-
-
-        }
-    }
-
-    open fun refreshWeex() {
-        render()
-    }
-
-    private fun render() {
-        mInstance
-        mInstance?.destroy()
-        mInstance = null
-        val renderContainer = RenderContainer(activity)
-        mInstance = WXSDKInstance(activity)
-        mInstance?.setRenderContainer(renderContainer)
-        mInstance?.registerRenderListener(this)
-        mInstance?.setNestedInstanceInterceptor(this)
-        mInstance?.isTrackComponent = true
-        view!!.post {
-            try {
-                if (url.startsWith("http")) {
-                    // 下载
-                    mInstance?.renderByUrl(url, url, null, null, WXRenderStrategy
-                            .APPEND_ASYNC)
-                } else {
-                    val file = UpdateManager.getFullUrl(url)
-                    val template = FileUtils.readFileToString(file)
-//                    mInstance?.render(url, WXFileUtils.loadAsset(url, context), null, null, WXRenderStrategy.APPEND_ASYNC)
-                    mInstance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
-                }
-            } catch (e: IOException) {
-                Logger.e(e, "")
-            }
         }
     }
 
     override fun onStart() {
         super.onStart()
-        mWxAnalyzerDelegate?.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mInstance?.onActivityResume()
-        mWxAnalyzerDelegate?.onResume()
     }
 
     override fun onFragmentResume() {
         super.onFragmentResume()
-        mInstance?.fireGlobalEventCallback("viewDidAppear", null)
+
+        registerWeexDebugBroadcast()
+        sendViewDidAppear()
     }
 
     override fun onFragmentPause() {
         super.onFragmentPause()
-        mInstance?.fireGlobalEventCallback("viewDidDisappear", null)
-    }
 
-    override fun onPause() {
-        super.onPause()
-        mInstance?.onActivityPause()
-        mWxAnalyzerDelegate?.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mInstance?.onActivityStop()
-        mWxAnalyzerDelegate?.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mInstance?.onActivityDestroy()
-//        unregisterBroadcastReceiver()
-        mWxAnalyzerDelegate?.onDestroy()
+        unregisterWeexDebugBroadcast()
+        sendViewDidDisappear()
     }
 
     override fun onException(instance: WXSDKInstance?, errCode: String?, msg: String?) {
-        mWxAnalyzerDelegate?.onException(instance, errCode, msg)
         if (!TextUtils.isEmpty(errCode) && errCode!!.contains("|")) {
             val errCodeList = errCode.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val code = errCodeList[1]
@@ -153,27 +114,11 @@ open abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener , WXSDKI
     }
 
     override fun onRenderSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
-        mWxAnalyzerDelegate?.onWeexRenderSuccess(instance)
-        Logger.d("Render Finish...width:" + width + "   ,height="+height)
-        mInstance?.fireGlobalEventCallback("viewDidAppear", null)
+        sendViewDidAppear()
     }
 
     override fun onRefreshSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
-        Logger.d("Refresh Success")
-    }
 
-    override fun onCreateNestInstance(instance: WXSDKInstance?, container: NestedContainer?) {
-        Logger.d("Nested Instance created.")
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        mInstance?.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        mInstance?.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun degradeAlert(errMsg: String) {
@@ -186,53 +131,47 @@ open abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener , WXSDKI
     }
 
     override fun onViewCreated(instance: WXSDKInstance?, view: View?) {
-        var wxView = view
-        val wrappedView = mWxAnalyzerDelegate?.onWeexViewCreated(instance, view)
-        if (wrappedView != null) {
-            wxView = wrappedView
-        }
-
-        onAddWeexView(wxView)
-//        if (wxView.parent == null) {
-//            mContainer.addView(wxView)
-//        }
-//        mContainer.requestLayout()
+        onAddWeexView(view)
     }
 
-    abstract fun onAddWeexView(wxView: View?);
+    abstract fun onAddWeexView(wxView: View?)
 
     //调试广播
-    inner class DefaultBroadcastReceiver : BroadcastReceiver() {
+    inner class RefreshBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            if (IWXDebugProxy.ACTION_DEBUG_INSTANCE_REFRESH == intent.action) {
-                refreshWeex()
-            } else if (WXSDKEngine.JS_FRAMEWORK_RELOAD == intent.action) {
-                refreshWeex()
+            refreshWeex()
+        }
+    }
+
+    private fun registerWeexDebugBroadcast() {
+        if (WeexBoxEngine.isDebug) {
+            broadcastReceiver = RefreshBroadcastReceiver()
+            val filter = IntentFilter()
+            filter.addAction(IWXDebugProxy.ACTION_DEBUG_INSTANCE_REFRESH)
+            filter.addAction(IWXDebugProxy.ACTION_INSTANCE_RELOAD)
+            activity!!.registerReceiver(broadcastReceiver, filter)
+        }
+    }
+
+    private fun unregisterWeexDebugBroadcast() {
+        if (WeexBoxEngine.isDebug) {
+            if (broadcastReceiver != null) {
+                activity!!.unregisterReceiver(broadcastReceiver)
+                broadcastReceiver = null
             }
         }
     }
 
-    fun registerWeexDebugBroadcast() {
-        if (mBroadcastReceiver == null){
-            mBroadcastReceiver = DefaultBroadcastReceiver()
+    private fun sendViewDidAppear() {
+        if (!hasSendViewDidAppear) {
+            instance?.fireGlobalEventCallback("viewDidAppear", null)
+            hasSendViewDidAppear = true
         }
-
-        if (filter == null) {
-            filter = IntentFilter()
-            filter!!.addAction(IWXDebugProxy.ACTION_DEBUG_INSTANCE_REFRESH)
-            filter!!.addAction(WXSDKEngine.JS_FRAMEWORK_RELOAD)
-        }
-
-        LocalBroadcastManager.getInstance(activity!!.applicationContext)
-                .registerReceiver(mBroadcastReceiver!!, filter!!)
     }
 
-    fun unregisterWeexDebugBroadcast() {
-        if (mBroadcastReceiver != null) {
-            LocalBroadcastManager.getInstance(activity!!.applicationContext)
-                    .unregisterReceiver(mBroadcastReceiver!!)
-            mBroadcastReceiver = null
-        }
+    private fun sendViewDidDisappear() {
+        instance?.fireGlobalEventCallback("viewDidDisappear", null)
+        hasSendViewDidAppear = false
     }
 
     /**
@@ -248,7 +187,7 @@ open abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener , WXSDKI
 
     override fun onBackPressedAction() {
         super.onBackPressedAction()
-        Event.emit(this!!.getFragmentSimpleName()!! + id, null)
+        Event.emit(this.getFragmentSimpleName()!! + id, null)
     }
 
 }
