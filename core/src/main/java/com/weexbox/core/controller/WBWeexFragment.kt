@@ -34,7 +34,7 @@ import kotlin.math.log
  * Time: 2018/8/16 下午4:38
  */
 
-open abstract class WBWeexFragment: WBBaseFragment() , Handler.Callback, IWXRenderListener , WXSDKInstance.NestedInstanceInterceptor {
+open abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener , WXSDKInstance.NestedInstanceInterceptor {
 
     open lateinit var url: String
     var mInstance: WXSDKInstance? = null

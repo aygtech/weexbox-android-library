@@ -23,14 +23,14 @@ open class BaseModule: WXModule() {
         val fragments = getActivity().supportFragmentManager.fragments as List<Fragment>
         for (fragment in fragments) {
             if (fragment is WBWeexFragment){
-                if (mWXSDKInstance == fragment.instance) {
+                if (mWXSDKInstance == fragment.mInstance) {
                     return fragment
                 }
             } else if (fragment.childFragmentManager.fragments.size > 0){
                 val fragmentss = fragment.childFragmentManager.fragments as List<Fragment>
                 for (fragmentt in fragmentss){
                     if (fragmentt is WBWeexFragment){
-                        if (mWXSDKInstance == fragmentt.instance) {
+                        if (mWXSDKInstance == fragmentt.mInstance) {
                             return fragmentt
                         }
                     }
