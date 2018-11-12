@@ -67,8 +67,8 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         val u = router?.url
         if (u == null) {
