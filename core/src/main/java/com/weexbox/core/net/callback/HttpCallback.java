@@ -103,7 +103,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
                     this.msg = jsonObject.optString(keyMessage);
                     onFail(requestId, RIGHT_CODE, this.errorCode, this.msg, e.getMessage());
                 } catch (JSONException e1) {
-                    onFail(requestId, RIGHT_CODE, this.errorCode, null, e.getMessage());
+                    onFail(requestId, RIGHT_CODE, this.errorCode, "", e.getMessage());
                 }
             }
         }
