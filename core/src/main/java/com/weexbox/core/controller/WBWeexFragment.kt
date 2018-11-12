@@ -76,7 +76,28 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         } else {
             url = u
             render()
+            instance?.onActivityCreate()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        instance?.onActivityResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        instance?.onActivityPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        instance?.onActivityStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        instance?.onActivityDestroy()
     }
 
     override fun onFragmentResume() {
@@ -115,6 +136,16 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
 
     override fun onRefreshSuccess(instance: WXSDKInstance?, width: Int, height: Int) {
 
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        instance?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        instance?.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun degradeAlert(errMsg: String) {
