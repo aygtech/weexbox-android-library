@@ -91,7 +91,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
         if (call.isCanceled()) {
             onFail(requestId, CANCEL, NO_BACK_CODE, e.getMessage(), null);
         } else {
-            if (this.errorCode == RIGHT_CODE){
+            if (this.errorCode == RIGHT_CODE && e.getMessage().contains("UnknownHostException")){
                 onFail(requestId, NET_ERROR, NO_BACK_CODE, e.getMessage(), null);
             } else if (this.errorCode == JSON_EXCEPTION) {
                 onFail(requestId, this.errorCode, NO_BACK_CODE, e.getMessage(), null);
