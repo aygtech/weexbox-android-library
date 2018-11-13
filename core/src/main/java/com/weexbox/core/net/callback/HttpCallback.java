@@ -135,7 +135,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
                 final int code = jsonObject.optInt(keyCode);
                 this.msg = jsonObject.optString(keyMessage);
                 if (code != rightCode && code != rightCode2) {
-                    this.errorCode = code;
+                    errorCode = code;
                     throw new Exception(string);
                 }
                 final String data = jsonObject.optString(keyData);
