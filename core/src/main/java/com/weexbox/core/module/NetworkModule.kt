@@ -35,7 +35,7 @@ class NetworkModule : BaseModule() {
                 val data = response.body()?.string()
                 if (data != null) {
                     if (info.responseType?.toUpperCase() == "JSON") {
-                        result.data["data"] = data.toJsonMap()
+                        result.data = data.toJsonMap()
                     } else {
                         result.data["data"] = data
                     }
