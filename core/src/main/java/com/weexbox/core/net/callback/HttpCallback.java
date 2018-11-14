@@ -44,7 +44,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
     private IFinishListener mListener;
     private String mRequestUrl;
 
-    public static void config(final int rightCode, final String keyCode, final String keyData, final String keyMessage,final boolean isEncrypt) {
+    public static void config(final int rightCode, final String keyCode, final String keyData, final String keyMessage, final boolean isEncrypt) {
         HttpCallback.rightCode = rightCode;
         HttpCallback.keyCode = keyCode;
         HttpCallback.keyData = keyData;
@@ -91,7 +91,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
         if (call.isCanceled()) {
             onFail(requestId, CANCEL, NO_BACK_CODE, e.getMessage(), null);
         } else {
-            if (this.errorCode == RIGHT_CODE && e.getMessage().contains("UnknownHostException")){
+            if (this.errorCode == RIGHT_CODE && e.getMessage().contains("Unable to resolve host")) {
                 onFail(requestId, NET_ERROR, NO_BACK_CODE, e.getMessage(), null);
             } else if (this.errorCode == JSON_EXCEPTION) {
                 onFail(requestId, this.errorCode, NO_BACK_CODE, e.getMessage(), null);
@@ -124,8 +124,8 @@ public abstract class HttpCallback<T> extends Callback<T> {
         } else {
             String string = response.body().string();
             if (!TextUtils.isEmpty(string)) {
-                if(isEncrypt){
-                    string = AES128Util.decrypt(HttpUtil.key,string);
+                if (isEncrypt) {
+                    string = AES128Util.decrypt(HttpUtil.key, string);
                 }
                 JSONObject jsonObject = new JSONObject(string);
                 if (jsonObject == null) {
