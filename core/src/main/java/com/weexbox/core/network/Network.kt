@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit
 
 object Network {
 
+    var server: String? = null
+
     enum class HTTPMethod {
         GET,
         POST
@@ -43,7 +45,7 @@ object Network {
     val client: OkHttpClient = OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).retryOnConnectionFailure(true).build()
     var mediaTypeJSON: MediaType?=  MediaType.parse("application/json")
 
-    fun call(url: String, method: HTTPMethod = HTTPMethod.GET, parameters: Map<String, Any>, headers: Map<String, String>): Call<ResponseBody> {
+    private fun call(url: String, method: HTTPMethod = HTTPMethod.GET, parameters: Map<String, Any>, headers: Map<String, String>): Call<ResponseBody> {
         val retrofit = Retrofit.Builder().baseUrl(url.appendingPathComponent(File.separator)).client(client).build()
         val service = retrofit.create(Service::class.java)
         if (method == HTTPMethod.POST) {
@@ -60,7 +62,11 @@ object Network {
     }
 
     fun request(url: String, method: HTTPMethod = HTTPMethod.GET, parameters: Map<String, Any>?, headers: Map<String, String>?, callback: Callback<ResponseBody>) {
-        val call = call(url, method, parameters ?: TreeMap(), headers ?: TreeMap())
+        var urlFinal: String? = null
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            urlFinal = server?.appendingPathComponent(url)
+        }
+        val call = call(urlFinal ?: url, method, parameters ?: TreeMap(), headers ?: TreeMap())
         call.enqueue(callback)
     }
 }
