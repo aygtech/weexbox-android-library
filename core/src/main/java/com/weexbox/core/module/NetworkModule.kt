@@ -18,7 +18,7 @@ import retrofit2.Response
  * Description: This is NetworkModule
  */
 
-class NetworkModule : BaseModule() {
+open class NetworkModule : BaseModule() {
 
     @JSMethod(uiThread = false)
     fun request(options: Map<String, Any>, callback: JSCallback) {

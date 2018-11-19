@@ -10,7 +10,7 @@ import com.weexbox.core.util.SelectImageUtil
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ExternalModule : BaseModule() {
+open class ExternalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun openCamera(options: Map<String, Any>, completionCallback: JSCallback) {

@@ -10,7 +10,7 @@ import com.taobao.weex.common.WXModule
  * Description: This is StorageModule
  */
 
-class StorageModule : BaseModule() {
+open class StorageModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun setData(key: String, value: String) {

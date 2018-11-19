@@ -12,7 +12,7 @@ import com.weexbox.core.model.JsOptions
  * Description: This is EventModule
  */
 
-class EventModule : BaseModule() {
+open class EventModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun register(name: String, callback: JSCallback) {

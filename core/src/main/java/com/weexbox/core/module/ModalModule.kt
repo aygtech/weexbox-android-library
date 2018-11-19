@@ -11,7 +11,7 @@ import java.math.BigDecimal
 import java.util.*
 
 
-class ModalModule : BaseModule() {
+open class ModalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     fun alert(options: Map<String, Any>, completionCallback: JSCallback) {

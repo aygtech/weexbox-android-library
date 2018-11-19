@@ -11,7 +11,7 @@ import com.weexbox.core.router.Router
  * Description: This is RouterModule
  */
 
-class RouterModule : BaseModule() {
+open class RouterModule : BaseModule() {
 
     //打开页面
     @JSMethod(uiThread = true)

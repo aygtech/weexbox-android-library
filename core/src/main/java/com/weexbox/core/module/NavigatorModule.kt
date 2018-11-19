@@ -13,7 +13,7 @@ import com.weexbox.core.model.Result
 import com.weexbox.core.widget.SimpleToolbar
 import java.util.*
 
-class NavigatorModule : BaseModule() {
+open class NavigatorModule : BaseModule() {
 
     //返回手势
     @JSMethod(uiThread = true)
