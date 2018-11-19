@@ -14,7 +14,7 @@ import java.util.*
 open class ModalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
-    fun alert(options: Map<String, Any>, completionCallback: JSCallback) {
+    open fun alert(options: Map<String, Any>, completionCallback: JSCallback) {
         val builder = AlertDialog.Builder(getActivity())
         // 设置参数
         builder.setTitle(options["title"] as String?)
@@ -29,7 +29,7 @@ open class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun confirm(options: Map<String, Any>, completionCallback: JSCallback) {
+    open fun confirm(options: Map<String, Any>, completionCallback: JSCallback) {
         val builder = AlertDialog.Builder(getActivity())
         // 设置参数
         builder.setTitle(options["title"] as String?)
