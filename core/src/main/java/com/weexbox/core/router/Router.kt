@@ -21,23 +21,24 @@ import java.util.*
 class Router :Serializable{
 
     companion object {
+
         var routes: TreeMap<String, Class<out WBBaseActivity>> = TreeMap()
-        val EXTRA_NAME = "WeexBoxRouter"
+        const val EXTRA_NAME = "WeexBoxRouter"
 
-        val TYPE_PUSH = "push"   //右往左啟動頁面
-        val TYPE_PRESENT = "present" //下往上啟動頁面
+        const val TYPE_PUSH = "push"   //右往左啟動頁面
+        const val TYPE_PRESENT = "present" //下往上啟動頁面
 
-        val NAME_WEEX = "weex"  //name的类型
-        val NAME_WEB = "web"    //name的类型
+        const val NAME_WEEX = "weex"  //name的类型
+        const val NAME_WEB = "web"    //name的类型
 
         fun register(name: String, controller: Class<out WBBaseActivity>){
             routes[name] = controller
         }
     }
 
-    //打开页面类型（weex，web，还有自定义原生）
+    // 页面名称
     var name: String = ""
-    // 类型为weex，web有数据
+    // 下一个weex/web的路径
     var url: String? = null
     // 页面出现方式：push, present
     var type: String = Router.TYPE_PUSH
@@ -45,9 +46,11 @@ class Router :Serializable{
     var navBarHidden: Boolean = false
     // 需要传到下一个页面的数据
     var params: Map<String, Any>? = null
-    // 指定关闭堆栈的哪些页面
+    // 打开页面的同时关闭页面
     var closeFrom: Int? = null
+    // 关闭页面的方向，默认和堆栈方向一致
     var closeFromBottomToTop = true
+    // 关闭页面的个数
     var closeCount: Int? = null
 
 

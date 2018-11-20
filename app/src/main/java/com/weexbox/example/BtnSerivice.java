@@ -11,6 +11,6 @@ public class BtnSerivice extends FloatingBtnService{
     @Nullable
     @Override
     public Activity getCurrentActivity() {
-        return App.getCurrentActivity();
+        return App.Companion.getCurrentActivity();
     }
 }
