@@ -1,8 +1,7 @@
-package com.weexbox.core.webviews;
+package com.weexbox.core.webview;
 
 import android.content.Context;
 import android.os.Build;
-import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.CookieManager;

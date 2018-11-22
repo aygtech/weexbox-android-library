@@ -1,11 +1,8 @@
 package com.weexbox.core.controller
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -13,16 +10,15 @@ import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.R
-import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.extension.getParameters
 import com.weexbox.core.event.Event
 import com.weexbox.core.event.EventCallback
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.ActivityManager
-import com.weexbox.core.util.EventBusUtil
 import com.weexbox.core.util.LoadDialogHelper
 import com.weexbox.core.util.SelectImageUtil
 import com.weexbox.core.widget.SimpleToolbar
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
@@ -53,37 +49,19 @@ open class WBBaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        EventBus.getDefault().register(this)
         ActivityManager.getInstance().addActivity(this)
         router = intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
         if (router == null){
             router = Router()
         }
-        if (isRegisterEventBus() && inCreateRegisterEventBus()) {
-            EventBusUtil.register(this)
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (isRegisterEventBus() && !inCreateRegisterEventBus()) {
-            EventBusUtil.register(this)
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (isRegisterEventBus() && !inCreateRegisterEventBus()) {
-            EventBusUtil.unregister(this)
-        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        EventBus.getDefault().unregister(this)
         loadDialogHelper.clear()
         ActivityManager.getInstance().removeActivity(this)
-        if (isRegisterEventBus() && inCreateRegisterEventBus()) {
-            EventBusUtil.unregister(this)
-        }
     }
 
     override fun setContentView(layoutResID: Int) {
@@ -112,14 +90,6 @@ open class WBBaseActivity : AppCompatActivity() {
 
     fun getActionbar(): SimpleToolbar{
         return toolbar;
-    }
-
-    open fun isRegisterEventBus(): Boolean {
-        return false
-    }
-
-    open fun inCreateRegisterEventBus(): Boolean {
-        return false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -159,50 +129,6 @@ open class WBBaseActivity : AppCompatActivity() {
             router.open(this)
         }
     }
-
-//    /**
-//     * 处理weexdebug 模式下，扫描单个weex.vue时的刷新界面
-//     * @param code vue的路径
-//     */
-//    fun refreshWeexUrl(code: String) {
-//        Toast.makeText(applicationContext, code, Toast.LENGTH_SHORT).show()
-//        val intent = Intent("com.weexbox.core.controller.openurl")
-//        intent.setPackage(applicationContext!!.packageName)
-//        var router = Router()
-//        router.url = code
-//        intent.putExtra(Router.EXTRA_NAME, router);
-//        startActivity(intent)
-//    }
-
-//    fun switchDebugModel(debug: Boolean, debugUrl: String) {
-//        if (!WXEnvironment.isApkDebugable()) {
-//            return
-//        }
-//        if (debug) {
-//            WXEnvironment.sDebugMode = true
-//            WXEnvironment.sDebugWsUrl = debugUrl
-//            try {
-//                val cls = Class.forName("com.taobao.weex.WXDebugTool")
-//                val m = cls.getMethod("connect", String::class.java)
-//                m.invoke(cls, debugUrl)
-//            } catch (e: Exception) {
-//                Log.d("weex", "WXDebugTool not found!")
-//            }
-//
-//        } else {
-//            WXEnvironment.sDebugMode = false
-//            WXEnvironment.sDebugWsUrl = null
-//            try {
-//                val cls = Class.forName("com.taobao.weex.WXDebugTool")
-//                val m = cls.getMethod("close")
-//                m.invoke(cls)
-//            } catch (e: Exception) {
-//                Log.d("weex", "WXDebugTool not found!")
-//            }
-//        }
-//    }
-
-
 
     interface HaveFragmentListener {
         fun refreshFragmentWeex()

@@ -6,29 +6,20 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.support.v4.content.LocalBroadcastManager
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import com.litesuits.common.io.FileUtils
 import com.orhanobut.logger.Logger
 import com.taobao.weex.IWXRenderListener
 import com.taobao.weex.RenderContainer
-import com.taobao.weex.WXSDKEngine
 import com.taobao.weex.WXSDKInstance
 import com.taobao.weex.common.IWXDebugProxy
 import com.taobao.weex.common.WXRenderStrategy
-import com.taobao.weex.ui.component.NestedContainer
-import com.taobao.weex.utils.WXFileUtils
 import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.event.Event
 import com.weexbox.core.update.UpdateManager
-import com.weexbox.core.util.WXAnalyzerDelegate
 import java.io.IOException
-import kotlin.math.log
 
 /**
  * Author: Mario

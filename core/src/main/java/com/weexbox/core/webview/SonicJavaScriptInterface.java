@@ -1,4 +1,4 @@
-package com.weexbox.core.webviews;
+package com.weexbox.core.webview;
 
 import android.content.Intent;
 import android.os.Handler;

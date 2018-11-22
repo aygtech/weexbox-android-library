@@ -8,7 +8,6 @@ import android.view.View
 import android.view.WindowManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
-import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
@@ -18,10 +17,9 @@ import com.tencent.sonic.sdk.SonicEngine
 import com.tencent.sonic.sdk.SonicSession
 import com.tencent.sonic.sdk.SonicSessionConfig
 import com.weexbox.core.R
-import com.weexbox.core.router.Router
-import com.weexbox.core.webviews.SonicJavaScriptInterface
-import com.weexbox.core.webviews.SonicRuntimeImpl
-import com.weexbox.core.webviews.SonicSessionClientImpl
+import com.weexbox.core.webview.SonicJavaScriptInterface
+import com.weexbox.core.webview.SonicRuntimeImpl
+import com.weexbox.core.webview.SonicSessionClientImpl
 import kotlinx.android.synthetic.main.activity_web_view.*
 
 /**

@@ -1,4 +1,4 @@
-package com.weexbox.core.webviews;
+package com.weexbox.core.webview;
 
 import android.os.Bundle;
 import android.webkit.WebView;
