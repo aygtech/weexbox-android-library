@@ -52,7 +52,7 @@ open class WBBaseActivity : AppCompatActivity() {
         EventBus.getDefault().register(this)
         ActivityManager.getInstance().addActivity(this)
         router = intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
-        if (router == null){
+        if (router == null) {
             router = Router()
         }
     }
@@ -71,16 +71,13 @@ open class WBBaseActivity : AppCompatActivity() {
 
     override fun setContentView(view: View) {
         if (view is ViewGroup) {
-            if (router != null){
+            if (router != null) {
                 toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
                 view.addView(toolbar, 0)
-                toolbar.setBackButton(View.OnClickListener {
-                    finish()
-                })
-
-                if (!(router!!.navBarHidden)){
+                toolbar.setBackButton { finish() }
+                if (!(router!!.navBarHidden)) {
                     toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
-                } else{
+                } else {
                     toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
                 }
             }
@@ -88,8 +85,8 @@ open class WBBaseActivity : AppCompatActivity() {
         super.setContentView(view)
     }
 
-    fun getActionbar(): SimpleToolbar{
-        return toolbar;
+    fun getActionbar(): SimpleToolbar {
+        return toolbar
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -133,15 +130,14 @@ open class WBBaseActivity : AppCompatActivity() {
     interface HaveFragmentListener {
         fun refreshFragmentWeex()
     }
+
     var listener: HaveFragmentListener? = null
-    fun setHaveFragmentListener(haveFragmentListener: HaveFragmentListener){
+    fun setHaveFragmentListener(haveFragmentListener: HaveFragmentListener) {
         listener = haveFragmentListener
     }
 
-    fun refreshWeex(){
-        if (listener != null){
-            listener!!.refreshFragmentWeex()
-        }
+    fun refreshWeex() {
+        listener?.refreshFragmentWeex()
     }
 
 }

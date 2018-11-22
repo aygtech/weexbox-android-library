@@ -1,8 +1,6 @@
 package com.weexbox.example;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +8,6 @@ import android.widget.FrameLayout;
 
 import com.weexbox.core.controller.WBWeexFragment;
 
-import org.jetbrains.annotations.Nullable;
 
 public class MainFragment extends WBWeexFragment {
 
@@ -48,7 +45,7 @@ public class MainFragment extends WBWeexFragment {
 
     @Override
     public void onAddWeexView(View view) {
-        if (mRootView != null){
+        if (mRootView != null) {
             if (view.getParent() == null) {
                 mRootView.addView(view);
             }
