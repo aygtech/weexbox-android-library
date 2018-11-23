@@ -32,7 +32,7 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     var instance: WXSDKInstance? = null
     private var broadcastReceiver: BroadcastReceiver? = null
     private var isFirstSendDidAppear = true
-    var renderContainer = RenderContainer(activity)
+    var renderContainer : RenderContainer? = null
 
     fun refreshWeex() {
         render()
@@ -61,6 +61,7 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        renderContainer = RenderContainer(activity)
         val u = router?.url
         if (u == null) {
             Logger.e("url不能为空")
