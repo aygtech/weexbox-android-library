@@ -32,6 +32,7 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     var instance: WXSDKInstance? = null
     private var broadcastReceiver: BroadcastReceiver? = null
     private var isFirstSendDidAppear = true
+    var renderContainer = RenderContainer(activity)
 
     fun refreshWeex() {
         render()
@@ -39,7 +40,6 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
 
     private fun render() {
         instance?.destroy()
-        val renderContainer = RenderContainer(activity)
         instance = WXSDKInstance(activity)
         instance?.setRenderContainer(renderContainer)
         instance?.registerRenderListener(this)
@@ -72,6 +72,8 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        renderContainer?.setSDKInstance(null)
+        instance?.setRenderContainer(null)
         instance?.registerRenderListener(null)
         instance?.destroy()
         instance = null
