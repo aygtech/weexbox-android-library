@@ -75,6 +75,7 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         instance?.registerRenderListener(null)
         instance?.destroy()
         instance = null
+        unregisterWeexDebugBroadcast()
     }
 
     override fun onFragmentResume() {
