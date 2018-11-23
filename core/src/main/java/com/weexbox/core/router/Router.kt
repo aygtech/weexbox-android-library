@@ -18,7 +18,7 @@ import java.util.*
  * Description: This is Router
  */
 
-class Router :Serializable{
+class Router: Serializable {
 
     companion object {
 
@@ -31,7 +31,7 @@ class Router :Serializable{
         const val NAME_WEEX = "weex"  //name的类型
         const val NAME_WEB = "web"    //name的类型
 
-        fun register(name: String, controller: Class<out WBBaseActivity>){
+        fun register(name: String, controller: Class<out WBBaseActivity>) {
             routes[name] = controller
         }
     }
@@ -61,14 +61,22 @@ class Router :Serializable{
         } else {
             var activities: List<Activity>? = null
             if (closeFrom != null) {
-                if (closeFromBottomToTop){
+                if (closeFromBottomToTop) {
                     val allActivities = ActivityManager.getInstance().allActivities
-                    val closeTo = if (closeCount != null) {closeCount!! + closeFrom!!} else {allActivities.size }
+                    val closeTo = if (closeCount != null) {
+                        closeCount!! + closeFrom!!
+                    } else {
+                        allActivities.size
+                    }
                     activities = allActivities.subList(closeFrom!!, closeTo)
-                } else{
+                } else {
                     val allActivities = ActivityManager.getInstance().allActivities
                     val closeTo = allActivities.size - closeFrom!!
-                    val closeMyFrom = if (closeCount != null) {allActivities.size - closeFrom!! - closeCount!!} else {1}
+                    val closeMyFrom = if (closeCount != null) {
+                        allActivities.size - closeFrom!! - closeCount!!
+                    } else {
+                        1
+                    }
                     activities = allActivities.subList(closeMyFrom, closeTo)
                 }
             }
@@ -87,11 +95,9 @@ class Router :Serializable{
     }
 
     fun removeActivitys(activities: List<Activity>) {
-
-
-            for (activity in activities) {
-                activity.finish()
-            }
+        for (activity in activities) {
+            activity.finish()
+        }
 
     }
 
@@ -103,12 +109,12 @@ class Router :Serializable{
 
         val activities = ActivityManager.getInstance().allActivities
 
-        if (activities.size < count){
+        if (activities.size < count) {
             count = activities.size
         }
 
         for (i in 0 until count) {
-            val activity = activities[(activities.size - i -1)]
+            val activity = activities[(activities.size - i - 1)]
             activity.finish()
         }
     }

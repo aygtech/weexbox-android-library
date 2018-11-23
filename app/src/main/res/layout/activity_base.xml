@@ -5,14 +5,6 @@
     android:background="#0000ff"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--app:title="dsafdsf"-->
-        <!--android:id="@+id/hahaha"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="40dp">-->
-
-    <!--</android.support.v7.widget.Toolbar>-->
-
     <TextView
         android:layout_centerInParent="true"
         android:text="asdfdasf"

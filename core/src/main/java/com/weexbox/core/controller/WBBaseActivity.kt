@@ -49,12 +49,10 @@ open class WBBaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         EventBus.getDefault().register(this)
         ActivityManager.getInstance().addActivity(this)
         router = intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
-        if (router == null) {
-            router = Router()
-        }
     }
 
     override fun onDestroy() {

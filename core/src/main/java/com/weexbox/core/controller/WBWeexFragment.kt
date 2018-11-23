@@ -6,9 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.*
-import android.widget.Toast
+import android.widget.FrameLayout
 import com.litesuits.common.io.FileUtils
 import com.orhanobut.logger.Logger
 import com.taobao.weex.IWXRenderListener
@@ -16,6 +15,7 @@ import com.taobao.weex.RenderContainer
 import com.taobao.weex.WXSDKInstance
 import com.taobao.weex.common.IWXDebugProxy
 import com.taobao.weex.common.WXRenderStrategy
+import com.weexbox.core.R
 import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.event.Event
 import com.weexbox.core.update.UpdateManager
@@ -26,12 +26,16 @@ import java.io.IOException
  * Time: 2018/8/16 下午4:38
  */
 
-abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
+class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
 
-    lateinit var url: String
+    var url: String? = null
     var instance: WXSDKInstance? = null
     private var broadcastReceiver: BroadcastReceiver? = null
     private var isFirstSendDidAppear = true
+
+    override fun getResId(): Int {
+        return R.layout.fragment_weex
+    }
 
     fun refreshWeex() {
         render()
@@ -45,11 +49,11 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         instance?.registerRenderListener(this)
         instance?.isTrackComponent = false
         try {
-            if (url.startsWith("http")) {
+            if (url!!.startsWith("http")) {
                 // 下载
                 instance?.renderByUrl(url, url, null, null, WXRenderStrategy.APPEND_ASYNC)
             } else {
-                val file = UpdateManager.getFullUrl(url)
+                val file = UpdateManager.getFullUrl(url!!)
                 val template = FileUtils.readFileToString(file)
                 instance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
             }
@@ -61,46 +65,40 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val u = router?.url
-        if (u == null) {
+        if (url == null) {
             Logger.e("url不能为空")
         } else {
-            url = u
             render()
         }
     }
 
-    override fun onFragmentResume() {
-        super.onFragmentResume()
+    override fun onDestroy() {
+        super.onDestroy()
 
-        if (WeexBoxEngine.isDebug) {
-            registerWeexDebugBroadcast()
-        }
-        if (!isFirstSendDidAppear) {
-            sendViewDidAppear()
-        }
+        instance?.destroy()
     }
 
-    override fun onFragmentPause() {
-        super.onFragmentPause()
+    override fun onVisibleToUserChanged(isVisibleToUser: Boolean) {
+        super.onVisibleToUserChanged(isVisibleToUser)
 
-        unregisterWeexDebugBroadcast()
-        sendViewDidDisappear()
+        if (isVisibleToUser) {
+            if (WeexBoxEngine.isDebug) {
+                registerWeexDebugBroadcast()
+            }
+            if (!isFirstSendDidAppear) {
+                sendViewDidAppear()
+            }
+        }
+        else {
+            unregisterWeexDebugBroadcast()
+            sendViewDidDisappear()
+        }
     }
 
     override fun onException(instance: WXSDKInstance?, errCode: String?, msg: String?) {
-        if (!TextUtils.isEmpty(errCode) && errCode!!.contains("|")) {
-            val errCodeList = errCode.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val code = errCodeList[1]
-            val codeType = errCode.substring(0, errCode.indexOf("|"))
-
-            if (TextUtils.equals("1", codeType)) {
-                val errMsg = "codeType:$codeType\n errCode:$code\n ErrorInfo:$msg"
-                degradeAlert(errMsg)
-                return
-            } else {
-                Toast.makeText(activity?.applicationContext, "errCode:$errCode Render ERROR:$msg", Toast.LENGTH_SHORT).show()
-            }
+        if (WeexBoxEngine.isDebug) {
+            val errMsg = "errorCode:$errCode\n message:$msg"
+            AlertDialog.Builder(activity).setMessage(errMsg).setPositiveButton("OK", null).show()
         }
     }
 
@@ -112,20 +110,15 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
 
     }
 
-    private fun degradeAlert(errMsg: String) {
-        AlertDialog.Builder(activity)
-                .setTitle("Downgrade success")
-                .setMessage(errMsg)
-                .setPositiveButton("OK", null)
-                .show()
-
-    }
-
     override fun onViewCreated(instance: WXSDKInstance?, view: View?) {
-        onAddWeexView(view)
+//        onWeexViewCreated(view)
+        if (view!!.parent == null) {
+            (rootView as FrameLayout).addView(view)
+        }
+        rootView.requestLayout()
     }
 
-    abstract fun onAddWeexView(wxView: View?)
+//    abstract fun onWeexViewCreated(weexView: View?)
 
     //调试广播
     inner class RefreshBroadcastReceiver : BroadcastReceiver() {
@@ -164,8 +157,8 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
      * @return
      */
     open fun getFragmentSimpleName(): String? {
-        return if (router != null && router!!.url != null) {
-            router!!.url
+        return if (url != null) {
+            url
         } else "WBWeexFragment"
     }
 
