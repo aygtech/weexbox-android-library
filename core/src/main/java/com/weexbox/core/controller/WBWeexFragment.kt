@@ -70,6 +70,13 @@ abstract class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        instance?.registerRenderListener(null)
+        instance?.destroy()
+        instance = null
+    }
+
     override fun onFragmentResume() {
         super.onFragmentResume()
 
