@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.weexbox.core.R;
 import com.weexbox.core.adapter.PageAdapter;
 import com.weexbox.core.adapter.PhotoViewPager;
+import com.weexbox.core.controller.WBBaseActivity;
 import com.weexbox.core.util.ImageUtil;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  * Time:2018/8/2   18:45
  * Description:This is PhotoActivity
  */
-public class PhotoActivity extends AppCompatActivity {
+public class PhotoActivity extends WBBaseActivity {
     TextView page;
     RelativeLayout top;
     PhotoViewPager viewPager;
