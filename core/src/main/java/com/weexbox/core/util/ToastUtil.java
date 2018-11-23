@@ -8,53 +8,19 @@ import android.widget.Toast;
  */
 public final class ToastUtil {
 
-    private static Toast sToast;
-
-    private ToastUtil() {
-
-    }
-
-    private static void showToast(final Context context, final String text, final int duration) {
-        if (sToast == null) {
-            sToast = Toast.makeText(context, text, duration);
-        } else {
-            sToast.setText(text);
-        }
-        sToast.show();
-    }
-
-    private static void showToast(Context context, int textId, int duration) {
-        if (sToast == null) {
-            sToast = Toast.makeText(context, textId, duration);
-        } else {
-            sToast.setText(textId);
-        }
-        sToast.show();
-    }
-
     public static void showShortToast(final Context context, final String text) {
-        showToast(context, text, Toast.LENGTH_SHORT);
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
     public static void showShortToast(final Context context, final int textId) {
-        showToast(context, textId, Toast.LENGTH_SHORT);
+        Toast.makeText(context, textId, Toast.LENGTH_SHORT).show();
     }
 
     public static void showLongToast(final Context context, final String text) {
-        showToast(context, text, Toast.LENGTH_LONG);
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
 
     public static void showLongToast(final Context context, final int textId) {
-        showToast(context, textId, Toast.LENGTH_LONG);
-    }
-
-    public static void cancelToast() {
-        if (sToast != null) {
-            sToast.cancel();
-        }
-    }
-
-    public static void releaseResources() {
-        sToast = null;
+        Toast.makeText(context, textId, Toast.LENGTH_LONG).show();
     }
 }
