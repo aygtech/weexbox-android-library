@@ -111,14 +111,11 @@ class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     }
 
     override fun onViewCreated(instance: WXSDKInstance?, view: View?) {
-//        onWeexViewCreated(view)
         if (view!!.parent == null) {
-            (rootView as FrameLayout).addView(view)
+            (rootView as ViewGroup).addView(view)
         }
         rootView.requestLayout()
     }
-
-//    abstract fun onWeexViewCreated(weexView: View?)
 
     //调试广播
     inner class RefreshBroadcastReceiver : BroadcastReceiver() {
