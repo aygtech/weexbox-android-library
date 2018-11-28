@@ -37,11 +37,6 @@
         </activity>
 
 
-        <service
-            android:name=".BtnSerivice"
-            android:enabled="true"
-            android:exported="false"></service>
-
     </application>
 
 </manifest>

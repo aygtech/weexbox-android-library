@@ -14,7 +14,7 @@ import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
 import com.weexbox.core.module.*
 import com.weexbox.core.router.Router
-import com.weexbox.core.service.FloatingBtnService
+import com.weexbox.core.service.DebugWeexService
 import com.weexbox.core.util.BitmapUtil
 import io.realm.Realm
 
@@ -32,7 +32,7 @@ object WeexBoxEngine {
         set(value) {
             field = value
             if (value) {
-//                initFloatingBtn(application, FloatingBtnService::class.java)
+                initFloatingBtn(application, DebugWeexService::class.java)
                 WXEnvironment.setOpenDebugLog(true)
                 WXEnvironment.setApkDebugable(true)
             } else {
@@ -55,8 +55,8 @@ object WeexBoxEngine {
     /**
      * 启动全局悬浮按钮service
      */
-    fun initFloatingBtn(context: Context, service: Class<out FloatingBtnService>) {
-        if (FloatingBtnService.STATAG == "stop") {
+    fun initFloatingBtn(context: Context, service: Class<out DebugWeexService>) {
+        if (DebugWeexService.STATAG == "stop") {
             val serviceIntent = Intent(context, service)
             context.startService(serviceIntent)
         }
