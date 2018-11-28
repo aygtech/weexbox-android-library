@@ -16,8 +16,6 @@ class NormalActivity: WBBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        router = Router()
-//        router!!.url = "module1/page1.js"
         setContentView(R.layout.activity_normal)
 
 

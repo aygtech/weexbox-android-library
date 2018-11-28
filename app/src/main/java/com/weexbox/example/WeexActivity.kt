@@ -13,8 +13,8 @@ import com.weexbox.core.router.Router
 class WeexActivity: WBWeexActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        router = Router()
-        router!!.url = "module1/page1.js"
+
+        router.url = "module1/page1.js"
 
         super.onCreate(savedInstanceState)
     }

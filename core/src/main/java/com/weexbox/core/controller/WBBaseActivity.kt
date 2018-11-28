@@ -32,7 +32,7 @@ import java.util.*
 open class WBBaseActivity : AppCompatActivity() {
 
     // 路由
-    var router: Router? = null
+    var router = Router()
     // 通用事件
     var events: MutableMap<String, EventCallback> = TreeMap()
     //导航栏
@@ -52,7 +52,10 @@ open class WBBaseActivity : AppCompatActivity() {
 
         EventBus.getDefault().register(this)
         ActivityManager.getInstance().addActivity(this)
-        router = router ?: intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
+        val intentRouter = intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
+        if (intentRouter != null) {
+            router = intentRouter
+        }
     }
 
     override fun onDestroy() {
@@ -69,15 +72,13 @@ open class WBBaseActivity : AppCompatActivity() {
 
     override fun setContentView(view: View) {
         if (view is ViewGroup) {
-            if (router != null) {
-                toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
-                view.addView(toolbar, 0)
-                toolbar.setBackButton { finish() }
-                if (!(router!!.navBarHidden)) {
-                    toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
-                } else {
-                    toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
-                }
+            toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
+            view.addView(toolbar, 0)
+            toolbar.setBackButton { finish() }
+            if (!(router.navBarHidden)) {
+                toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
+            } else {
+                toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
             }
         }
         super.setContentView(view)
@@ -96,7 +97,7 @@ open class WBBaseActivity : AppCompatActivity() {
                 if (result.contents == null) {
                     Toast.makeText(applicationContext, "Cancelled", Toast.LENGTH_SHORT).show()
                 } else {
-                    handleDecodeInternally(result.contents)
+                    openWeex(result.contents)
                 }
             }
         }
@@ -106,7 +107,7 @@ open class WBBaseActivity : AppCompatActivity() {
      * 处理devtool返回的DebugProxyUrl,WX启动devtool模式
      * @param code
      */
-    private fun handleDecodeInternally(url: String) {
+    private fun openWeex(url: String) {
         // 处理windows上的dev路径带有"\\"
         val parameters = url.replace("\\", "/").getParameters()
         val devtoolUrl = parameters["_wx_devtool"]
@@ -125,17 +126,17 @@ open class WBBaseActivity : AppCompatActivity() {
         }
     }
 
-    interface HaveFragmentListener {
-        fun refreshFragmentWeex()
-    }
-
-    var listener: HaveFragmentListener? = null
-    fun setHaveFragmentListener(haveFragmentListener: HaveFragmentListener) {
-        listener = haveFragmentListener
-    }
-
-    fun refreshWeex() {
-        listener?.refreshFragmentWeex()
-    }
+//    interface HaveFragmentListener {
+//        fun refreshFragmentWeex()
+//    }
+//
+//    var listener: HaveFragmentListener? = null
+//    fun setHaveFragmentListener(haveFragmentListener: HaveFragmentListener) {
+//        listener = haveFragmentListener
+//    }
+//
+//    fun refreshWeex() {
+//        listener?.refreshFragmentWeex()
+//    }
 
 }

@@ -37,7 +37,7 @@ class Router: Serializable {
     }
 
     // 页面名称
-    var name: String = ""
+    var name: String? = null
     // 下一个weex/web的路径
     var url: String? = null
     // 页面出现方式：push, present
@@ -101,7 +101,7 @@ class Router: Serializable {
 
     }
 
-    fun close(from: WBBaseActivity, levels: Int? = null) {
+    fun close(levels: Int? = null) {
         var count = 0
         if (levels != null) {
             count = levels

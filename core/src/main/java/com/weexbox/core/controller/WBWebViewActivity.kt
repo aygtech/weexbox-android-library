@@ -33,7 +33,7 @@ class WBWebViewActivity : WBBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        url = router!!.url
+        url = router.url
         if (TextUtils.isEmpty(url)) {
             finish()
             return

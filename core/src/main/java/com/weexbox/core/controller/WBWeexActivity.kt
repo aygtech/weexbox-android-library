@@ -16,7 +16,7 @@ open class WBWeexActivity : WBBaseActivity() {
 
         setContentView(R.layout.activity_weex)
         val weexFragment = WBWeexFragment()
-        weexFragment.url = router?.url
+        weexFragment.url = router.url
         supportFragmentManager.beginTransaction().replace(R.id.weex_fragment, weexFragment).commit()
     }
 }
