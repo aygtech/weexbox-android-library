@@ -52,7 +52,7 @@ open class WBBaseActivity : AppCompatActivity() {
 
         EventBus.getDefault().register(this)
         ActivityManager.getInstance().addActivity(this)
-        router = intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
+        router = router ?: intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
     }
 
     override fun onDestroy() {

@@ -8,17 +8,17 @@ import com.weexbox.core.router.Router
 /**
  * Author: Mario
  * Time: 2018/11/23 2:10 PM
- * Description: This is BaseActivity
+ * Description: This is NormalActivity
  */
 
-class BaseActivity: WBWeexActivity() {
+class NormalActivity: WBBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         router = Router()
-//        router!!.url = ""
-        setContentView(R.layout.activity_base)
+//        router!!.url = "module1/page1.js"
+        setContentView(R.layout.activity_normal)
 
 
     }

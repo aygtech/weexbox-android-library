@@ -34,10 +34,10 @@ open class NetworkModule : BaseModule() {
                 result.status = response.code()
                 val data = response.body()?.string()
                 if (data != null) {
-                    if (info.responseType?.toUpperCase() == "JSON") {
-                        result.data = data.toJsonMap()
-                    } else {
+                    if (info.responseType?.toUpperCase() == "TEXT") {
                         result.data["data"] = data
+                    } else {
+                        result.data = data.toJsonMap()
                     }
                 }
                 result.error = response.errorBody()?.string()

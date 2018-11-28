@@ -2,5 +2,6 @@
 <resources>
     <!-- Title -->
     <dimen name="title_height">48dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

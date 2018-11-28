@@ -24,7 +24,7 @@
         android:largeHeap="true"
     	tools:replace="android:allowBackup,android:theme">
 
-        <activity android:name=".BaseActivity">
+        <activity android:name=".WeexActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".NormalActivity">
 
+        </activity>
 
 
         <service
