@@ -13,22 +13,22 @@ import com.taobao.weex.common.WXModule
 open class StorageModule : BaseModule() {
 
     @JSMethod(uiThread = true)
-    fun setData(key: String, value: String) {
+    open fun setData(key: String, value: String) {
 
     }
 
     @JSMethod(uiThread = true)
-    fun getData(key: String): String {
+    open fun getData(key: String): String {
         return key
     }
 
     @JSMethod(uiThread = true)
-    fun deleteData(key: String) {
+    open fun deleteData(key: String) {
 
     }
 
     @JSMethod(uiThread = true)
-    fun deleteAll() {
+    open fun deleteAll() {
 
     }
 }

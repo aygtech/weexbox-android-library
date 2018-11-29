@@ -50,7 +50,7 @@ open class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun prompt(options: Map<String, Any>, completionCallback: JSCallback) {
+    open fun prompt(options: Map<String, Any>, completionCallback: JSCallback) {
         val edit = EditText(getActivity())
         edit.setText(options["placeholder"] as String?)
 
@@ -80,7 +80,7 @@ open class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun actionSheet(options: Map<String, Any>, completionCallback: JSCallback) {
+    open fun actionSheet(options: Map<String, Any>, completionCallback: JSCallback) {
 
         val list = options["actions"] as List<Map<String, String>>
         var items = arrayOfNulls<String>(list.size)
@@ -109,7 +109,7 @@ open class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun showToast(options: Map<String, Any>) {
+    open fun showToast(options: Map<String, Any>) {
         if (options["duration"] is Int){
             Toast.makeText(getActivity().applicationContext, options["text"] as String?, options["duration"] as Int * 1000).show()
         } else if (options["duration"] is BigDecimal){
@@ -118,7 +118,7 @@ open class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun showLoading(text: String) {
+    open fun showLoading(text: String) {
         getActivity().loadDialogHelper.showLoadWithText(getActivity(), text)
     }
 
@@ -132,12 +132,12 @@ open class ModalModule : BaseModule() {
 //    }
 
     @JSMethod(uiThread = true)
-    fun showProgress(options: Map<String, Any>) {
+    open fun showProgress(options: Map<String, Any>) {
         getActivity().loadDialogHelper.showProgressWithText(getActivity(), options["text"] as String?, options["progress"] as Int)
     }
 
     @JSMethod(uiThread = true)
-    fun dismiss() {
+    open fun dismiss() {
         getActivity().loadDialogHelper.close()
     }
 }

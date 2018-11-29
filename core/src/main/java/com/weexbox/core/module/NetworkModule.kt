@@ -21,7 +21,7 @@ import retrofit2.Response
 open class NetworkModule : BaseModule() {
 
     @JSMethod(uiThread = false)
-    fun request(options: Map<String, Any>, callback: JSCallback) {
+    open fun request(options: Map<String, Any>, callback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         var method = Network.HTTPMethod.GET
         if (info.method?.toUpperCase() == "POST") {

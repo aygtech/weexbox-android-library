@@ -15,25 +15,25 @@ import com.weexbox.core.model.JsOptions
 open class EventModule : BaseModule() {
 
     @JSMethod(uiThread = true)
-    fun register(name: String, callback: JSCallback) {
+    open fun register(name: String, callback: JSCallback) {
         Event.register(getFragment()!!, name) {
             callback.invokeAndKeepAlive(it)
         }
     }
 
     @JSMethod(uiThread = true)
-    fun emit(options: Map<String, Any>) {
+    open fun emit(options: Map<String, Any>) {
         val info = options.toObject(JsOptions::class.java)
         Event.emit(info.name!!, info.params)
     }
 
     @JSMethod(uiThread = true)
-    fun unregister(name: String) {
+    open fun unregister(name: String) {
         Event.unregister(getFragment()!!, name)
     }
 
     @JSMethod(uiThread = true)
-    fun unregisterAll() {
+    open fun unregisterAll() {
         Event.unregisterAll(getFragment()!!)
     }
 }
