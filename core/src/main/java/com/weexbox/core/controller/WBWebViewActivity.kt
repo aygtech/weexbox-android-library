@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_web_view.*
  * Time:2018/10/20   19:00
  * Description:This is WBWebViewActivity
  */
-class WBWebViewActivity : WBBaseActivity() {
+open class WBWebViewActivity : WBBaseActivity() {
     var url: String? = ""
     private var sonicSession: SonicSession? = null
 

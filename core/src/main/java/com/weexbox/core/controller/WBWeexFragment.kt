@@ -26,7 +26,7 @@ import java.io.IOException
  * Time: 2018/8/16 下午4:38
  */
 
-class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
+open class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
 
     var url: String? = null
     var instance: WXSDKInstance? = null
@@ -153,15 +153,15 @@ class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
      * 代码混淆后不能对应上
      * @return
      */
-    open fun getFragmentSimpleName(): String? {
+    fun getFragmentSimpleName(): String? {
         return if (url != null) {
             url
         } else "WBWeexFragment"
     }
 
-    override fun onBackPressedAction() {
-        super.onBackPressedAction()
-        Event.emit(this.getFragmentSimpleName()!! + id, null)
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Event.emit(backName, null)
     }
 
 }

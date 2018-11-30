@@ -20,13 +20,17 @@ abstract class WBBaseFragment: Fragment() {
     // 通用事件
     var events: MutableMap<String, EventCallback> = TreeMap()
     // 返回键操作
-    var backPressed: Boolean = false
+    var isListenBack = false
+    val backName = "WB-onBackPressed"
+
     // 可见性相关
-    private var isVisibleToUser = false
+    var isVisibleToUser = false
     private var isOnCreateView = false
     private var isSetUserVisibleHint = false
     private var isHiddenChanged = false
     private var isFirstResume = false
+
+
 
     lateinit var rootView: View
 
@@ -54,14 +58,16 @@ abstract class WBBaseFragment: Fragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: Event) {
         val callback = events[event.name]
-        callback?.invoke(event.info)
+        if (event.name == backName) {
+            if (isVisibleToUser) {
+                callback?.invoke(event.info)
+            }
+        } else {
+            callback?.invoke(event.info)
+        }
     }
 
-    open fun onBackPressed(): Boolean {
-        return backPressed
-    }
-
-    open fun onBackPressedAction() {
+    open fun onBackPressed() {
 
     }
 
@@ -70,7 +76,7 @@ abstract class WBBaseFragment: Fragment() {
 
         if (!isHiddenChanged && !isSetUserVisibleHint) {
             if (isFirstResume) {
-                setVisibleToUser(true)
+                changeVisibleToUser(true)
             }
         }
         if (isSetUserVisibleHint || (!isFirstResume && !isHiddenChanged)) {
@@ -83,24 +89,24 @@ abstract class WBBaseFragment: Fragment() {
 
         isHiddenChanged = false
         isSetUserVisibleHint = false
-        setVisibleToUser(false)
+        changeVisibleToUser(false)
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
 
         isSetUserVisibleHint = true
-        setVisibleToUser(isVisibleToUser)
+        changeVisibleToUser(isVisibleToUser)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
 
         isHiddenChanged = true
-        setVisibleToUser(!hidden)
+        changeVisibleToUser(!hidden)
     }
 
-    private fun setVisibleToUser(isVisibleToUser: Boolean) {
+    fun changeVisibleToUser(isVisibleToUser: Boolean) {
         if (!isOnCreateView) {
             return
         }

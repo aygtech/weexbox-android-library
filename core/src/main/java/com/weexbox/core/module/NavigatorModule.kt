@@ -162,13 +162,12 @@ open class NavigatorModule : BaseModule() {
 
     //物理返回键
     @JSMethod(uiThread = true)
-    fun onBackPressed(completionCallback: JSCallback) {
-        getFragment()!!.backPressed = true
-        Event.register(this!!.getFragment()!!, getFragment()!!.getFragmentSimpleName()!! + this!!.getFragment()!!.id, object : EventCallback{
-            override fun invoke(p1: Map<String, Any>?) {
-                completionCallback.invokeAndKeepAlive(null)
-            }
-        })
+    fun onBackPressed(callback: JSCallback) {
+        val fragment = getFragment()!!
+        fragment.isListenBack = true
+        Event.register(fragment, fragment.backName) {
+            callback.invokeAndKeepAlive(it)
+        }
     }
 
     fun getActionbar(): SimpleToolbar {

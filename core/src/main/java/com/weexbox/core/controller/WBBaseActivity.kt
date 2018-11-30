@@ -2,6 +2,7 @@ package com.weexbox.core.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
@@ -63,6 +64,29 @@ open class WBBaseActivity : AppCompatActivity() {
         EventBus.getDefault().unregister(this)
         loadDialogHelper.clear()
         ActivityManager.getInstance().removeActivity(this)
+    }
+
+    override fun onBackPressed() {
+        val fragment = getFragment()
+        if (fragment != null && fragment.isListenBack) {
+            fragment.onBackPressed()
+        }
+    }
+
+    fun getFragment(): WBBaseFragment? {
+        val fragments = supportFragmentManager.fragments
+        return getRecursionFragment(fragments)
+    }
+
+    private fun getRecursionFragment(fragments: List<Fragment>): WBBaseFragment? {
+        for (recursionFragment in fragments) {
+            if (recursionFragment is WBBaseFragment && recursionFragment.isVisibleToUser) {
+                return recursionFragment
+            } else if (recursionFragment.childFragmentManager.fragments.size > 0){
+                getRecursionFragment(recursionFragment.childFragmentManager.fragments)
+            }
+        }
+        return null
     }
 
     override fun setContentView(layoutResID: Int) {
