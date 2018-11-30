@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.Toast
 import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
@@ -19,6 +22,7 @@ import com.weexbox.core.util.ActivityManager
 import com.weexbox.core.util.LoadDialogHelper
 import com.weexbox.core.util.SelectImageUtil
 import com.weexbox.core.widget.SimpleToolbar
+import kotlinx.android.synthetic.main.activity_photoview.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -95,9 +99,19 @@ open class WBBaseActivity : AppCompatActivity() {
     }
 
     override fun setContentView(view: View) {
-        if (view is ViewGroup) {
+        if (view is LinearLayout) {
             toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
             view.addView(toolbar, 0)
+        }
+//        else if (view is ViewGroup) {
+//            toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
+//            view.addView(toolbar, 0)
+//            var v = view.getChildAt(1)
+//            var params = view.layoutParams;
+//            params.
+//        }
+
+        if (view is LinearLayout){
             toolbar.setBackButton { finish() }
             if (!(router.navBarHidden)) {
                 toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
@@ -105,6 +119,7 @@ open class WBBaseActivity : AppCompatActivity() {
                 toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
             }
         }
+
         super.setContentView(view)
     }
 
