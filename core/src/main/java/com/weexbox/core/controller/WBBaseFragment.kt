@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.weexbox.core.event.Event
 import com.weexbox.core.event.EventCallback
+import com.weexbox.core.router.Router
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -17,6 +18,8 @@ import java.util.*
 */
 abstract class WBBaseFragment: Fragment() {
 
+    // 路由
+    var router = Router()
     // 通用事件
     var events: MutableMap<String, EventCallback> = TreeMap()
     // 返回键操作

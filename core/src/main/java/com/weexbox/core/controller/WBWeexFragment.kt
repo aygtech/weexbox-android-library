@@ -65,6 +65,7 @@ open class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        url = router.url
         if (url == null) {
             Logger.e("url不能为空")
         } else {
