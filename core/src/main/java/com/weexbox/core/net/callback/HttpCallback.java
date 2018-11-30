@@ -97,6 +97,8 @@ public abstract class HttpCallback<T> extends Callback<T> {
                 onFail(requestId, this.errorCode, NO_BACK_CODE, e.getMessage(), null);
             } else if (this.errorCode == 401) {
                 onFail(requestId, this.errorCode, NO_BACK_CODE, e.getMessage(), null);
+            } else if (this.errorCode == 500) {
+                onFail(requestId, this.errorCode, NO_BACK_CODE, e.getMessage(), null);
             } else {
                 try {
                     JSONObject jsonObject = new JSONObject(e.getMessage());
