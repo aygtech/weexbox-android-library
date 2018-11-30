@@ -16,7 +16,25 @@ class JsOptions {
     var responseType: String? = null
 //    var files: Array<UploadFile>?
 
+    // modal
+    var text: String? = null
+    var progress: Int? = null
+    var title: String? = null
+    var message: String? = null
+    var okTitle: String? = null
+    var cancelTitle: String? = null
+    var placeholder: String? = null
+    var isSecure: Boolean? = null
+    var actions: Array<ActionSheet>? = null
+    var duration: Double? = null
+
+    class ActionSheet {
+        var title: String? = null
+        var type: String? = null // destructive;cancel;normal
+    }
+
     var name: String? = null
+//    var count: Int? = null
 
     //ExternalModule 相机相册使用options
     var enableCrop = false
