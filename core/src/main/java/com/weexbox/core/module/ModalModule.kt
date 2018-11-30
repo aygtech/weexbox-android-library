@@ -14,7 +14,7 @@ import java.math.BigDecimal
 open class ModalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
-    fun alert(options: Map<String, Any>, callback: JSCallback) {
+    open fun alert(options: Map<String, Any>, callback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         val builder = AlertDialog.Builder(getActivity())
         // 设置参数
@@ -25,7 +25,7 @@ open class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun confirm(options: Map<String, Any>, callback: JSCallback) {
+    open fun confirm(options: Map<String, Any>, callback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         val builder = AlertDialog.Builder(getActivity())
         // 设置参数
@@ -42,7 +42,7 @@ open class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun prompt(options: Map<String, Any>, callback: JSCallback) {
+    open fun prompt(options: Map<String, Any>, callback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         val edit = EditText(getActivity())
         edit.setText(info.placeholder)
@@ -61,7 +61,7 @@ open class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun actionSheet(options: Map<String, Any>, completionCallback: JSCallback) {
+    open fun actionSheet(options: Map<String, Any>, completionCallback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         val actions = info.actions
         val items: Array<String?> = arrayOf()
@@ -81,7 +81,7 @@ open class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun showToast(options: Map<String, Any>) {
+    open fun showToast(options: Map<String, Any>) {
         val info = options.toObject(JsOptions::class.java)
         var time = Toast.LENGTH_SHORT
         if (info.duration != null && info.duration!! >= 3) {
@@ -91,18 +91,18 @@ open class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun showLoading(text: String) {
+    open fun showLoading(text: String) {
         getActivity().loadDialogHelper.showLoadWithText(getActivity(), text)
     }
 
     @JSMethod(uiThread = true)
-    fun showProgress(options: Map<String, Any>) {
+    open fun showProgress(options: Map<String, Any>) {
         val info = options.toObject(JsOptions::class.java)
         getActivity().loadDialogHelper.showProgressWithText(getActivity(), info.text, info.progress!!)
     }
 
     @JSMethod(uiThread = true)
-    fun dismiss() {
+    open fun dismiss() {
         getActivity().loadDialogHelper.close()
     }
 }

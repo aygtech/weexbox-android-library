@@ -17,12 +17,12 @@ open class NavigatorModule : BaseModule() {
 
     //返回手势
     @JSMethod(uiThread = true)
-    fun disableGestureBack() {
+    open fun disableGestureBack() {
     }
 
     //中间title
     @JSMethod(uiThread = true)
-    fun setCenterItem(info: Map<String, Any>, completionCallback: JSCallback) {
+    open fun setCenterItem(info: Map<String, Any>, completionCallback: JSCallback) {
         if (getActionbar() != null && info != null){
             val result = Result()
 
@@ -49,7 +49,7 @@ open class NavigatorModule : BaseModule() {
 
     //左item
     @JSMethod(uiThread = true)
-    fun setLeftItems(items: List<Map<String, Any>>, completionCallback: JSCallback) {
+    open fun setLeftItems(items: List<Map<String, Any>>, completionCallback: JSCallback) {
         if (getActionbar() != null){
             for (i in items.indices) {
                 var info: Map<String, Any>
@@ -104,7 +104,7 @@ open class NavigatorModule : BaseModule() {
 
     //右item
     @JSMethod(uiThread = true)
-    fun setRightItems(items: List<Map<String, Any>>, completionCallback: JSCallback) {
+    open fun setRightItems(items: List<Map<String, Any>>, completionCallback: JSCallback) {
         if (getActionbar() != null){
             for (i in items.indices) {
                 var info: Map<String, Any>
@@ -154,7 +154,7 @@ open class NavigatorModule : BaseModule() {
 
     //导航栏颜色
     @JSMethod(uiThread = true)
-    fun setNavColor(color: String) {
+    open fun setNavColor(color: String) {
         if (getActionbar() != null){
             getActionbar().setAcitionbarAndStatusbarBackground("#" + color)
         }
@@ -162,7 +162,7 @@ open class NavigatorModule : BaseModule() {
 
     //物理返回键
     @JSMethod(uiThread = true)
-    fun onBackPressed(callback: JSCallback) {
+    open fun onBackPressed(callback: JSCallback) {
         val fragment = getFragment()!!
         fragment.isListenBack = true
         Event.register(fragment, fragment.backName) {
@@ -171,7 +171,7 @@ open class NavigatorModule : BaseModule() {
     }
 
     @JSMethod(uiThread = false)
-    fun getHeight(): Float {
+    open fun getHeight(): Float {
         // TODO
         return 0.toFloat()
     }

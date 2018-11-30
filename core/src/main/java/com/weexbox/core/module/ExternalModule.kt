@@ -13,7 +13,7 @@ import kotlin.collections.ArrayList
 open class ExternalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
-    fun openCamera(options: Map<String, Any>, callback: JSCallback) {
+    open fun openCamera(options: Map<String, Any>, callback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         val enableCrop = info.enableCrop
         val isCircle = info.isCircle
@@ -33,7 +33,7 @@ open class ExternalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    fun openPhoto(options: JSONObject, callback: JSCallback) {
+    open fun openPhoto(options: JSONObject, callback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         val count = info.count
         val enableCrop = info.enableCrop

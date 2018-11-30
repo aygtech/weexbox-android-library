@@ -106,7 +106,7 @@ abstract class WBBaseFragment: Fragment() {
         changeVisibleToUser(!hidden)
     }
 
-    fun changeVisibleToUser(isVisibleToUser: Boolean) {
+    private fun changeVisibleToUser(isVisibleToUser: Boolean) {
         if (!isOnCreateView) {
             return
         }
@@ -117,6 +117,6 @@ abstract class WBBaseFragment: Fragment() {
         onVisibleToUserChanged(this.isVisibleToUser)
     }
 
-    protected open fun onVisibleToUserChanged(isVisibleToUser: Boolean) {
+    open fun onVisibleToUserChanged(isVisibleToUser: Boolean) {
     }
 }
