@@ -28,7 +28,7 @@ import java.io.IOException
 
 open class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
 
-    var url: String? = null
+    private var url: String? = null
     var instance: WXSDKInstance? = null
     private var broadcastReceiver: BroadcastReceiver? = null
     private var isFirstSendDidAppear = true

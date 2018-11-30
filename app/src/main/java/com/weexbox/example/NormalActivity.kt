@@ -20,7 +20,7 @@ class NormalActivity: WBBaseActivity() {
         setContentView(R.layout.activity_normal)
         val weexFragment = WBWeexFragment()
 //        weexFragment.url = "http://dotwe.org/raw/dist/791c8507ae8f35a9e134abe8a776588d.bundle.wx"
-        weexFragment.url = "module1/page1.js"
+        weexFragment.router.url = "module1/page1.js"
         supportFragmentManager.beginTransaction().replace(R.id.weex_fragment, weexFragment).commit()
 
     }
