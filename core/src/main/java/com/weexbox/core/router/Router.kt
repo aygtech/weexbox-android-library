@@ -61,14 +61,15 @@ class Router :Serializable{
         } else {
             var activities: List<Activity>? = null
             if (closeFrom != null) {
+                val allActivities = ActivityManager.getInstance().allActivities
                 if (closeFromBottomToTop){
-                    val allActivities = ActivityManager.getInstance().allActivities
-                    val closeTo = if (closeCount != null) {closeCount!! + closeFrom!!} else {allActivities.size }
+                    var closeTo = if (closeCount != null) {closeCount!! + closeFrom!!} else {allActivities.size }
+                    if (closeTo > allActivities.size){ closeTo = allActivities.size }
                     activities = allActivities.subList(closeFrom!!, closeTo)
                 } else{
-                    val allActivities = ActivityManager.getInstance().allActivities
                     val closeTo = allActivities.size - closeFrom!!
-                    val closeMyFrom = if (closeCount != null) {allActivities.size - closeFrom!! - closeCount!!} else {1}
+                    var closeMyFrom = if (closeCount != null) {allActivities.size - closeFrom!! - closeCount!!} else {1}
+                    if (closeMyFrom < 1) { closeMyFrom = 1 }
                     activities = allActivities.subList(closeMyFrom, closeTo)
                 }
             }
