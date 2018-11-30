@@ -21,7 +21,7 @@ import retrofit2.Response
 open class NetworkModule : BaseModule() {
 
     @JSMethod(uiThread = false)
-    open fun request(options: Map<String, Any>, callback: JSCallback) {
+    fun request(options: Map<String, Any>, callback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         var method = Network.HTTPMethod.GET
         if (info.method?.toUpperCase() == "POST") {
@@ -34,10 +34,10 @@ open class NetworkModule : BaseModule() {
                 result.status = response.code()
                 val data = response.body()?.string()
                 if (data != null) {
-                    if (info.responseType?.toUpperCase() == "JSON") {
-                        result.data = data.toJsonMap()
-                    } else {
+                    if (info.responseType?.toUpperCase() == "TEXT") {
                         result.data["data"] = data
+                    } else {
+                        result.data = data.toJsonMap()
                     }
                 }
                 result.error = response.errorBody()?.string()

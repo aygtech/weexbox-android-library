@@ -2,6 +2,7 @@ package com.weexbox.core.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,7 @@ import java.util.*
 open class WBBaseActivity : AppCompatActivity() {
 
     // 路由
-    var router: Router? = null
+    var router = Router()
     // 通用事件
     var events: MutableMap<String, EventCallback> = TreeMap()
     //导航栏
@@ -49,11 +50,12 @@ open class WBBaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         EventBus.getDefault().register(this)
         ActivityManager.getInstance().addActivity(this)
-        router = intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
-        if (router == null) {
-            router = Router()
+        val intentRouter = intent.getSerializableExtra(Router.EXTRA_NAME) as Router?
+        if (intentRouter != null) {
+            router = intentRouter
         }
     }
 
@@ -64,6 +66,29 @@ open class WBBaseActivity : AppCompatActivity() {
         ActivityManager.getInstance().removeActivity(this)
     }
 
+    override fun onBackPressed() {
+        val fragment = getFragment()
+        if (fragment != null && fragment.isListenBack) {
+            fragment.onBackPressed()
+        }
+    }
+
+    fun getFragment(): WBBaseFragment? {
+        val fragments = supportFragmentManager.fragments
+        return getRecursionFragment(fragments)
+    }
+
+    private fun getRecursionFragment(fragments: List<Fragment>): WBBaseFragment? {
+        for (recursionFragment in fragments) {
+            if (recursionFragment is WBBaseFragment && recursionFragment.isVisibleToUser) {
+                return recursionFragment
+            } else if (recursionFragment.childFragmentManager.fragments.size > 0){
+                getRecursionFragment(recursionFragment.childFragmentManager.fragments)
+            }
+        }
+        return null
+    }
+
     override fun setContentView(layoutResID: Int) {
         val view = layoutInflater.inflate(layoutResID, null)
         setContentView(view)
@@ -71,15 +96,13 @@ open class WBBaseActivity : AppCompatActivity() {
 
     override fun setContentView(view: View) {
         if (view is ViewGroup) {
-            if (router != null) {
-                toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
-                view.addView(toolbar, 0)
-                toolbar.setBackButton { finish() }
-                if (!(router!!.navBarHidden)) {
-                    toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
-                } else {
-                    toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
-                }
+            toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
+            view.addView(toolbar, 0)
+            toolbar.setBackButton { finish() }
+            if (!(router.navBarHidden)) {
+                toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
+            } else {
+                toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
             }
         }
         super.setContentView(view)
@@ -98,7 +121,7 @@ open class WBBaseActivity : AppCompatActivity() {
                 if (result.contents == null) {
                     Toast.makeText(applicationContext, "Cancelled", Toast.LENGTH_SHORT).show()
                 } else {
-                    handleDecodeInternally(result.contents)
+                    openWeex(result.contents)
                 }
             }
         }
@@ -108,7 +131,7 @@ open class WBBaseActivity : AppCompatActivity() {
      * 处理devtool返回的DebugProxyUrl,WX启动devtool模式
      * @param code
      */
-    private fun handleDecodeInternally(url: String) {
+    private fun openWeex(url: String) {
         // 处理windows上的dev路径带有"\\"
         val parameters = url.replace("\\", "/").getParameters()
         val devtoolUrl = parameters["_wx_devtool"]
@@ -125,19 +148,6 @@ open class WBBaseActivity : AppCompatActivity() {
             router.url = tplUrl
             router.open(this)
         }
-    }
-
-    interface HaveFragmentListener {
-        fun refreshFragmentWeex()
-    }
-
-    var listener: HaveFragmentListener? = null
-    fun setHaveFragmentListener(haveFragmentListener: HaveFragmentListener) {
-        listener = haveFragmentListener
-    }
-
-    fun refreshWeex() {
-        listener?.refreshFragmentWeex()
     }
 
 }

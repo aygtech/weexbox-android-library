@@ -18,7 +18,7 @@ import java.util.*
  * Description: This is Router
  */
 
-class Router :Serializable{
+class Router : Serializable {
 
     companion object {
 
@@ -31,13 +31,13 @@ class Router :Serializable{
         const val NAME_WEEX = "weex"  //name的类型
         const val NAME_WEB = "web"    //name的类型
 
-        fun register(name: String, controller: Class<out WBBaseActivity>){
+        fun register(name: String, controller: Class<out WBBaseActivity>) {
             routes[name] = controller
         }
     }
 
     // 页面名称
-    var name: String = ""
+    var name: String? = null
     // 下一个weex/web的路径
     var url: String? = null
     // 页面出现方式：push, present
@@ -62,14 +62,26 @@ class Router :Serializable{
             var activities: List<Activity>? = null
             if (closeFrom != null) {
                 val allActivities = ActivityManager.getInstance().allActivities
-                if (closeFromBottomToTop){
-                    var closeTo = if (closeCount != null) {closeCount!! + closeFrom!!} else {allActivities.size }
-                    if (closeTo > allActivities.size){ closeTo = allActivities.size }
+                if (closeFromBottomToTop) {
+                    var closeTo = if (closeCount != null) {
+                        closeCount!! + closeFrom!!
+                    } else {
+                        allActivities.size
+                    }
+                    if (closeTo > allActivities.size) {
+                        closeTo = allActivities.size
+                    }
                     activities = allActivities.subList(closeFrom!!, closeTo)
-                } else{
+                } else {
                     val closeTo = allActivities.size - closeFrom!!
-                    var closeMyFrom = if (closeCount != null) {allActivities.size - closeFrom!! - closeCount!!} else {1}
-                    if (closeMyFrom < 1) { closeMyFrom = 1 }
+                    var closeMyFrom = if (closeCount != null) {
+                        allActivities.size - closeFrom!! - closeCount!!
+                    } else {
+                        1
+                    }
+                    if (closeMyFrom < 1) {
+                        closeMyFrom = 1
+                    }
                     activities = allActivities.subList(closeMyFrom, closeTo)
                 }
             }
@@ -88,15 +100,13 @@ class Router :Serializable{
     }
 
     fun removeActivitys(activities: List<Activity>) {
-
-
-            for (activity in activities) {
-                activity.finish()
-            }
+        for (activity in activities) {
+            activity.finish()
+        }
 
     }
 
-    fun close(from: WBBaseActivity, levels: Int? = null) {
+    fun close(levels: Int? = null) {
         var count = 0
         if (levels != null) {
             count = levels
@@ -104,12 +114,12 @@ class Router :Serializable{
 
         val activities = ActivityManager.getInstance().allActivities
 
-        if (activities.size < count){
+        if (activities.size < count) {
             count = activities.size
         }
 
         for (i in 0 until count) {
-            val activity = activities[(activities.size - i -1)]
+            val activity = activities[(activities.size - i - 1)]
             activity.finish()
         }
     }

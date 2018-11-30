@@ -13,11 +13,11 @@ import com.weexbox.core.controller.WBWeexFragment
 
 open class BaseModule : WXModule() {
 
-    open fun getActivity(): WBBaseActivity {
+    fun getActivity(): WBBaseActivity {
         return mWXSDKInstance.context as WBBaseActivity
     }
 
-    open fun getFragment(): WBWeexFragment? {
+    fun getFragment(): WBWeexFragment? {
         val fragments = getActivity().supportFragmentManager.fragments as List<Fragment>
         return getRecursionFragment(fragments)
     }

@@ -13,59 +13,50 @@ import kotlin.collections.ArrayList
 open class ExternalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
-    open fun openCamera(options: Map<String, Any>, completionCallback: JSCallback) {
+    fun openCamera(options: Map<String, Any>, callback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
-        var enableCrop = info.enableCrop
-        var isCircle = info.isCircle
-        var width = info.width
-        var height = info.height
-        SelectImageUtil.startCamera(getActivity(), width, height, enableCrop, isCircle, object : SelectImageUtil.MultipleImageCompleteListener {
-            override fun onComplete(imgs: Array<out String>?) {
-                val result = Result()
-                val map = TreeMap<String, Any>()
-                if (imgs!![0].length > 0) {
-                    val array = arrayListOf<String>();
-                    array.add(imgs[0])
-                    map.put("urls", array)
-                }
-                result.data = map
-                completionCallback.invoke(result.toJsResult())
+        val enableCrop = info.enableCrop
+        val isCircle = info.isCircle
+        val width = info.width
+        val height = info.height
+        SelectImageUtil.startCamera(getActivity(), width, height, enableCrop, isCircle) { imgs ->
+            val result = Result()
+            val map = TreeMap<String, Any>()
+            if (imgs!![0].isNotEmpty()) {
+                val array = arrayListOf<String>()
+                array.add(imgs[0])
+                map["urls"] = array
             }
-        })
+            result.data = map
+            callback.invoke(result.toJsResult())
+        }
     }
 
     @JSMethod(uiThread = true)
-    open fun openPhoto(options: JSONObject, completionCallback: JSCallback) {
+    fun openPhoto(options: JSONObject, callback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         val count = info.count
-        var enableCrop = info.enableCrop
-        var isCircle = info.isCircle
-        var width = info.width
-        var height = info.height
+        val enableCrop = info.enableCrop
         if (enableCrop) {
-            SelectImageUtil.startImagePickActivity(getActivity(), 100, 100, false, enableCrop, false, object : SelectImageUtil.MultipleImageCompleteListener {
-                override fun onComplete(imgs: Array<out String>?) {
-                    val result = Result()
-                    val map = TreeMap<String, Any>()
-                    if (imgs != null) {
-                        map.put("urls", imgs)
-                    }
-                    result.data = map
-                    completionCallback.invoke(result)
+            SelectImageUtil.startImagePickActivity(getActivity(), 100, 100, false, enableCrop, false) {imgs ->
+                val result = Result()
+                val map = TreeMap<String, Any>()
+                if (imgs != null) {
+                    map["urls"] = imgs
                 }
-            })
+                result.data = map
+                callback.invoke(result)
+            }
         } else {
-            SelectImageUtil.startImagePickActivity(getActivity(), count, 0, false, object : SelectImageUtil.MultipleImageCompleteListener {
-                override fun onComplete(imgs: Array<out String>?) {
-                    val result = Result()
-                    val map = TreeMap<String, Any>()
-                    if (imgs != null) {
-                        map.put("urls", imgs)
-                    }
-                    result.data = map
-                    completionCallback.invoke(result)
+            SelectImageUtil.startImagePickActivity(getActivity(), count, 0, false) { imgs ->
+                val result = Result()
+                val map = TreeMap<String, Any>()
+                if (imgs != null) {
+                    map["urls"] = imgs
                 }
-            })
+                result.data = map
+                callback.invoke(result)
+            }
         }
     }
 }

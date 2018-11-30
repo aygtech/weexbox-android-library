@@ -33,17 +33,17 @@ open class RouterModule : BaseModule() {
 
     @JSMethod(uiThread = false)
     fun getParams(): Map<String, Any>? {
-        return getActivity().router?.params
+        return getActivity().router.params
     }
 
     @JSMethod(uiThread = true)
     fun close(levels: Int?) {
-        getActivity().router!!.close(getActivity(), levels)
+        getActivity().router.close(levels)
     }
 
     @JSMethod(uiThread = true)
     fun refresh() {
-        getActivity().refreshWeex()
+        getFragment()?.refreshWeex()
     }
 
     fun getRouter(info: Map<String, Any>): Router {

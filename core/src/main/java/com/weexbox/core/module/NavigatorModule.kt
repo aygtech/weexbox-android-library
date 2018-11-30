@@ -17,12 +17,12 @@ open class NavigatorModule : BaseModule() {
 
     //返回手势
     @JSMethod(uiThread = true)
-    open fun disableGestureBack() {
+    fun disableGestureBack() {
     }
 
     //中间title
     @JSMethod(uiThread = true)
-    open fun setCenterItem(info: Map<String, Any>, completionCallback: JSCallback) {
+    fun setCenterItem(info: Map<String, Any>, completionCallback: JSCallback) {
         if (getActionbar() != null && info != null){
             val result = Result()
 
@@ -49,7 +49,7 @@ open class NavigatorModule : BaseModule() {
 
     //左item
     @JSMethod(uiThread = true)
-    open fun setLeftItems(items: List<Map<String, Any>>, completionCallback: JSCallback) {
+    fun setLeftItems(items: List<Map<String, Any>>, completionCallback: JSCallback) {
         if (getActionbar() != null){
             for (i in items.indices) {
                 var info: Map<String, Any>
@@ -104,7 +104,7 @@ open class NavigatorModule : BaseModule() {
 
     //右item
     @JSMethod(uiThread = true)
-    open fun setRightItems(items: List<Map<String, Any>>, completionCallback: JSCallback) {
+    fun setRightItems(items: List<Map<String, Any>>, completionCallback: JSCallback) {
         if (getActionbar() != null){
             for (i in items.indices) {
                 var info: Map<String, Any>
@@ -154,7 +154,7 @@ open class NavigatorModule : BaseModule() {
 
     //导航栏颜色
     @JSMethod(uiThread = true)
-    open fun setNavColor(color: String) {
+    fun setNavColor(color: String) {
         if (getActionbar() != null){
             getActionbar().setAcitionbarAndStatusbarBackground("#" + color)
         }
@@ -162,13 +162,18 @@ open class NavigatorModule : BaseModule() {
 
     //物理返回键
     @JSMethod(uiThread = true)
-    open fun onBackPressed(completionCallback: JSCallback) {
-        getFragment()!!.backPressed = true
-        Event.register(this!!.getFragment()!!, getFragment()!!.getFragmentSimpleName()!! + this!!.getFragment()!!.id, object : EventCallback{
-            override fun invoke(p1: Map<String, Any>?) {
-                completionCallback.invokeAndKeepAlive(null)
-            }
-        })
+    fun onBackPressed(callback: JSCallback) {
+        val fragment = getFragment()!!
+        fragment.isListenBack = true
+        Event.register(fragment, fragment.backName) {
+            callback.invokeAndKeepAlive(it)
+        }
+    }
+
+    @JSMethod(uiThread = false)
+    fun getHeight(): Float {
+        // TODO
+        return 0.toFloat()
     }
 
     fun getActionbar(): SimpleToolbar {

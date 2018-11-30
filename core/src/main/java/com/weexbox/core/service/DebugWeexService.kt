@@ -4,21 +4,17 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
-import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import com.google.zxing.integration.android.IntentIntegrator
 import com.weexbox.core.R
-import android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION
-import android.provider.Settings.canDrawOverlays
 import android.os.Build
 import android.provider.Settings
-import android.support.annotation.RequiresApi
+import com.weexbox.core.util.ActivityManager
 
-
-abstract class FloatingBtnService : Service(){
+class DebugWeexService: Service(){
 
     private var view: LinearLayout? = null
 
@@ -38,7 +34,7 @@ abstract class FloatingBtnService : Service(){
         view = inflater.inflate(R.layout.toast_location, null) as LinearLayout
         // 给窗体上的view对象注册点击事件
         view!!.setOnClickListener {
-            val integrator = IntentIntegrator(getCurrentActivity())
+            val integrator = IntentIntegrator(ActivityManager.getInstance().currentActivity())
             integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
             integrator.setPrompt("Scan a barcode")
             //integrator.setCameraId(0);  // Use a specific camera of the device
@@ -123,8 +119,6 @@ abstract class FloatingBtnService : Service(){
         }
         wm!!.addView(view, params)
     }
-
-    abstract fun getCurrentActivity(): Activity?
 
     override fun onCreate() {
         wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager

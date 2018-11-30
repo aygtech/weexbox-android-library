@@ -4,18 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="com.weexbox.core.controller.WBWeexActivity">
 
     <FrameLayout
+        android:id="@+id/weex_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <FrameLayout
-            android:id="@+id/mContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff">
-        </FrameLayout>
     </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>
