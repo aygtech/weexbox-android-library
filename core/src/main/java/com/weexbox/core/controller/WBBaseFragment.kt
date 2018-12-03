@@ -31,7 +31,7 @@ abstract class WBBaseFragment: Fragment() {
     private var isOnCreateView = false
     private var isSetUserVisibleHint = false
     private var isHiddenChanged = false
-    private var isFirstResume = false
+    private var isFirstResume = true
 
 
 
@@ -85,7 +85,7 @@ abstract class WBBaseFragment: Fragment() {
         if (isSetUserVisibleHint || (!isFirstResume && !isHiddenChanged)) {
             isVisibleToUser = true
         }
-        isFirstResume = true
+        isFirstResume = false
     }
     override fun onPause() {
         super.onPause()
