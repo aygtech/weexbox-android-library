@@ -74,6 +74,8 @@ open class WBBaseActivity : AppCompatActivity() {
         val fragment = getFragment()
         if (fragment != null && fragment.isListenBack) {
             fragment.onBackPressed()
+        } else {
+            super.onBackPressed()
         }
     }
 
