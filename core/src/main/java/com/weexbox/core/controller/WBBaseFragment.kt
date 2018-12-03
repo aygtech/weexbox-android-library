@@ -77,6 +77,8 @@ abstract class WBBaseFragment: Fragment() {
 
         if (!isHiddenChanged && !isSetUserVisibleHint) {
             changeVisibleToUser(true)
+        } else if ((isHiddenChanged || isSetUserVisibleHint) && !isHidden) {
+            changeVisibleToUser(true)
         }
         if (isSetUserVisibleHint || (!isFirstResume && !isHiddenChanged)) {
             isVisibleToUser = true
@@ -87,8 +89,6 @@ abstract class WBBaseFragment: Fragment() {
     override fun onPause() {
         super.onPause()
 
-        isHiddenChanged = false
-        isSetUserVisibleHint = false
         changeVisibleToUser(false)
     }
 
