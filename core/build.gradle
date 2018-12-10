@@ -27,8 +27,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // weexSDk依赖
-//    api 'com.taobao.android:weex_sdk:0.19.0.5'
-    api 'com.taobao.android:weex_sdk:0.19.0.5:debug@aar'
+    api 'com.taobao.android:weex_sdk:0.19.0.7'
     api 'com.android.support:appcompat-v7:27.1.1'
     api 'com.alibaba:fastjson:1.1.70.android'
     api 'com.android.support:recyclerview-v7:27.1.1'
