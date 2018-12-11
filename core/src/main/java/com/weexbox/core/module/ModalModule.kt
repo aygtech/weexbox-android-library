@@ -64,7 +64,7 @@ open class ModalModule : BaseModule() {
     open fun actionSheet(options: Map<String, Any>, completionCallback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         val actions = info.actions
-        val items: Array<String?> = arrayOf()
+        val items: Array<String?> = emptyArray()
         for (i in actions!!.indices) {
             items[i] = actions[i].title
         }
