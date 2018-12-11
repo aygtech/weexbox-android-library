@@ -13,6 +13,7 @@
         <service android:name=".service.DebugWeexService"/>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
             android:clearTaskOnLaunch="true"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
