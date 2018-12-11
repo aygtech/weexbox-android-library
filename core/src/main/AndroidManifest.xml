@@ -18,8 +18,13 @@
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".controller.WBWebViewActivity"
-            android:screenOrientation="portrait">
+            android:name=".controller.WBBaseActivity">
+        </activity>
+        <activity
+            android:name=".controller.WBWebViewActivity">
+        </activity>
+        <activity
+            android:name=".controller.WBWeexActivity">
         </activity>
     </application>
 
