@@ -5,24 +5,20 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.Toast
 import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.R
-import com.weexbox.core.extension.getParameters
 import com.weexbox.core.event.Event
 import com.weexbox.core.event.EventCallback
+import com.weexbox.core.extension.getParameters
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.ActivityManager
 import com.weexbox.core.util.LoadDialogHelper
 import com.weexbox.core.util.SelectImageUtil
 import com.weexbox.core.widget.SimpleToolbar
-import kotlinx.android.synthetic.main.activity_photoview.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -88,7 +84,7 @@ open class WBBaseActivity : AppCompatActivity() {
         for (recursionFragment in fragments) {
             if (recursionFragment is WBBaseFragment && recursionFragment.isVisibleToUser) {
                 return recursionFragment
-            } else if (recursionFragment.childFragmentManager.fragments.size > 0){
+            } else if (recursionFragment.childFragmentManager.fragments.size > 0) {
                 getRecursionFragment(recursionFragment.childFragmentManager.fragments)
             }
         }
@@ -101,28 +97,19 @@ open class WBBaseActivity : AppCompatActivity() {
     }
 
     override fun setContentView(view: View) {
-        if (view is LinearLayout) {
-            toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
-            view.addView(toolbar, 0)
-        }
-//        else if (view is ViewGroup) {
-//            toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, view, false) as SimpleToolbar
-//            view.addView(toolbar, 0)
-//            var v = view.getChildAt(1)
-//            var params = view.layoutParams;
-//            params.
-//        }
+        val container = layoutInflater.inflate(R.layout.activity_base, null) as LinearLayout
+        toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, container, false) as SimpleToolbar
+        container.addView(toolbar, 0)
+        container.addView(view, 1)
 
-        if (view is LinearLayout){
-            toolbar.setBackButton { finish() }
-            if (!(router.navBarHidden)) {
-                toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
-            } else {
-                toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
-            }
+        toolbar.setBackButton { finish() }
+        if (!(router.navBarHidden)) {
+            toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
+        } else {
+            toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
         }
 
-        super.setContentView(view)
+        super.setContentView(container)
     }
 
     fun getActionbar(): SimpleToolbar {
