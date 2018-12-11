@@ -62,3 +62,13 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.5'
     api "com.tencent.sonic:sdk:3.0.0"
 }
+
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+}
