@@ -64,3 +64,7 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
 .idea/
+app/gradlew.bat
+app/gradlew
+app/gradle/wrapper/gradle-wrapper.properties
+app/gradle/wrapper/gradle-wrapper.jar

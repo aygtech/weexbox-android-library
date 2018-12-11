@@ -56,6 +56,8 @@ dependencies {
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
     api 'com.kaopiz:kprogresshud:1.2.0'
     api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.4.0'
     api 'com.google.code.gson:gson:2.8.5'
     api "com.tencent.sonic:sdk:3.0.0"
 }
