@@ -109,7 +109,7 @@ open class WBBaseActivity : AppCompatActivity() {
             toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
         }
 
-        super.setContentView(view)
+        super.setContentView(container)
     }
 
     fun getActionbar(): SimpleToolbar {
