@@ -129,9 +129,7 @@ open class WBBaseActivity : AppCompatActivity() {
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if (result != null) {
-                if (result.contents == null) {
-                    Toast.makeText(applicationContext, "Cancelled", Toast.LENGTH_SHORT).show()
-                } else {
+                if (result.contents != null) {
                     openWeex(result.contents)
                 }
             }
