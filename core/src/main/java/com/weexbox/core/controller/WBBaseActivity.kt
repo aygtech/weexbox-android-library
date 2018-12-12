@@ -92,12 +92,9 @@ open class WBBaseActivity : AppCompatActivity() {
     }
 
     override fun setContentView(layoutResID: Int) {
-        val view = layoutInflater.inflate(layoutResID, null)
-        setContentView(view)
-    }
 
-    override fun setContentView(view: View) {
         val container = layoutInflater.inflate(R.layout.activity_base, null) as LinearLayout
+        val view = layoutInflater.inflate(layoutResID, container, false)
         toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, container, false) as SimpleToolbar
         container.addView(toolbar, 0)
         container.addView(view, 1)
@@ -109,7 +106,7 @@ open class WBBaseActivity : AppCompatActivity() {
             toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
         }
 
-        super.setContentView(container)
+        setContentView(container)
     }
 
     fun getActionbar(): SimpleToolbar {

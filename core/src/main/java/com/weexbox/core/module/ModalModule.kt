@@ -64,8 +64,8 @@ open class ModalModule : BaseModule() {
     open fun actionSheet(options: Map<String, Any>, completionCallback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         val actions = info.actions
-        val items: Array<String?> = arrayOf()
-        for (i in actions!!.indices) {
+        val items: Array<String?> = arrayOfNulls(actions!!.size)
+        for (i in actions.indices) {
             items[i] = actions[i].title
         }
         // 创建对话框构建器
