@@ -116,6 +116,15 @@ open class WBBaseActivity : AppCompatActivity() {
         return toolbar
     }
 
+    override fun finish() {
+        super.finish()
+
+        when (router.type) {
+            Router.TYPE_PUSH -> overridePendingTransition(0, R.anim.push_out)
+            Router.TYPE_PRESENT -> overridePendingTransition(0, R.anim.present_out)
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         SelectImageUtil.onActivityResult(requestCode, resultCode, data, this)

@@ -2,12 +2,9 @@ package com.weexbox.core.router
 
 import android.app.Activity
 import android.content.Intent
-import com.alibaba.fastjson.JSON
 import com.orhanobut.logger.Logger
 import com.weexbox.core.R
 import com.weexbox.core.controller.WBBaseActivity
-import com.weexbox.core.controller.WBWebViewActivity
-import com.weexbox.core.controller.WBWeexActivity
 import com.weexbox.core.util.ActivityManager
 import java.io.Serializable
 import java.util.*
@@ -86,12 +83,13 @@ class Router : Serializable {
                 }
             }
 
-            if (type == Router.TYPE_PRESENT) {
-                from.overridePendingTransition(R.anim.present_enter, R.anim.present_exit)
-            }
             val intent = Intent(from, to)
             intent.putExtra(Router.EXTRA_NAME, this)
             from.startActivity(intent)
+            when (type) {
+                Router.TYPE_PUSH -> from.overridePendingTransition(R.anim.push_in, 0)
+                Router.TYPE_PRESENT -> from.overridePendingTransition(R.anim.present_in, 0)
+            }
             if (activities != null) {
                 removeActivitys(activities)
             }

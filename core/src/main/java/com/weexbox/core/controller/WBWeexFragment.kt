@@ -28,7 +28,6 @@ import java.io.IOException
 
 open class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
 
-    private var url: String? = null
     var instance: WXSDKInstance? = null
     private var broadcastReceiver: BroadcastReceiver? = null
     private var isFirstSendDidAppear = true
@@ -48,29 +47,28 @@ open class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
         instance?.setRenderContainer(renderContainer)
         instance?.registerRenderListener(this)
         instance?.isTrackComponent = false
-        try {
-            if (url!!.startsWith("http")) {
+        if (router.url != null) {
+            if (router.url!!.startsWith("http")) {
                 // 下载
-                instance?.renderByUrl(url, url, null, null, WXRenderStrategy.APPEND_ASYNC)
+                instance?.renderByUrl(router.url, router.url, null, null, WXRenderStrategy.APPEND_ASYNC)
             } else {
-                val file = UpdateManager.getFullUrl(url!!)
-                val template = FileUtils.readFileToString(file)
-                instance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
+                try {
+                    val file = UpdateManager.getFullUrl(router.url!!)
+                    val template = FileUtils.readFileToString(file)
+                    instance?.render(router.url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
+                } catch (e: IOException) {
+                    Logger.e(e, "文件不存在")
+                }
             }
-        } catch (e: IOException) {
-            Logger.e(e, "文件不存在")
+        } else {
+            Logger.e("url不能为空")
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        url = router.url
-        if (url == null) {
-            Logger.e("url不能为空")
-        } else {
-            render()
-        }
+        render()
     }
 
     override fun onDestroy() {
@@ -155,13 +153,12 @@ open class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
      * @return
      */
     fun getFragmentSimpleName(): String? {
-        return if (url != null) {
-            url
-        } else "WBWeexFragment"
+        return router.url ?: "WBWeexFragment"
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
+
         Event.emit(backName, null)
     }
 
