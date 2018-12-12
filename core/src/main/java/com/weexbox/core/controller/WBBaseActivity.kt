@@ -5,24 +5,28 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.Toast
 import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.R
+import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.event.Event
 import com.weexbox.core.event.EventCallback
 import com.weexbox.core.extension.getParameters
 import com.weexbox.core.router.Router
 import com.weexbox.core.util.ActivityManager
+import com.weexbox.core.util.AnimationUtil
 import com.weexbox.core.util.LoadDialogHelper
 import com.weexbox.core.util.SelectImageUtil
+import com.weexbox.core.widget.FloatingDraftButton
 import com.weexbox.core.widget.SimpleToolbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
+import kotlinx.android.synthetic.main.layout_floating_button.*
 
 /**
  * Author: Mario
@@ -41,6 +45,7 @@ open class WBBaseActivity : AppCompatActivity() {
     //hud
     var loadDialogHelper: LoadDialogHelper = LoadDialogHelper(this)
 
+    lateinit var floatingDraftButton: FloatingDraftButton
     // 通用事件
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: Event) {
@@ -92,21 +97,26 @@ open class WBBaseActivity : AppCompatActivity() {
     }
 
     override fun setContentView(layoutResID: Int) {
-
-        val container = layoutInflater.inflate(R.layout.activity_base, null) as LinearLayout
+        val container = layoutInflater.inflate(R.layout.activity_base, null) as RelativeLayout
         val view = layoutInflater.inflate(layoutResID, container, false)
         toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, container, false) as SimpleToolbar
+        var params = view.layoutParams as RelativeLayout.LayoutParams
+        params.addRule(RelativeLayout.BELOW,R.id.toolbar)
+        view.layoutParams = params
         container.addView(toolbar, 0)
         container.addView(view, 1)
-
         toolbar.setBackButton { finish() }
         if (!(router.navBarHidden)) {
             toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
         } else {
             toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
         }
-
+        if(WeexBoxEngine.isDebug){
+            val btnView = layoutInflater.inflate(R.layout.layout_floating_button, container, false)
+            container.addView(btnView, 2)
+        }
         setContentView(container)
+        initFloating()
     }
 
     fun getActionbar(): SimpleToolbar {
@@ -151,4 +161,36 @@ open class WBBaseActivity : AppCompatActivity() {
         }
     }
 
+    fun initFloating() {
+        if(!WeexBoxEngine.isDebug){
+            return
+        }
+        floatingDraftButton = floatingButton
+        floatingDraftButton.registerButton(camara_btn)
+        floatingDraftButton.registerButton(refesh_btn)
+        floatingDraftButton.setOnClickListener() {
+            //弹出动态Button
+            AnimationUtil.slideButtons(this, floatingDraftButton);
+        }
+        camara_btn.setOnClickListener() {
+            //二维码扫描
+            AnimationUtil.slideButtons(this, floatingDraftButton)
+            val integrator = IntentIntegrator(ActivityManager.getInstance().currentActivity())
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            integrator.setPrompt("Scan a barcode")
+            //integrator.setCameraId(0);  // Use a specific camera of the device
+            integrator.setBeepEnabled(true)
+            integrator.setOrientationLocked(false)
+            integrator.setBarcodeImageEnabled(true)
+            integrator.initiateScan()
+        }
+        refesh_btn.setOnClickListener() {
+            //刷新
+            AnimationUtil.slideButtons(this, floatingDraftButton)
+            val fragment = getFragment()
+            if(fragment is WBWeexFragment){
+                fragment.refreshWeex()
+            }
+        }
+        }
 }

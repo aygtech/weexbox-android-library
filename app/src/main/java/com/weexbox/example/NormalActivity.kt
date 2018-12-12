@@ -24,14 +24,5 @@ class NormalActivity: WBBaseActivity() {
 //        weexFragment.router.url = "module1/page1.js"
         supportFragmentManager.beginTransaction().replace(R.id.weex_fragment, weexFragment).commit()
 
-        getActionbar().setBackButton {
-//            router.url = "https://www.baidu.com"
-//            router.name = Router.NAME_WEB
-//            router.open(this)
-
-            router.url = "http://dotwe.org/raw/dist/791c8507ae8f35a9e134abe8a776588d.bundle.wx"
-            router.name = Router.NAME_WEEX
-            router.open(this)
-        }
     }
 }

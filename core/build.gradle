@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'realm-android'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group='com.github.aygtech'
+group = 'com.github.aygtech'
 
 android {
 
@@ -61,6 +61,7 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.4.0'
     api 'com.google.code.gson:gson:2.8.5'
     api "com.tencent.sonic:sdk:3.0.0"
+    api 'com.android.support:design:27.1.1'
 }
 
 // build a jar with source files

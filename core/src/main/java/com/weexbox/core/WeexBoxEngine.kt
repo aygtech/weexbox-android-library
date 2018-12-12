@@ -1,8 +1,6 @@
 package com.weexbox.core
 
 import android.app.Application
-import android.content.Context
-import android.content.Intent
 import com.alibaba.android.bindingx.plugin.weex.BindingX
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -14,7 +12,6 @@ import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
 import com.weexbox.core.module.*
 import com.weexbox.core.router.Router
-import com.weexbox.core.service.DebugWeexService
 import com.weexbox.core.util.BitmapUtil
 import io.realm.Realm
 
@@ -32,7 +29,6 @@ object WeexBoxEngine {
         set(value) {
             field = value
             if (value) {
-                initFloatingBtn(application, DebugWeexService::class.java)
                 WXEnvironment.setOpenDebugLog(true)
                 WXEnvironment.setApkDebugable(true)
             } else {
@@ -51,17 +47,6 @@ object WeexBoxEngine {
         Logger.addLogAdapter(AndroidLogAdapter())
         initWeex(weexConfig)
     }
-
-    /**
-     * 启动全局悬浮按钮service
-     */
-    fun initFloatingBtn(context: Context, service: Class<out DebugWeexService>) {
-        if (DebugWeexService.STATAG == "stop") {
-            val serviceIntent = Intent(context, service)
-            context.startService(serviceIntent)
-        }
-    }
-
 
     private fun initWeex(config: InitConfig?) {
         WXSDKEngine.initialize(application, config
