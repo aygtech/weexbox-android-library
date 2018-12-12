@@ -22,8 +22,8 @@ class Router : Serializable {
         var routes: TreeMap<String, Class<out WBBaseActivity>> = TreeMap()
         const val EXTRA_NAME = "WeexBoxRouter"
 
-        const val TYPE_PUSH = "push"   //右往左啟動頁面
-        const val TYPE_PRESENT = "present" //下往上啟動頁面
+        const val TYPE_PUSH = "push"   //仅对iOS有效
+        const val TYPE_PRESENT = "present" //仅对iOS有效
 
         const val NAME_WEEX = "weex"  //name的类型
         const val NAME_WEB = "web"    //name的类型
@@ -86,10 +86,6 @@ class Router : Serializable {
             val intent = Intent(from, to)
             intent.putExtra(Router.EXTRA_NAME, this)
             from.startActivity(intent)
-            when (type) {
-                Router.TYPE_PUSH -> from.overridePendingTransition(R.anim.push_in, 0)
-                Router.TYPE_PRESENT -> from.overridePendingTransition(R.anim.present_in, 0)
-            }
             if (activities != null) {
                 removeActivitys(activities)
             }
