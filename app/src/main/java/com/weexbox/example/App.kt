@@ -19,7 +19,7 @@ class App : Application() {
 
         Router.register(Router.NAME_WEEX, WeexActivity::class.java)
 
-        UpdateManager.serverUrl = "https://weexbox.surge.sh"
+        UpdateManager.serverUrl = "https://aygtech.github.io/weexbox"
         UpdateManager.update { state, progress, error, url ->  }
     }
 

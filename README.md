@@ -1,4 +1,4 @@
-WeexBox Android SDK https://weexbox.surge.sh/guide/native-android.html
+WeexBox Android SDK https://aygtech.github.io/weexbox/guide/native-android.html
 
 # 介绍
 
