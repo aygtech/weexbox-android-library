@@ -15,11 +15,6 @@ import java.util.*
 
 open class NavigatorModule : BaseModule() {
 
-    //返回手势
-    @JSMethod(uiThread = true)
-    open fun disableGestureBack() {
-    }
-
     //中间title
     @JSMethod(uiThread = true)
     open fun setCenterItem(info: Map<String, Any>, completionCallback: JSCallback) {
