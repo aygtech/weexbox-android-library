@@ -13,11 +13,6 @@ import com.weexbox.core.widget.SimpleToolbar
 
 open class NavigatorModule : BaseModule() {
 
-    //返回手势
-    @JSMethod(uiThread = true)
-    open fun disableGestureBack() {
-    }
-
     //中间title
     @JSMethod(uiThread = true)
     open fun setCenterItem(options: Map<String, Any>, callback: JSCallback?) {
