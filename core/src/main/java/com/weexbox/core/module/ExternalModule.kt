@@ -75,12 +75,12 @@ open class ExternalModule : BaseModule() {
 
     //打电话
     @JSMethod(uiThread = true)
-    open fun callPhone(phone: String, callback: JSCallback) {
+    open fun callPhone(phone: String, callback: JSCallback?) {
         if (phone != null){
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+ phone))
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getActivity().startActivity(intent);
-            callback.invoke(Result())
+            callback?.invoke(Result())
         }
     }
 
