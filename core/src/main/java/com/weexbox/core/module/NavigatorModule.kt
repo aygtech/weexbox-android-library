@@ -164,7 +164,7 @@ open class NavigatorModule : BaseModule() {
 
     @JSMethod(uiThread = false)
     open fun getHeight(): Int {
-        return mWXSDKInstance.instanceViewPortWidth * AndroidUtil.getStateBarHeight(getActivity()) / AndroidUtil.getScreenHeight(getActivity());
+        return mWXSDKInstance.instanceViewPortWidth * AndroidUtil.getStateBarHeight(getActivity()) / AndroidUtil.getScreenWidth(getActivity());
     }
 
     private fun getActionbar(): SimpleToolbar {
