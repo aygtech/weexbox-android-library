@@ -18,6 +18,8 @@ import com.bumptech.glide.request.transition.Transition;
 import com.weexbox.core.R;
 import com.weexbox.core.util.BitmapUtil;
 
+import org.jetbrains.annotations.NotNull;
+
 public class SimpleToolbar extends LinearLayout {
 
     private TextView mBackBtn;

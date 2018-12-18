@@ -1,5 +1,7 @@
 package com.weexbox.core.module
 
+import android.content.Intent
+import android.net.Uri
 import com.alibaba.fastjson.JSONObject
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
@@ -8,7 +10,6 @@ import com.weexbox.core.model.JsOptions
 import com.weexbox.core.model.Result
 import com.weexbox.core.util.SelectImageUtil
 import java.util.*
-import kotlin.collections.ArrayList
 
 open class ExternalModule : BaseModule() {
 
@@ -38,7 +39,7 @@ open class ExternalModule : BaseModule() {
         val count = info.count
         val enableCrop = info.enableCrop
         if (enableCrop) {
-            SelectImageUtil.startImagePickActivity(getActivity(), 100, 100, false, enableCrop, false) {imgs ->
+            SelectImageUtil.startImagePickActivity(getActivity(), 100, 100, false, enableCrop, false) { imgs ->
                 val result = Result()
                 val map = TreeMap<String, Any>()
                 if (imgs != null) {
@@ -58,5 +59,23 @@ open class ExternalModule : BaseModule() {
                 callback.invoke(result)
             }
         }
+    }
+
+    //打开浏览器
+    @JSMethod(uiThread = true)
+    open fun openBrowser(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            getActivity().startActivity(Intent.createChooser(intent, "请选择浏览器"));
+        }
+    }
+
+    //打电话
+    @JSMethod(uiThread = true)
+    open fun callPhone(phone: String, callback: JSCallback?) {
+        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone))
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getActivity().startActivity(intent);
+        callback?.invoke(Result())
     }
 }

@@ -101,7 +101,6 @@ class Router : Serializable {
         for (activity in activities) {
             activity.finish()
         }
-
     }
 
     fun close(levels: Int? = null) {
