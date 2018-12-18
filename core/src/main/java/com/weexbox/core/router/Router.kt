@@ -41,6 +41,8 @@ class Router : Serializable {
     var type = Router.TYPE_PUSH
     // 是否隐藏导航栏
     var navBarHidden = false
+    // 导航栏标题
+    var title: String? = null
     // 禁用返回手势
     var disableGestureBack = false
     // 需要传到下一个页面的数据
