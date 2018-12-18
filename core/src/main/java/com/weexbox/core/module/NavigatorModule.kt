@@ -2,8 +2,12 @@ package com.weexbox.core.module
 
 import android.text.TextUtils
 import android.view.View
+import com.taobao.weex.WXEnvironment
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
+import com.taobao.weex.common.WXConfig
+import com.taobao.weex.utils.WXUtils
+import com.taobao.weex.utils.WXViewUtils
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
@@ -160,7 +164,7 @@ open class NavigatorModule : BaseModule() {
 
     @JSMethod(uiThread = false)
     open fun getHeight(): Int {
-        return AndroidUtil.getStateBarHeight(getActivity());
+        return mWXSDKInstance.instanceViewPortWidth * AndroidUtil.getStateBarHeight(getActivity()) / AndroidUtil.getScreenHeight(getActivity());
     }
 
     private fun getActionbar(): SimpleToolbar {
