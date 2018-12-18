@@ -1,5 +1,8 @@
 package com.weexbox.core.module
 
+import android.content.ComponentName
+import android.content.Intent
+import android.net.Uri
 import com.alibaba.fastjson.JSONObject
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
@@ -7,6 +10,7 @@ import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
 import com.weexbox.core.model.Result
 import com.weexbox.core.util.SelectImageUtil
+import com.weexbox.core.util.ToastUtil
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -57,6 +61,26 @@ open class ExternalModule : BaseModule() {
                 result.data = map
                 callback.invoke(result)
             }
+        }
+    }
+
+    //打开浏览器
+    @JSMethod(uiThread = true)
+    open fun openBrowser(url: String) {
+        var intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            getActivity().startActivity(Intent.createChooser(intent, "请选择浏览器"));
+        }
+    }
+
+    //打电话
+    @JSMethod(uiThread = true)
+    open fun callPhone(phone: String, callback: JSCallback) {
+        if (phone != null){
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+ phone))
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getActivity().startActivity(intent);
+            callback.invoke(Result())
         }
     }
 }
