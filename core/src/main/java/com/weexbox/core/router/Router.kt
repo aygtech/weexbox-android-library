@@ -38,9 +38,13 @@ class Router : Serializable {
     // 下一个weex/web的路径
     var url: String? = null
     // 页面出现方式：push, present
-    var type: String = Router.TYPE_PUSH
+    var type = Router.TYPE_PUSH
     // 是否隐藏导航栏
-    var navBarHidden: Boolean = false
+    var navBarHidden = false
+    // 导航栏标题
+    var title: String? = null
+    // 禁用返回手势
+    var disableGestureBack = false
     // 需要传到下一个页面的数据
     var params: Map<String, Any>? = null
     // 打开页面的同时关闭页面
@@ -97,7 +101,6 @@ class Router : Serializable {
         for (activity in activities) {
             activity.finish()
         }
-
     }
 
     fun close(levels: Int? = null) {

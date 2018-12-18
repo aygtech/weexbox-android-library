@@ -15,20 +15,8 @@ open class RouterModule : BaseModule() {
 
     //打开页面
     @JSMethod(uiThread = true)
-    open fun open(info: Map<String, Any>) {
-        getRouter(info).open(getActivity())
-    }
-
-    //打开浏览器
-    @JSMethod(uiThread = true)
-    open fun openBrowser(info: Map<String, Any>) {
-//        getRouter(info).openBrowser(getActivity())
-    }
-
-    //打电话
-    @JSMethod(uiThread = true)
-    open fun openPhone(info: Map<String, Any>) {
-//        getRouter(info).openPhone(getActivity())
+    open fun open(options: Map<String, Any>) {
+        getRouter(options).open(getActivity())
     }
 
     @JSMethod(uiThread = false)
@@ -37,7 +25,7 @@ open class RouterModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    open  fun close(levels: Int?) {
+    open fun close(levels: Int?) {
         getFragment()!!.router.close(levels)
     }
 
@@ -46,8 +34,7 @@ open class RouterModule : BaseModule() {
         getFragment()!!.refreshWeex()
     }
 
-    fun getRouter(info: Map<String, Any>): Router {
-        return info.toObject(Router::class.java)
+    fun getRouter(options: Map<String, Any>): Router {
+        return options.toObject(Router::class.java)
     }
-
 }

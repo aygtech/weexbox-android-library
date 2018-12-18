@@ -100,7 +100,7 @@ open class WBBaseActivity : AppCompatActivity() {
         val container = layoutInflater.inflate(R.layout.activity_base, null) as RelativeLayout
         val view = layoutInflater.inflate(layoutResID, container, false)
         toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, container, false) as SimpleToolbar
-        var params = view.layoutParams as RelativeLayout.LayoutParams
+        val params = view.layoutParams as RelativeLayout.LayoutParams
         params.addRule(RelativeLayout.BELOW,R.id.toolbar)
         view.layoutParams = params
         container.addView(toolbar, 0)
@@ -111,6 +111,7 @@ open class WBBaseActivity : AppCompatActivity() {
         } else {
             toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
         }
+        toolbar.setTitleText(router.title)
         if(WeexBoxEngine.isDebug){
             val btnView = layoutInflater.inflate(R.layout.layout_floating_button, container, false)
             container.addView(btnView, 2)

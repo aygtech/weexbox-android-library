@@ -1,8 +1,6 @@
 package com.weexbox.core.net.callback;
 
 import com.alibaba.fastjson.JSON;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
