@@ -190,6 +190,9 @@ public final class AndroidUtil {
     public static void makeCall(Context context, String phoneNumber) {
         try {
             Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
             context.startActivity(intent);
         } catch (Exception e) {
         }

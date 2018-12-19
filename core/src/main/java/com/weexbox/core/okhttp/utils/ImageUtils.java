@@ -69,7 +69,9 @@ public class ImageUtils {
     private static int getExpectHeight(View view) {
 
         int height = 0;
-        if (view == null) return 0;
+        if (view == null) {
+            return 0;
+        }
 
         final ViewGroup.LayoutParams params = view.getLayoutParams();
         //如果是WRAP_CONTENT，此时图片还没加载，getWidth根本无效
@@ -102,7 +104,9 @@ public class ImageUtils {
      */
     private static int getExpectWidth(View view) {
         int width = 0;
-        if (view == null) return 0;
+        if (view == null) {
+            return 0;
+        }
 
         final ViewGroup.LayoutParams params = view.getLayoutParams();
         //如果是WRAP_CONTENT，此时图片还没加载，getWidth根本无效

@@ -48,10 +48,11 @@ public class OtherRequest extends OkHttpRequest {
         if (method.equals(OkHttpUtils.METHOD.PUT)) {
             builder.put(requestBody);
         } else if (method.equals(OkHttpUtils.METHOD.DELETE)) {
-            if (requestBody == null)
+            if (requestBody == null) {
                 builder.delete();
-            else
+            } else {
                 builder.delete(requestBody);
+            }
         } else if (method.equals(OkHttpUtils.METHOD.HEAD)) {
             builder.head();
         } else if (method.equals(OkHttpUtils.METHOD.PATCH)) {

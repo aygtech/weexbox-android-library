@@ -16,7 +16,9 @@ public class CookieJarImpl implements CookieJar {
     private CookieStore cookieStore;
 
     public CookieJarImpl(CookieStore cookieStore) {
-        if (cookieStore == null) Exceptions.illegalArgument("cookieStore can not be null.");
+        if (cookieStore == null) {
+            Exceptions.illegalArgument("cookieStore can not be null.");
+        }
         this.cookieStore = cookieStore;
     }
 
