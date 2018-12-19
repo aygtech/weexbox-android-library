@@ -1,16 +1,13 @@
 package com.weexbox.core.controller
 
-import android.annotation.TargetApi
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.View
 import android.view.WindowManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
+import com.orhanobut.logger.Logger
 
 import com.tencent.sonic.sdk.SonicConfig
 import com.tencent.sonic.sdk.SonicEngine
@@ -28,65 +25,61 @@ import kotlinx.android.synthetic.main.activity_web_view.*
  * Description:This is WBWebViewActivity
  */
 open class WBWebViewActivity : WBBaseActivity() {
-    var url: String? = ""
+
     private var sonicSession: SonicSession? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        url = router.url
-        if (TextUtils.isEmpty(url)) {
-            finish()
+
+        if (router.url == null) {
+            Logger.e("url不能为空")
             return
         }
 
         window.addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED)
 
-        // init sonic engine if necessary, or maybe u can do this when application created
+        // step 1: Initialize sonic engine if necessary, or maybe u can do this when application created
         if (!SonicEngine.isGetInstanceAllowed()) {
             SonicEngine.createInstance(SonicRuntimeImpl(application), SonicConfig.Builder().build())
         }
 
-        var sonicSessionClient: SonicSessionClientImpl? = SonicSessionClientImpl()
-        val sessionConfigBuilder = SonicSessionConfig.Builder()
-        sessionConfigBuilder.setSupportLocalServer(true)
-        // create sonic session and run sonic flow
-        sonicSession = SonicEngine.getInstance().createSession(url!!, sessionConfigBuilder.build())
-        if (null != sonicSession) {
-            sonicSession!!.bindClient(sonicSessionClient)
-        } else {
+        var sonicSessionClient: SonicSessionClientImpl? = null
 
-            Toast.makeText(this, "create sonic session fail!", Toast.LENGTH_LONG).show()
+        // step 2: Create SonicSession
+        sonicSession = SonicEngine.getInstance().createSession(router.url!!, SonicSessionConfig.Builder().build())
+        if (null != sonicSession) {
+            sonicSessionClient = SonicSessionClientImpl()
+            sonicSession!!.bindClient(sonicSessionClient)
         }
 
+        // step 3: BindWebView for sessionClient and bindClient for SonicSession
+        // in the real world, the init flow may cost a long time as startup
+        // runtime、init configs....
         setContentView(R.layout.activity_web_view)
-        getActionbar().setBackButton(View.OnClickListener {
-            finish()
-        }, "关闭")
-        val webView = webView
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
-                val title = view.title
-                if (!TextUtils.isEmpty(title)) {
-                    getActionbar().setTitleText(title)
+
+                if (router.title == null && !view.title.isNullOrEmpty()) {
+                    getActionbar().setTitleText(view.title)
                 }
+
                 if (sonicSession != null) {
                     sonicSession!!.sessionClient.pageFinish(url)
                 }
             }
 
-            @TargetApi(21)
             override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
-                return shouldInterceptRequest(view, request.url.toString())
-            }
-
-            override fun shouldInterceptRequest(view: WebView, url: String): WebResourceResponse? {
-                return sonicSessionClient?.requestResource(url) as WebResourceResponse?
+                return sonicSessionClient?.requestResource(request.url.toString()) as WebResourceResponse?
             }
         }
 
         val webSettings = webView.settings
 
+        // step 4: bind javascript
+        // note:if api level lower than 17(android 4.2), addJavascriptInterface has security
+        // issue, please use x5 or see https://developer.android.com/reference/android/webkit/
+        // WebView.html#addJavascriptInterface(java.lang.Object, java.lang.String)
         webSettings.javaScriptEnabled = true
         webView.removeJavascriptInterface("searchBoxJavaBridge_")
         webView.addJavascriptInterface(SonicJavaScriptInterface(sonicSessionClient, Intent()), "sonic")
@@ -102,12 +95,12 @@ open class WBWebViewActivity : WBBaseActivity() {
         webSettings.loadWithOverviewMode = true
 
 
-        // webview is ready now, just tell session client to bind
+        // step 5: webview is ready now, just tell session client to bind
         if (sonicSessionClient != null) {
             sonicSessionClient.bindWebView(webView)
             sonicSessionClient.clientReady()
         } else { // default mode
-            webView.loadUrl(url)
+            webView.loadUrl(router.url)
         }
     }
 
@@ -120,10 +113,9 @@ open class WBWebViewActivity : WBBaseActivity() {
     }
 
     override fun onDestroy() {
-        if (null != sonicSession) {
-            sonicSession!!.destroy()
-            sonicSession = null
-        }
+        sonicSession?.destroy()
+        sonicSession = null
+
         super.onDestroy()
     }
 }
