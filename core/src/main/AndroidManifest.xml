@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
@@ -22,9 +21,12 @@
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden"
             tools:replace="android:screenOrientation" />
-        <activity android:name=".controller.WBBaseActivity"></activity>
-        <activity android:name=".controller.WBWebViewActivity"></activity>
-        <activity android:name=".controller.WBWeexActivity"></activity>
+
+        <activity android:name=".controller.WBBaseActivity" />
+
+        <activity android:name=".controller.WBWebViewActivity" />
+
+        <activity android:name=".controller.WBWeexActivity" />
     </application>
 
 </manifest>
