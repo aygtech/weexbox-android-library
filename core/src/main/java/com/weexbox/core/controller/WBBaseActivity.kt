@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.RelativeLayout
-import android.widget.Toast
 import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
@@ -22,11 +21,11 @@ import com.weexbox.core.util.LoadDialogHelper
 import com.weexbox.core.util.SelectImageUtil
 import com.weexbox.core.widget.FloatingDraftButton
 import com.weexbox.core.widget.SimpleToolbar
+import kotlinx.android.synthetic.main.layout_floating_button.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
-import kotlinx.android.synthetic.main.layout_floating_button.*
 
 /**
  * Author: Mario
@@ -101,7 +100,7 @@ open class WBBaseActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(layoutResID, container, false)
         toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, container, false) as SimpleToolbar
         val params = view.layoutParams as RelativeLayout.LayoutParams
-        params.addRule(RelativeLayout.BELOW,R.id.toolbar)
+        params.addRule(RelativeLayout.BELOW, R.id.toolbar)
         view.layoutParams = params
         container.addView(toolbar, 0)
         container.addView(view, 1)
@@ -112,7 +111,7 @@ open class WBBaseActivity : AppCompatActivity() {
             toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
         }
         toolbar.setTitleText(router.title)
-        if(WeexBoxEngine.isDebug){
+        if (WeexBoxEngine.isDebug) {
             val btnView = layoutInflater.inflate(R.layout.layout_floating_button, container, false)
             container.addView(btnView, 2)
         }
@@ -161,17 +160,17 @@ open class WBBaseActivity : AppCompatActivity() {
     }
 
     fun initFloating() {
-        if(!WeexBoxEngine.isDebug){
+        if (!WeexBoxEngine.isDebug) {
             return
         }
         floatingDraftButton = floatingButton
         floatingDraftButton.registerButton(camara_btn)
         floatingDraftButton.registerButton(refesh_btn)
-        floatingDraftButton.setOnClickListener() {
+        floatingDraftButton.setOnClickListener {
             //弹出动态Button
-            AnimationUtil.slideButtons(this, floatingDraftButton);
+            AnimationUtil.slideButtons(this, floatingDraftButton)
         }
-        camara_btn.setOnClickListener() {
+        camara_btn.setOnClickListener {
             //二维码扫描
             AnimationUtil.slideButtons(this, floatingDraftButton)
             val integrator = IntentIntegrator(ActivityManager.getInstance().currentActivity())
@@ -183,13 +182,13 @@ open class WBBaseActivity : AppCompatActivity() {
             integrator.setBarcodeImageEnabled(true)
             integrator.initiateScan()
         }
-        refesh_btn.setOnClickListener() {
+        refesh_btn.setOnClickListener {
             //刷新
             AnimationUtil.slideButtons(this, floatingDraftButton)
             val fragment = getFragment()
-            if(fragment is WBWeexFragment){
+            if (fragment is WBWeexFragment) {
                 fragment.refreshWeex()
             }
         }
-        }
+    }
 }

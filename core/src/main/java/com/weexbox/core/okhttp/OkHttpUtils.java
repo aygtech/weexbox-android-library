@@ -52,15 +52,6 @@ public class OkHttpUtils {
         return initClient(null);
     }
 
-
-    public Executor getDelivery() {
-        return mPlatform.defaultCallbackExecutor();
-    }
-
-    public OkHttpClient getOkHttpClient() {
-        return mOkHttpClient;
-    }
-
     public static GetBuilder get() {
         return new GetBuilder();
     }
@@ -93,9 +84,18 @@ public class OkHttpUtils {
         return new OtherRequestBuilder(METHOD.PATCH);
     }
 
+    public Executor getDelivery() {
+        return mPlatform.defaultCallbackExecutor();
+    }
+
+    public OkHttpClient getOkHttpClient() {
+        return mOkHttpClient;
+    }
+
     public void execute(final RequestCall requestCall, Callback callback) {
-        if (callback == null)
+        if (callback == null) {
             callback = Callback.CALLBACK_DEFAULT;
+        }
         final Callback finalCallback = callback;
         final int id = requestCall.getOkHttpRequest().getId();
 
@@ -123,8 +123,9 @@ public class OkHttpUtils {
                 } catch (Exception e) {
                     sendFailResultCallback(call, e, finalCallback, id);
                 } finally {
-                    if (response.body() != null)
+                    if (response.body() != null) {
                         response.body().close();
+                    }
                 }
 
             }
@@ -133,7 +134,9 @@ public class OkHttpUtils {
 
 
     public void sendFailResultCallback(final Call call, final Exception e, final Callback callback, final int id) {
-        if (callback == null) return;
+        if (callback == null) {
+            return;
+        }
 
         mPlatform.execute(new Runnable() {
             @Override
@@ -145,7 +148,9 @@ public class OkHttpUtils {
     }
 
     public void sendSuccessResultCallback(final Object object, final Callback callback, final int id) {
-        if (callback == null) return;
+        if (callback == null) {
+            return;
+        }
         mPlatform.execute(new Runnable() {
             @Override
             public void run() {

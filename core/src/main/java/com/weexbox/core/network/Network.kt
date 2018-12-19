@@ -43,7 +43,7 @@ object Network {
     }
 
     val client: OkHttpClient = OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).retryOnConnectionFailure(true).build()
-    var mediaTypeJSON: MediaType?=  MediaType.parse("application/json")
+    var mediaTypeJSON: MediaType? = MediaType.parse("application/json")
 
     private fun call(url: String, method: HTTPMethod = HTTPMethod.GET, parameters: Map<String, Any>, headers: Map<String, String>): Call<ResponseBody> {
         val retrofit = Retrofit.Builder().baseUrl(url.appendingPathComponent(File.separator)).client(client).build()

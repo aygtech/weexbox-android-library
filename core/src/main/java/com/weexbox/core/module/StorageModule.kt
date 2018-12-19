@@ -1,8 +1,6 @@
 package com.weexbox.core.module
 
 import com.taobao.weex.annotation.JSMethod
-import com.taobao.weex.bridge.JSCallback
-import com.taobao.weex.common.WXModule
 
 /**
  * Author: Mario

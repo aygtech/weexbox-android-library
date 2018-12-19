@@ -4,48 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <com.weexbox.core.widget.FloatingDraftButton
         android:id="@+id/floatingButton"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        app:rippleColor="@color/white"
-        app:backgroundTint="@color/white"
-        android:src="@drawable/logo"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        app:elevation="6dp"
+        android:src="@drawable/logo"
+        app:backgroundTint="@color/white"
         app:borderWidth="0dp"
-        app:pressedTranslationZ="12dp"
+        app:elevation="6dp"
         app:fabSize="normal"
-        />
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="@color/white" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/camara_btn"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        app:rippleColor="@color/white"
-        app:backgroundTint="@color/white"
-        android:src="@drawable/camera"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        app:elevation="6dp"
-        app:borderWidth="0dp"
-        app:pressedTranslationZ="12dp"
-        app:fabSize="normal"
+        android:src="@drawable/camera"
         android:visibility="invisible"
-        />
+        app:backgroundTint="@color/white"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="@color/white" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/refesh_btn"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        app:rippleColor="@color/white"
-        app:backgroundTint="@color/white"
-        android:src="@drawable/refesh"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        app:elevation="6dp"
-        app:borderWidth="0dp"
-        app:pressedTranslationZ="12dp"
-        app:fabSize="normal"
+        android:src="@drawable/refesh"
         android:visibility="invisible"
-        />
+        app:backgroundTint="@color/white"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="@color/white" />
 </RelativeLayout>

@@ -3,7 +3,6 @@ package com.weexbox.core.router
 import android.app.Activity
 import android.content.Intent
 import com.orhanobut.logger.Logger
-import com.weexbox.core.R
 import com.weexbox.core.controller.WBBaseActivity
 import com.weexbox.core.util.ActivityManager
 import java.io.Serializable

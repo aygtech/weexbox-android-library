@@ -77,11 +77,15 @@ public abstract class HttpFileCallback extends HttpCallback<File> {
         } finally {
             try {
                 inputStream.close();
-                if (is != null) is.close();
+                if (is != null) {
+                    is.close();
+                }
             } catch (IOException e) {
             }
             try {
-                if (fos != null) fos.close();
+                if (fos != null) {
+                    fos.close();
+                }
             } catch (IOException e) {
             }
 

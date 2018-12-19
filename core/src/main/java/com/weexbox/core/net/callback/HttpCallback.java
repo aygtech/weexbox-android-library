@@ -31,13 +31,12 @@ public abstract class HttpCallback<T> extends Callback<T> {
     public static final int CANCEL = -44;
 
     public static final int RIGHT_CODE = 200;
+    public static boolean isEncrypt = false;
     private static String keyCode = "code";
     private static String keyData = "data";
     private static String keyMessage = "message";
     private static int rightCode = RIGHT_CODE;
     private static int rightCode2 = 200;
-    public static boolean isEncrypt = false;
-
     private int errorCode = RIGHT_CODE;
     private String msg = null;
 

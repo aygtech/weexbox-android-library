@@ -1,6 +1,7 @@
 package com.weexbox.core.util;
 
 import android.content.Context;
+
 import com.orhanobut.logger.Logger;
 
 public final class LogUtil {

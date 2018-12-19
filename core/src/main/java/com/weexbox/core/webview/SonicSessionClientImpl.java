@@ -14,6 +14,7 @@ import java.util.HashMap;
  */
 public class SonicSessionClientImpl extends SonicSessionClient {
     private WebView webView;
+
     public void bindWebView(WebView webView) {
         this.webView = webView;
     }

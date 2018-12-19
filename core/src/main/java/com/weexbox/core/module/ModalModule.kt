@@ -1,7 +1,6 @@
 package com.weexbox.core.module
 
 import android.support.v7.app.AlertDialog
-import android.text.TextUtils
 import android.widget.EditText
 import android.widget.Toast
 import com.taobao.weex.annotation.JSMethod
@@ -10,7 +9,6 @@ import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
 import com.weexbox.core.model.Result
-import java.math.BigDecimal
 
 open class ModalModule : BaseModule() {
 
@@ -88,7 +86,7 @@ open class ModalModule : BaseModule() {
         if (info.duration != null && info.duration!! >= 3) {
             time = Toast.LENGTH_LONG
         }
-        if(!TextUtils.isEmpty(info.text)){
+        if (!info.text.isNullOrEmpty()) {
             Toast.makeText(WeexBoxEngine.application, info.text, time).show()
         }
     }

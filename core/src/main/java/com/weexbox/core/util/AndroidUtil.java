@@ -1,5 +1,6 @@
 package com.weexbox.core.util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ClipData;
@@ -17,6 +18,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.Settings.Secure;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -128,11 +130,8 @@ public final class AndroidUtil {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
         String currentPackageName = cn.getPackageName();
-        if (!TextUtils.isEmpty(currentPackageName) && currentPackageName.equals(context.getPackageName())) {
-            return true;
-        }
+        return !TextUtils.isEmpty(currentPackageName) && currentPackageName.equals(context.getPackageName());
 
-        return false;
     }
 
     /**
@@ -191,6 +190,9 @@ public final class AndroidUtil {
     public static void makeCall(Context context, String phoneNumber) {
         try {
             Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
             context.startActivity(intent);
         } catch (Exception e) {
         }
@@ -329,21 +331,6 @@ public final class AndroidUtil {
     }
 
     /**
-     * 获取设备IMEI码
-     *
-     * @param context
-     * @return
-     */
-    public static String getIMEI(Context context) {
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String deviceId = telephonyManager.getDeviceId();
-        if (deviceId == null) {// 获取不到IMEI，则用ANDROID_ID
-            deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-        }
-        return deviceId;
-    }
-
-    /**
      * 获取当前的网络类型
      *
      * @return
@@ -365,11 +352,8 @@ public final class AndroidUtil {
         ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
-        if (null != netInfo
-                && netInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-            return true;
-        }
-        return false;
+        return null != netInfo
+                && netInfo.getType() == ConnectivityManager.TYPE_WIFI;
     }
 
     /**

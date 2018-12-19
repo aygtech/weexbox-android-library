@@ -9,7 +9,6 @@ import java.net.URLEncoder
 import java.util.*
 
 
-
 /**
  * Author: Mario
  * Time: 2018/9/11 下午6:18
@@ -59,7 +58,6 @@ fun String?.queryToParameters(): Map<String, String> {
     }
     return results
 }
-
 
 
 fun String?.getQuery(): String? {
