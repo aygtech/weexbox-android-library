@@ -328,21 +328,6 @@ public final class AndroidUtil {
     }
 
     /**
-     * 获取设备IMEI码
-     *
-     * @param context
-     * @return
-     */
-    public static String getIMEI(Context context) {
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String deviceId = telephonyManager.getDeviceId();
-        if (deviceId == null) {// 获取不到IMEI，则用ANDROID_ID
-            deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-        }
-        return deviceId;
-    }
-
-    /**
      * 获取当前的网络类型
      *
      * @return
