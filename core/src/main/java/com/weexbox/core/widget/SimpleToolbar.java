@@ -207,6 +207,7 @@ public class SimpleToolbar extends LinearLayout {
         if (mBackBtn == null || text == null) {
             return;
         }
+        mBackBtn.setCompoundDrawables(null, null, null, null);
         mBackBtn.setVisibility(View.VISIBLE);
         mBackBtn.setText(text);
         mBackBtn.setOnClickListener(listener);
