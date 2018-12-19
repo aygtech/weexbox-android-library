@@ -3,6 +3,7 @@ package com.weexbox.example
 import android.os.Bundle
 import com.weexbox.core.controller.WBBaseActivity
 import com.weexbox.core.controller.WBWeexFragment
+import com.weexbox.core.util.ToastUtil
 
 /**
  * Author: Mario
@@ -16,6 +17,7 @@ class NormalActivity : WBBaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_normal)
+
         val weexFragment = WBWeexFragment()
         weexFragment.router.url = "http://dotwe.org/raw/dist/791c8507ae8f35a9e134abe8a776588d.bundle.wx"
 //        weexFragment.router.url = "module1/page1.js"

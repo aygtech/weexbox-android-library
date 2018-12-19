@@ -115,6 +115,9 @@ open class WBBaseActivity : AppCompatActivity() {
             val btnView = layoutInflater.inflate(R.layout.layout_floating_button, container, false)
             container.addView(btnView, 2)
         }
+        if (ActivityManager.getInstance().allActivities.size == 1){
+            toolbar.setBackButton({},"")
+        }
         setContentView(container)
         initFloating()
     }
