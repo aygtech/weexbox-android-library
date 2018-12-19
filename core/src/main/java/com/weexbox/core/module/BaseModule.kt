@@ -26,7 +26,7 @@ open class BaseModule : WXModule() {
         for (recursionFragment in fragments) {
             if (recursionFragment is WBWeexFragment && mWXSDKInstance == recursionFragment.instance) {
                 return recursionFragment
-            } else if (recursionFragment.childFragmentManager.fragments.size > 0){
+            } else if (recursionFragment.childFragmentManager.fragments.size > 0) {
                 getRecursionFragment(recursionFragment.childFragmentManager.fragments)
             }
         }

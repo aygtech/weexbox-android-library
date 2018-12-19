@@ -3,7 +3,6 @@ package com.weexbox.core.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -61,7 +60,6 @@ public class PhotoActivity extends WBBaseActivity {
         });
 
 
-
     }
 
     /**
@@ -77,11 +75,11 @@ public class PhotoActivity extends WBBaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         setContentView(R.layout.activity_photoview);
-        page = (TextView) findViewById(R.id.page);
-        top = (RelativeLayout) findViewById(R.id.top);
-        viewPager = (PhotoViewPager) findViewById(R.id.viewPager);
+        page = findViewById(R.id.page);
+        top = findViewById(R.id.top);
+        viewPager = findViewById(R.id.viewPager);
 //        back = findViewById(R.id.back);
-        save = (TextView) findViewById(R.id.save);
+        save = findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

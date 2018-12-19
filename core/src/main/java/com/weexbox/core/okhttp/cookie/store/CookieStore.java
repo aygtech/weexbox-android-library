@@ -5,8 +5,7 @@ import java.util.List;
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 
-public interface CookieStore
-{
+public interface CookieStore {
 
     void add(HttpUrl uri, List<Cookie> cookie);
 

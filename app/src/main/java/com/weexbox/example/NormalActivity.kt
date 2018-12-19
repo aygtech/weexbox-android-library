@@ -2,10 +2,7 @@ package com.weexbox.example
 
 import android.os.Bundle
 import com.weexbox.core.controller.WBBaseActivity
-import com.weexbox.core.controller.WBWebViewActivity
-import com.weexbox.core.controller.WBWeexActivity
 import com.weexbox.core.controller.WBWeexFragment
-import com.weexbox.core.router.Router
 
 /**
  * Author: Mario
@@ -13,7 +10,7 @@ import com.weexbox.core.router.Router
  * Description: This is NormalActivity
  */
 
-class NormalActivity: WBBaseActivity() {
+class NormalActivity : WBBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

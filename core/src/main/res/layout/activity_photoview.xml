@@ -13,13 +13,13 @@
         android:paddingRight="10dp">
 
         <!--<ImageView-->
-            <!--android:id="@+id/back"-->
-            <!--android:layout_width="15dp"-->
-            <!--android:layout_height="15dp"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:onClick="back"-->
-            <!--android:scaleType="centerCrop"-->
-            <!--android:src="@drawable/top_path_icon1" />-->
+        <!--android:id="@+id/back"-->
+        <!--android:layout_width="15dp"-->
+        <!--android:layout_height="15dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:onClick="back"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@drawable/top_path_icon1" />-->
 
         <TextView
             android:id="@+id/page"
@@ -34,9 +34,9 @@
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
+            android:clickable="true"
             android:paddingRight="16dp"
             android:text="保存"
             android:textColor="@android:color/white"

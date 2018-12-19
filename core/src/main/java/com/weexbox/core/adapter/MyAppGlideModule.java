@@ -2,6 +2,7 @@ package com.weexbox.core.adapter;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
+
 /**
  * Author: Mario
  * Time: 2018/8/15 下午4:10
@@ -9,4 +10,5 @@ import com.bumptech.glide.module.AppGlideModule;
  */
 
 @GlideModule
-public final class MyAppGlideModule extends AppGlideModule {}
+public final class MyAppGlideModule extends AppGlideModule {
+}

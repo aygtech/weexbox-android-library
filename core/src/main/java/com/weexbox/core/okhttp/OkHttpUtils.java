@@ -52,15 +52,6 @@ public class OkHttpUtils {
         return initClient(null);
     }
 
-
-    public Executor getDelivery() {
-        return mPlatform.defaultCallbackExecutor();
-    }
-
-    public OkHttpClient getOkHttpClient() {
-        return mOkHttpClient;
-    }
-
     public static GetBuilder get() {
         return new GetBuilder();
     }
@@ -91,6 +82,14 @@ public class OkHttpUtils {
 
     public static OtherRequestBuilder patch() {
         return new OtherRequestBuilder(METHOD.PATCH);
+    }
+
+    public Executor getDelivery() {
+        return mPlatform.defaultCallbackExecutor();
+    }
+
+    public OkHttpClient getOkHttpClient() {
+        return mOkHttpClient;
     }
 
     public void execute(final RequestCall requestCall, Callback callback) {

@@ -408,7 +408,7 @@ public class BitmapUtil {
     private static void display(final Context context, final Target target, final String url, File file, final int defaultLoadId, final int
             defaultErrorId,
                                 final int displayType, final Transformation transformation) {
-        GlideRequest request = configDisplay(context, url, file,0, displayType, transformation);
+        GlideRequest request = configDisplay(context, url, file, 0, displayType, transformation);
         if (defaultLoadId != NON_EXISTENT_ID) {
             request = request.placeholder(defaultLoadId);
         }
@@ -421,7 +421,7 @@ public class BitmapUtil {
     private static void display(final Context context, final ImageView target, final String url, File file, final int defaultLoadId, final int
             defaultErrorId,
                                 final int displayType, final Transformation transformation) {
-        GlideRequest request = configDisplay(context, url, file,0, displayType, transformation);
+        GlideRequest request = configDisplay(context, url, file, 0, displayType, transformation);
         if (defaultLoadId != NON_EXISTENT_ID) {
             request = request.placeholder(defaultLoadId);
         }
@@ -434,7 +434,7 @@ public class BitmapUtil {
     private static void display(final Context context, final ImageView target, final int id, final int defaultLoadId, final int
             defaultErrorId,
                                 final int displayType, final Transformation transformation) {
-        GlideRequest request = configDisplay(context, "", null,id, displayType, transformation);
+        GlideRequest request = configDisplay(context, "", null, id, displayType, transformation);
         if (defaultLoadId != NON_EXISTENT_ID) {
             request = request.placeholder(defaultLoadId);
         }
@@ -444,10 +444,10 @@ public class BitmapUtil {
         request.into(target);
     }
 
-    private static void display(final Context context, final Target target, final int id,  final int defaultLoadId, final int
+    private static void display(final Context context, final Target target, final int id, final int defaultLoadId, final int
             defaultErrorId,
                                 final int displayType, final Transformation transformation) {
-        GlideRequest request = configDisplay(context, "", null,id, displayType, transformation);
+        GlideRequest request = configDisplay(context, "", null, id, displayType, transformation);
         if (defaultLoadId != NON_EXISTENT_ID) {
             request = request.placeholder(defaultLoadId);
         }
@@ -457,14 +457,14 @@ public class BitmapUtil {
         request.into(target);
     }
 
-    private static GlideRequest configDisplay(final Context context, final String url, File file,int id, final int displayType, final Transformation
+    private static GlideRequest configDisplay(final Context context, final String url, File file, int id, final int displayType, final Transformation
             transformation) {
         GlideRequest request;
         if (!TextUtils.isEmpty(url)) {
             request = buildGlideRequest(context, url);
-        } else if(file!=null){
+        } else if (file != null) {
             request = buildGlideRequest(context, file);
-        }else {
+        } else {
             request = buildGlideRequest(context, id);
         }
         if (displayType == CIRCLE) {

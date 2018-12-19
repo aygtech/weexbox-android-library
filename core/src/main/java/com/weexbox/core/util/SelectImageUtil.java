@@ -3,16 +3,12 @@ package com.weexbox.core.util;
 import android.app.Activity;
 import android.content.Intent;
 
-
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.tools.PictureFileUtils;
 
-import org.json.JSONObject;
-
-import java.io.File;
 import java.util.List;
 
 /**
@@ -22,17 +18,17 @@ import java.util.List;
  */
 public class SelectImageUtil {
 
-    private static MultipleImageCompleteListener mCompleteListener;
     private static final int SingleImgType = 51557;
     public static boolean mIsMultiple;
+    private static MultipleImageCompleteListener mCompleteListener;
     private static int imgType = 0;//0原图，1为剪切图，2为压缩图
-   // private static Activity activity;
+    // private static Activity activity;
 
     //单独启动相机，只支持单张图片
-    public static void startCamera(Activity context, int w, int h,  boolean enableCrop, boolean isCircle, MultipleImageCompleteListener callback) {
-        if(enableCrop){
+    public static void startCamera(Activity context, int w, int h, boolean enableCrop, boolean isCircle, MultipleImageCompleteListener callback) {
+        if (enableCrop) {
             imgType = 1;
-        }else {
+        } else {
             imgType = 0;
         }
         Activity activity = context;
@@ -48,7 +44,7 @@ public class SelectImageUtil {
                 .sizeMultiplier(0.9f)
                 .compress(false)
                 .cropCompressQuality(100)
-                .withAspectRatio(w,h)
+                .withAspectRatio(w, h)
                 .circleDimmedLayer(isCircle)
                 .showCropFrame(!isCircle)
                 .previewImage(true)
@@ -64,7 +60,7 @@ public class SelectImageUtil {
      * picked：已经选择了几张
      * isCamera：是否开启相机
      */
-    public static void startImagePickActivity(Activity context,int count, int picked, boolean isCamera, MultipleImageCompleteListener callback) {
+    public static void startImagePickActivity(Activity context, int count, int picked, boolean isCamera, MultipleImageCompleteListener callback) {
         imgType = 0;
         if (picked >= 9) {
             return;
@@ -95,9 +91,9 @@ public class SelectImageUtil {
      * 单选  w剪裁宽 h剪裁高 isCamera 是否拍照，enableCrop是否剪裁，是否圆形剪裁，否则矩形剪裁
      */
     public static void startImagePickActivity(Activity context, int w, int h, boolean isCamera, boolean enableCrop, boolean isCircle, MultipleImageCompleteListener callback) {
-        if(enableCrop){
+        if (enableCrop) {
             imgType = 1;
-        }else {
+        } else {
             imgType = 0;
         }
         Activity activity = context;
@@ -114,7 +110,7 @@ public class SelectImageUtil {
                 .sizeMultiplier(0.9f)
                 .compress(false)
                 .cropCompressQuality(100)
-                .withAspectRatio(w,h)
+                .withAspectRatio(w, h)
                 .circleDimmedLayer(isCircle)
                 .showCropFrame(!isCircle)
                 .isCamera(isCamera)
@@ -131,34 +127,30 @@ public class SelectImageUtil {
             case PictureConfig.CHOOSE_REQUEST:
                 if (resultCode == Activity.RESULT_OK) {
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    if (selectList.size() > 1) {
-                        mIsMultiple = true;
-                    } else {
-                        mIsMultiple = false;
-                    }
-                    handleCropResult(selectList,activity);
+                    mIsMultiple = selectList.size() > 1;
+                    handleCropResult(selectList, activity);
                 }
                 break;
             case SingleImgType:
                 if (resultCode == Activity.RESULT_OK) {
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    handleCropResult(selectList,activity);
+                    handleCropResult(selectList, activity);
                 }
                 break;
         }
     }
 
-    private static void handleCropResult(final List<LocalMedia> list,final Activity activity) {
+    private static void handleCropResult(final List<LocalMedia> list, final Activity activity) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 int count = list.size();
-                String [] imgs = new String[count];
+                String[] imgs = new String[count];
                 for (int i = 0; i < count; i++) {
-                    if(imgType == 0){
+                    if (imgType == 0) {
                         String path = list.get(i).getPath();
                         imgs[i] = path;
-                    }else{
+                    } else {
                         String path = list.get(i).getCutPath();
                         imgs[i] = path;
                     }

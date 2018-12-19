@@ -47,6 +47,7 @@ public final class ImageUtil {
 
     /**
      * bitmap转为base64
+     *
      * @param bitmap
      * @return
      */
@@ -82,6 +83,7 @@ public final class ImageUtil {
 
     /**
      * base64转为bitmap
+     *
      * @param base64Data
      * @return
      */
@@ -568,15 +570,6 @@ public final class ImageUtil {
         return (bitmap);
     }
 
-    public interface OnBlurCompleteListener {
-        /**
-         * blur complete event.(Notice:in sub thread)
-         *
-         * @param bitmap the blurred bitmap
-         */
-        void onBlurComplete(@NonNull Bitmap bitmap);
-    }
-
     public static void insertImageToSystemGallery(final Context context, final String url) {
         if (TextUtils.isEmpty(url)) {
             ToastUtil.showLongToast(context, "图片地址不能为空");
@@ -596,6 +589,15 @@ public final class ImageUtil {
                 ToastUtil.showLongToast(context, "保存失败，请重试～");
             }
         });
+    }
+
+    public interface OnBlurCompleteListener {
+        /**
+         * blur complete event.(Notice:in sub thread)
+         *
+         * @param bitmap the blurred bitmap
+         */
+        void onBlurComplete(@NonNull Bitmap bitmap);
     }
 
 //    public static void insertImageToSystemGallery(Context context, final Bitmap bitmap, String fileName) {

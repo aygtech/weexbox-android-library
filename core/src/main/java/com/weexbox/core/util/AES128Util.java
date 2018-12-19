@@ -1,6 +1,5 @@
 package com.weexbox.core.util;
 
-import android.annotation.SuppressLint;
 import android.util.Base64;
 
 import javax.crypto.Cipher;

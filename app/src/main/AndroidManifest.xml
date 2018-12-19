@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-          package="com.weexbox.example">
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    package="com.weexbox.example">
 
 
     <application
@@ -14,11 +9,11 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="WeexBox"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionbarTheme"
-        android:largeHeap="true"
-    	tools:replace="android:allowBackup,android:theme">
+        tools:replace="android:allowBackup,android:theme">
 
         <activity android:name=".NormalActivity">
             <intent-filter>

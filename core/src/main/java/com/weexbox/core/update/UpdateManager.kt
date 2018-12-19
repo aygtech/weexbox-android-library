@@ -1,16 +1,17 @@
 package com.weexbox.core.update
 
+import VersionUtil
 import android.content.Context
 import android.os.AsyncTask
 import com.alibaba.fastjson.TypeReference
+import com.litesuits.common.io.FileUtils
+import com.litesuits.common.io.IOUtils
 import com.weexbox.core.WeexBoxEngine
+import com.weexbox.core.extension.appendingPathComponent
+import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.Md5Realm
 import com.weexbox.core.model.UpdateConfig
 import com.weexbox.core.model.UpdateMd5
-import com.litesuits.common.io.FileUtils
-import com.litesuits.common.io.IOUtils
-import com.weexbox.core.extension.appendingPathComponent
-import com.weexbox.core.extension.toObject
 import com.weexbox.core.network.Network
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -168,7 +169,7 @@ object UpdateManager {
 
     private fun getServer() {
         complete(UpdateState.GetServer)
-        Network.request(serverVersionUrl, Network.HTTPMethod.GET, null, null, object: Callback<ResponseBody> {
+        Network.request(serverVersionUrl, Network.HTTPMethod.GET, null, null, object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                 complete(UpdateState.GetServerError, 0, t)
             }
@@ -219,7 +220,7 @@ object UpdateManager {
     // 获取服务端config文件
     private fun downloadConfig() {
         complete(UpdateState.DownloadConfig)
-        Network.request(serverConfigUrl, Network.HTTPMethod.GET, null, null, object: Callback<ResponseBody> {
+        Network.request(serverConfigUrl, Network.HTTPMethod.GET, null, null, object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                 complete(UpdateState.DownloadConfigError, 0, t)
             }
@@ -280,7 +281,7 @@ object UpdateManager {
                             org.zeroturnaround.zip.commons.FileUtils.forceMkdir(file.parentFile)
                             org.zeroturnaround.zip.commons.FileUtils.copy(`in`, file)
                             if (to == workingUrl) {
-                                var progress = (unzipFilesCount ++) * 100 / resourceMd5.size
+                                var progress = (unzipFilesCount++) * 100 / resourceMd5.size
                                 if (progress > 100) {
                                     progress = 100
                                 }
@@ -336,7 +337,7 @@ object UpdateManager {
 
     private fun downloadMd5() {
         complete(UpdateState.DownloadMd5)
-        Network.request(serverMd5Url, Network.HTTPMethod.GET, null, null, object: Callback<ResponseBody> {
+        Network.request(serverMd5Url, Network.HTTPMethod.GET, null, null, object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                 complete(UpdateState.DownloadMd5Error, 0, t)
             }
@@ -344,7 +345,7 @@ object UpdateManager {
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
                 if (response?.isSuccessful == true) {
                     complete(UpdateState.DownloadMd5Success)
-                    val serverMd5: List<UpdateMd5> = response.body()!!.string().toObject(object : TypeReference<List<UpdateMd5>>(){})
+                    val serverMd5: List<UpdateMd5> = response.body()!!.string().toObject(object : TypeReference<List<UpdateMd5>>() {})
                     DownloadFilesTask().execute(serverMd5)
                 } else {
                     complete(UpdateState.DownloadMd5Error, 0)
@@ -403,7 +404,7 @@ object UpdateManager {
             val file = files[index]
             val path = file.path!!
             val destination = File(backupUrl, path)
-            Network.request(serverWwwUrl.appendingPathComponent(path), Network.HTTPMethod.GET, null, null, object: Callback<ResponseBody> {
+            Network.request(serverWwwUrl.appendingPathComponent(path), Network.HTTPMethod.GET, null, null, object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                     if (retry == 0) {
                         complete(UpdateState.DownloadFileError, 0, t)
@@ -447,8 +448,7 @@ object UpdateManager {
             if (forceUpdate || (!forceUpdate && url == workingUrl)) {
                 completion?.invoke(state, progress, error, url)
             }
-        }
-        else {
+        } else {
             completion?.invoke(state, progress, error, url)
         }
         if (state == UpdateState.UpdateSuccess || error != null) {

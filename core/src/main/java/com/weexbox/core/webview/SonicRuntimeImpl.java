@@ -61,7 +61,7 @@ public class SonicRuntimeImpl extends SonicRuntime {
 
     @Override
     public Object createWebResourceResponse(String mimeType, String encoding, InputStream data, Map<String, String> headers) {
-        WebResourceResponse resourceResponse =  new WebResourceResponse(mimeType, encoding, data);
+        WebResourceResponse resourceResponse = new WebResourceResponse(mimeType, encoding, data);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             resourceResponse.setResponseHeaders(headers);
         }

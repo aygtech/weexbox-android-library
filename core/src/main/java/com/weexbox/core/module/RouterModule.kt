@@ -2,7 +2,6 @@ package com.weexbox.core.module
 
 import com.taobao.weex.annotation.JSMethod
 import com.weexbox.core.extension.toObject
-import com.weexbox.core.model.Result
 import com.weexbox.core.router.Router
 
 /**

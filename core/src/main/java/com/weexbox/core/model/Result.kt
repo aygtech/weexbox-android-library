@@ -10,6 +10,7 @@ import java.util.*
  */
 
 typealias JsResult = Map<String, Any>?
+
 typealias Callback = (Result) -> Unit
 
 class Result {

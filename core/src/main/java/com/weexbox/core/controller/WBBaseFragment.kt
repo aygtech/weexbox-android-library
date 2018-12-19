@@ -16,7 +16,7 @@ import java.util.*
 /*
 * Fragment基类
 */
-abstract class WBBaseFragment: Fragment() {
+abstract class WBBaseFragment : Fragment() {
 
     // 路由
     var router = Router()

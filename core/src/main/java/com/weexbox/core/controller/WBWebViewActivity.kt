@@ -61,14 +61,14 @@ open class WBWebViewActivity : WBBaseActivity() {
         setContentView(R.layout.activity_web_view)
         getActionbar().setBackButton(View.OnClickListener {
             finish()
-        },"关闭")
+        }, "关闭")
         val webView = webView
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
-                val title = view.getTitle()
+                val title = view.title
                 if (!TextUtils.isEmpty(title)) {
-                    getActionbar().setTitleText(title);
+                    getActionbar().setTitleText(title)
                 }
                 if (sonicSession != null) {
                     sonicSession!!.sessionClient.pageFinish(url)

@@ -6,8 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.view.*
-import android.widget.FrameLayout
+import android.view.View
+import android.view.ViewGroup
 import com.litesuits.common.io.FileUtils
 import com.orhanobut.logger.Logger
 import com.taobao.weex.IWXRenderListener
@@ -26,7 +26,7 @@ import java.io.IOException
  * Time: 2018/8/16 下午4:38
  */
 
-open class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
+open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
 
     var instance: WXSDKInstance? = null
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -87,8 +87,7 @@ open class WBWeexFragment: WBBaseFragment(), IWXRenderListener {
             if (!isFirstSendDidAppear) {
                 sendViewDidAppear()
             }
-        }
-        else {
+        } else {
             unregisterWeexDebugBroadcast()
             sendViewDidDisappear()
         }

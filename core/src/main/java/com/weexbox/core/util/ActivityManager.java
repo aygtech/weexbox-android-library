@@ -1,9 +1,6 @@
 package com.weexbox.core.util;
 
 import android.app.Activity;
-import android.util.Log;
-
-import com.taobao.weex.devtools.common.LogUtil;
 
 import java.util.Stack;
 

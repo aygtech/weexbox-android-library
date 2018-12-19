@@ -12,49 +12,21 @@ import java.lang.reflect.Field;
 /**
  * Created by zhy on 15/11/6.
  */
-public class ImageUtils
-{
+public class ImageUtils {
     /**
      * 根据InputStream获取图片实际的宽度和高度
      *
      * @param imageStream
      * @return
      */
-    public static ImageSize getImageSize(InputStream imageStream)
-    {
+    public static ImageSize getImageSize(InputStream imageStream) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeStream(imageStream, null, options);
         return new ImageSize(options.outWidth, options.outHeight);
     }
 
-    public static class ImageSize
-    {
-        int width;
-        int height;
-
-        public ImageSize()
-        {
-        }
-
-        public ImageSize(int width, int height)
-        {
-            this.width = width;
-            this.height = height;
-        }
-
-        @Override
-        public String toString()
-        {
-            return "ImageSize{" +
-                    "width=" + width +
-                    ", height=" + height +
-                    '}';
-        }
-    }
-
-    public static int calculateInSampleSize(ImageSize srcSize, ImageSize targetSize)
-    {
+    public static int calculateInSampleSize(ImageSize srcSize, ImageSize targetSize) {
         // 源图片的宽度
         int width = srcSize.width;
         int height = srcSize.height;
@@ -63,8 +35,7 @@ public class ImageUtils
         int reqWidth = targetSize.width;
         int reqHeight = targetSize.height;
 
-        if (width > reqWidth && height > reqHeight)
-        {
+        if (width > reqWidth && height > reqHeight) {
             // 计算出实际宽度和目标宽度的比率
             int widthRatio = Math.round((float) width / (float) reqWidth);
             int heightRatio = Math.round((float) height / (float) reqHeight);
@@ -79,8 +50,7 @@ public class ImageUtils
      * @param view
      * @return
      */
-    public static ImageSize getImageViewSize(View view)
-    {
+    public static ImageSize getImageViewSize(View view) {
 
         ImageSize imageSize = new ImageSize();
 
@@ -96,31 +66,26 @@ public class ImageUtils
      * @param view
      * @return
      */
-    private static int getExpectHeight(View view)
-    {
+    private static int getExpectHeight(View view) {
 
         int height = 0;
         if (view == null) return 0;
 
         final ViewGroup.LayoutParams params = view.getLayoutParams();
         //如果是WRAP_CONTENT，此时图片还没加载，getWidth根本无效
-        if (params != null && params.height != ViewGroup.LayoutParams.WRAP_CONTENT)
-        {
+        if (params != null && params.height != ViewGroup.LayoutParams.WRAP_CONTENT) {
             height = view.getWidth(); // 获得实际的宽度
         }
-        if (height <= 0 && params != null)
-        {
+        if (height <= 0 && params != null) {
             height = params.height; // 获得布局文件中的声明的宽度
         }
 
-        if (height <= 0)
-        {
+        if (height <= 0) {
             height = getImageViewFieldValue(view, "mMaxHeight");// 获得设置的最大的宽度
         }
 
         //如果宽度还是没有获取到，憋大招，使用屏幕的宽度
-        if (height <= 0)
-        {
+        if (height <= 0) {
             DisplayMetrics displayMetrics = view.getContext().getResources()
                     .getDisplayMetrics();
             height = displayMetrics.heightPixels;
@@ -135,19 +100,16 @@ public class ImageUtils
      * @param view
      * @return
      */
-    private static int getExpectWidth(View view)
-    {
+    private static int getExpectWidth(View view) {
         int width = 0;
         if (view == null) return 0;
 
         final ViewGroup.LayoutParams params = view.getLayoutParams();
         //如果是WRAP_CONTENT，此时图片还没加载，getWidth根本无效
-        if (params != null && params.width != ViewGroup.LayoutParams.WRAP_CONTENT)
-        {
+        if (params != null && params.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
             width = view.getWidth(); // 获得实际的宽度
         }
-        if (width <= 0 && params != null)
-        {
+        if (width <= 0 && params != null) {
             width = params.width; // 获得布局文件中的声明的宽度
         }
 
@@ -175,22 +137,39 @@ public class ImageUtils
      * @param fieldName
      * @return
      */
-    private static int getImageViewFieldValue(Object object, String fieldName)
-    {
+    private static int getImageViewFieldValue(Object object, String fieldName) {
         int value = 0;
-        try
-        {
+        try {
             Field field = ImageView.class.getDeclaredField(fieldName);
             field.setAccessible(true);
             int fieldValue = field.getInt(object);
-            if (fieldValue > 0 && fieldValue < Integer.MAX_VALUE)
-            {
+            if (fieldValue > 0 && fieldValue < Integer.MAX_VALUE) {
                 value = fieldValue;
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
         }
         return value;
 
+    }
+
+    public static class ImageSize {
+        int width;
+        int height;
+
+        public ImageSize() {
+        }
+
+        public ImageSize(int width, int height) {
+            this.width = width;
+            this.height = height;
+        }
+
+        @Override
+        public String toString() {
+            return "ImageSize{" +
+                    "width=" + width +
+                    ", height=" + height +
+                    '}';
+        }
     }
 }

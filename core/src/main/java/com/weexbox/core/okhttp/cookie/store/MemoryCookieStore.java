@@ -12,34 +12,27 @@ import okhttp3.HttpUrl;
 /**
  * Created by zhy on 16/3/10.
  */
-public class MemoryCookieStore implements CookieStore
-{
+public class MemoryCookieStore implements CookieStore {
     private final HashMap<String, List<Cookie>> allCookies = new HashMap<>();
 
     @Override
-    public void add(HttpUrl url, List<Cookie> cookies)
-    {
+    public void add(HttpUrl url, List<Cookie> cookies) {
         List<Cookie> oldCookies = allCookies.get(url.host());
 
-        if (oldCookies != null)
-        {
+        if (oldCookies != null) {
             Iterator<Cookie> itNew = cookies.iterator();
             Iterator<Cookie> itOld = oldCookies.iterator();
-            while (itNew.hasNext())
-            {
+            while (itNew.hasNext()) {
                 String va = itNew.next().name();
-                while (va != null && itOld.hasNext())
-                {
+                while (va != null && itOld.hasNext()) {
                     String v = itOld.next().name();
-                    if (v != null && va.equals(v))
-                    {
+                    if (v != null && va.equals(v)) {
                         itOld.remove();
                     }
                 }
             }
             oldCookies.addAll(cookies);
-        } else
-        {
+        } else {
             allCookies.put(url.host(), cookies);
         }
 
@@ -47,11 +40,9 @@ public class MemoryCookieStore implements CookieStore
     }
 
     @Override
-    public List<Cookie> get(HttpUrl uri)
-    {
+    public List<Cookie> get(HttpUrl uri) {
         List<Cookie> cookies = allCookies.get(uri.host());
-        if (cookies == null)
-        {
+        if (cookies == null) {
             cookies = new ArrayList<>();
             allCookies.put(uri.host(), cookies);
         }
@@ -60,19 +51,16 @@ public class MemoryCookieStore implements CookieStore
     }
 
     @Override
-    public boolean removeAll()
-    {
+    public boolean removeAll() {
         allCookies.clear();
         return true;
     }
 
     @Override
-    public List<Cookie> getCookies()
-    {
+    public List<Cookie> getCookies() {
         List<Cookie> cookies = new ArrayList<>();
         Set<String> httpUrls = allCookies.keySet();
-        for (String url : httpUrls)
-        {
+        for (String url : httpUrls) {
             cookies.addAll(allCookies.get(url));
         }
         return cookies;
@@ -80,11 +68,9 @@ public class MemoryCookieStore implements CookieStore
 
 
     @Override
-    public boolean remove(HttpUrl uri, Cookie cookie)
-    {
+    public boolean remove(HttpUrl uri, Cookie cookie) {
         List<Cookie> cookies = allCookies.get(uri.host());
-        if (cookie != null)
-        {
+        if (cookie != null) {
             return cookies.remove(cookie);
         }
         return false;

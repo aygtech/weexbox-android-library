@@ -4,7 +4,6 @@ package com.weexbox.core.net;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.weexbox.core.R;
 import com.weexbox.core.net.callback.HttpCallback;
 import com.weexbox.core.net.callback.HttpFileCallback;
 import com.weexbox.core.okhttp.OkHttpUtils;
@@ -16,9 +15,7 @@ import com.weexbox.core.okhttp.cookie.CookieJarImpl;
 import com.weexbox.core.okhttp.cookie.store.PersistentCookieStore;
 import com.weexbox.core.okhttp.https.HttpsUtils;
 import com.weexbox.core.util.AES128Util;
-import com.weexbox.core.util.AndroidUtil;
 import com.weexbox.core.util.LogUtil;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -45,8 +42,8 @@ import okhttp3.Response;
  */
 public final class HttpUtil {
 
-    private static RequestInterceptor requestInterceptor;
     public static String key = "";
+    private static RequestInterceptor requestInterceptor;
 
     private HttpUtil() {
     }
@@ -58,7 +55,7 @@ public final class HttpUtil {
     /**
      * 初始化OkHttpClient, 默认不带上cookies管理
      */
-    public static void init(HttpUtil.RequestInterceptor interceptor,String keyStr) {
+    public static void init(HttpUtil.RequestInterceptor interceptor, String keyStr) {
         requestInterceptor = interceptor;
         key = keyStr;
         OkHttpClient.Builder builder = build();
@@ -68,7 +65,7 @@ public final class HttpUtil {
     /**
      * 初始化OkHttpClient, 带上cookies管理
      */
-    public static void init(HttpUtil.RequestInterceptor interceptor,Context context) {
+    public static void init(HttpUtil.RequestInterceptor interceptor, Context context) {
         requestInterceptor = interceptor;
         OkHttpClient.Builder builder = BuildWithCookie(context);
         initHttp(builder);
@@ -83,7 +80,7 @@ public final class HttpUtil {
         initHttp(builder);
     }
 
-    public static void init(final InputStream[] certificates, final InputStream bksFile, final String password,Context context) {
+    public static void init(final InputStream[] certificates, final InputStream bksFile, final String password, Context context) {
         OkHttpClient.Builder builder = BuildWithCookie(context);
         initSSL(builder, certificates, bksFile, password);
         initHttp(builder);
@@ -147,7 +144,7 @@ public final class HttpUtil {
 
     }
 
-    public static void sendGetRequest(final String url, final Map<String,String> header, final HttpParams params, final Object tag, final HttpCallback callback) {
+    public static void sendGetRequest(final String url, final Map<String, String> header, final HttpParams params, final Object tag, final HttpCallback callback) {
         if (TextUtils.isEmpty(url)) {
             return;
         }
@@ -163,7 +160,7 @@ public final class HttpUtil {
         requestAction(getBuilder, tag, callback);
     }
 
-    public static void sendPostRequest(final String url, final Map<String,String> header,  final HttpParams params, final Object tag, final HttpCallback callback) {
+    public static void sendPostRequest(final String url, final Map<String, String> header, final HttpParams params, final Object tag, final HttpCallback callback) {
         if (TextUtils.isEmpty(url)) {
             return;
         }
@@ -179,7 +176,7 @@ public final class HttpUtil {
         requestAction(formBuilder, tag, callback);
     }
 
-    public static void sendPostJsonRequest(final String url, final Map<String,String> header,  final HttpParams params, final Object tag, final HttpCallback callback) {
+    public static void sendPostJsonRequest(final String url, final Map<String, String> header, final HttpParams params, final Object tag, final HttpCallback callback) {
         if (TextUtils.isEmpty(url)) {
             return;
         }
@@ -196,15 +193,15 @@ public final class HttpUtil {
         requestAction(stringBuilder, tag, callback);
     }
 
-    public static void sendPostStringRequest(final String url, final Map<String,String> header,  final HttpParams params, final Object tag, final HttpCallback callback) {
+    public static void sendPostStringRequest(final String url, final Map<String, String> header, final HttpParams params, final Object tag, final HttpCallback callback) {
         if (TextUtils.isEmpty(url)) {
             return;
         }
         PostStringBuilder stringBuilder = OkHttpUtils.postString().url(url);
         if (params != null) {
-            stringBuilder.content(AES128Util.encrypt(key,params.convertToJson()));
+            stringBuilder.content(AES128Util.encrypt(key, params.convertToJson()));
         } else {
-            stringBuilder.content(AES128Util.encrypt(key,new HttpParams().convertToJson()));
+            stringBuilder.content(AES128Util.encrypt(key, new HttpParams().convertToJson()));
         }
         if (header != null) {
             stringBuilder.headers(params.getUrlParams());

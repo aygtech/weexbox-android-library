@@ -1,8 +1,6 @@
 package com.weexbox.core.adapter;
 
 import android.graphics.drawable.Drawable;
-import android.os.Environment;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -55,7 +53,7 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                     String path = url.substring(9);
                     int id = BitmapUtil.sContext.getResources().getIdentifier(path, "drawable", BitmapUtil.sContext.getPackageName());
                     if (strategy.getImageListener() == null) {
-                        BitmapUtil.displayImage(view, id , null);
+                        BitmapUtil.displayImage(view, id, null);
                     } else {
                         BitmapUtil.displayImage(getTarget(url, view, strategy), id, null);
                     }
@@ -76,7 +74,7 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
     }
 
     private SimpleTarget getTarget(final String url, final ImageView view, final WXImageStrategy strategy) {
-        SimpleTarget target = new SimpleTarget<Drawable>(view.getLayoutParams().width,view.getLayoutParams().height) {
+        SimpleTarget target = new SimpleTarget<Drawable>(view.getLayoutParams().width, view.getLayoutParams().height) {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                 if (strategy.getImageListener() != null) {

@@ -65,8 +65,8 @@ open class ExternalModule : BaseModule() {
     @JSMethod(uiThread = true)
     open fun openBrowser(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            getActivity().startActivity(Intent.createChooser(intent, "请选择浏览器"));
+        if (intent.resolveActivity(getActivity().packageManager) != null) {
+            getActivity().startActivity(Intent.createChooser(intent, "请选择浏览器"))
         }
     }
 
@@ -74,8 +74,8 @@ open class ExternalModule : BaseModule() {
     @JSMethod(uiThread = true)
     open fun callPhone(phone: String, callback: JSCallback?) {
         val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone))
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getActivity().startActivity(intent);
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        getActivity().startActivity(intent)
         callback?.invoke(Result())
     }
 }

@@ -2,7 +2,6 @@ package com.weexbox.example
 
 import android.os.Bundle
 import com.weexbox.core.controller.WBWeexActivity
-import com.weexbox.core.router.Router
 
 /**
  * Author: Mario
@@ -10,7 +9,7 @@ import com.weexbox.core.router.Router
  * Description: This is WeexActivity
  */
 
-class WeexActivity: WBWeexActivity() {
+class WeexActivity : WBWeexActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

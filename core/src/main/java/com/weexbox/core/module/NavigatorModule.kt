@@ -1,13 +1,8 @@
 package com.weexbox.core.module
 
 import android.text.TextUtils
-import android.view.View
-import com.taobao.weex.WXEnvironment
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
-import com.taobao.weex.common.WXConfig
-import com.taobao.weex.utils.WXUtils
-import com.taobao.weex.utils.WXViewUtils
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
@@ -26,9 +21,9 @@ open class NavigatorModule : BaseModule() {
         }
 
         getActionbar().setTitleText(info.text)
-        if (info.color?.startsWith("#") == true){
+        if (info.color?.startsWith("#") == true) {
             getActionbar().setTitleTextColor(info.color)
-        } else if (info.color != null){
+        } else if (info.color != null) {
             getActionbar().setTitleTextColor("#" + info.color)
         }
     }
@@ -45,7 +40,7 @@ open class NavigatorModule : BaseModule() {
                 info = items[0]
                 if (info["text"] != null && !TextUtils.isEmpty(info["color"] as CharSequence?)) {
                     var color: String = info["color"] as String
-                    if (color.startsWith("#") == false){
+                    if (color.startsWith("#") == false) {
                         color = "#" + color
                     }
                     getActionbar().setBackButton({
@@ -70,7 +65,7 @@ open class NavigatorModule : BaseModule() {
                 info = items[1]
                 if (info["text"] != null && !TextUtils.isEmpty(info["color"] as CharSequence?)) {
                     var color: String = info["color"] as String
-                    if (color.startsWith("#") == false){
+                    if (color.startsWith("#") == false) {
                         color = "#" + color
                     }
                     getActionbar().setBackButton2({
@@ -103,7 +98,7 @@ open class NavigatorModule : BaseModule() {
                 info = items[0]
                 if (info["text"] != null && !TextUtils.isEmpty(info["color"] as CharSequence?)) {
                     var color: String = info["color"] as String
-                    if (color.startsWith("#") == false){
+                    if (color.startsWith("#") == false) {
                         color = "#" + color
                     }
                     getActionbar().setRightButton({
@@ -116,7 +111,7 @@ open class NavigatorModule : BaseModule() {
                     }, info["text"] as String?)
 
                 } else if (!TextUtils.isEmpty(info["image"] as CharSequence?)) {
-                    getActionbar().setRightButtonDrawable( {
+                    getActionbar().setRightButtonDrawable({
                         callback?.invokeAndKeepAlive(result)
                     }, info.get("image") as String?)
                 }
@@ -125,7 +120,7 @@ open class NavigatorModule : BaseModule() {
                 info = items[1]
                 if (info["text"] != null && !TextUtils.isEmpty(info["color"] as CharSequence?)) {
                     var color: String = info["color"] as String
-                    if (color.startsWith("#") == false){
+                    if (color.startsWith("#") == false) {
                         color = "#" + color
                     }
                     getActionbar().setRightButton2({
@@ -149,7 +144,7 @@ open class NavigatorModule : BaseModule() {
     //导航栏颜色
     @JSMethod(uiThread = true)
     open fun setNavColor(color: String) {
-            getActionbar().setAcitionbarAndStatusbarBackground("#" + color)
+        getActionbar().setAcitionbarAndStatusbarBackground("#" + color)
     }
 
     //物理返回键
@@ -164,7 +159,7 @@ open class NavigatorModule : BaseModule() {
 
     @JSMethod(uiThread = false)
     open fun getHeight(): Int {
-        return mWXSDKInstance.instanceViewPortWidth * AndroidUtil.getStateBarHeight(getActivity()) / AndroidUtil.getScreenWidth(getActivity());
+        return mWXSDKInstance.instanceViewPortWidth * AndroidUtil.getStateBarHeight(getActivity()) / AndroidUtil.getScreenWidth(getActivity())
     }
 
     private fun getActionbar(): SimpleToolbar {

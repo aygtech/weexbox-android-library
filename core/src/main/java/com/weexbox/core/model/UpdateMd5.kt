@@ -3,7 +3,7 @@ package com.weexbox.core.model
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-internal open class Md5Realm: RealmObject() {
+internal open class Md5Realm : RealmObject() {
 
     @PrimaryKey
     var path: String? = null

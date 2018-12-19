@@ -6,14 +6,14 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 
 public class LoadDialogHelper {
 
-    private KProgressHUD hud;
-    private KProgressHUD progressHUD;
-    private Context mConetxt;
     public int width = 68;
     public int height = 68;
     public boolean isCancel = true;
+    private KProgressHUD hud;
+    private KProgressHUD progressHUD;
+    private Context mConetxt;
 
-    public LoadDialogHelper(Context mConetxt){
+    public LoadDialogHelper(Context mConetxt) {
         this.mConetxt = mConetxt;
     }
 
@@ -22,7 +22,7 @@ public class LoadDialogHelper {
             hud.dismiss();
             hud = null;
         }
-        if (progressHUD != null){
+        if (progressHUD != null) {
             progressHUD.dismiss();
             progressHUD = null;
         }
