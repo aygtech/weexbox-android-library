@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.weexbox.core.event.Event
 import com.weexbox.core.event.EventCallback
 import com.weexbox.core.router.Router
+import com.weexbox.core.util.LoadDialogHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -25,6 +26,8 @@ abstract class WBBaseFragment : Fragment() {
     // 返回键操作
     var isListenBack = false
     val backName = "WB-onBackPressed"
+    //hud
+    var loadDialogHelper: LoadDialogHelper = LoadDialogHelper(context)
 
     // 可见性相关
     var isVisibleToUser = false
@@ -52,6 +55,7 @@ abstract class WBBaseFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
+        loadDialogHelper.clear()
         EventBus.getDefault().unregister(this)
     }
 
