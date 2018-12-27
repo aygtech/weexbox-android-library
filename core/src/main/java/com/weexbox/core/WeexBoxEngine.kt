@@ -8,6 +8,7 @@ import com.taobao.weex.InitConfig
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.adapter.ImageAdapter
+import com.weexbox.core.component.RichTextComponent
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
 import com.weexbox.core.module.*
@@ -54,6 +55,7 @@ object WeexBoxEngine {
         BindingX.register()
         registerModule()
         registerRouter()
+        registerComponent()
     }
 
     private fun registerModule() {
@@ -69,5 +71,9 @@ object WeexBoxEngine {
     private fun registerRouter() {
         Router.register(Router.NAME_WEEX, WBWeexActivity::class.java)
         Router.register(Router.NAME_WEB, WBWebViewActivity::class.java)
+    }
+
+    private fun registerComponent() {
+        WXSDKEngine.registerComponent("wb-richtext", RichTextComponent::class.java)
     }
 }
