@@ -15,10 +15,7 @@ import com.weexbox.core.event.Event
 import com.weexbox.core.event.EventCallback
 import com.weexbox.core.extension.getParameters
 import com.weexbox.core.router.Router
-import com.weexbox.core.util.ActivityManager
-import com.weexbox.core.util.AnimationUtil
-import com.weexbox.core.util.LoadDialogHelper
-import com.weexbox.core.util.SelectImageUtil
+import com.weexbox.core.util.*
 import com.weexbox.core.widget.FloatingDraftButton
 import com.weexbox.core.widget.SimpleToolbar
 import kotlinx.android.synthetic.main.layout_floating_button.*
@@ -41,6 +38,8 @@ open class WBBaseActivity : AppCompatActivity() {
     var events: MutableMap<String, EventCallback> = TreeMap()
     //导航栏
     lateinit var toolbar: SimpleToolbar
+    //没有导航栏时候的状态栏阴影
+    lateinit var statusbar_layout: View
     //hud
     var loadDialogHelper: LoadDialogHelper = LoadDialogHelper(this)
 
@@ -115,11 +114,24 @@ open class WBBaseActivity : AppCompatActivity() {
             val btnView = layoutInflater.inflate(R.layout.layout_floating_button, container, false)
             container.addView(btnView, 2)
         }
+        statusbar_layout = layoutInflater.inflate(R.layout.activity_statusbar_layout, container, false)
+        val layoutParams = statusbar_layout.getLayoutParams()
+        layoutParams.height = DeviceUtil.getStatusBarHeight(this)
+        statusbar_layout.setLayoutParams(layoutParams)
+        container.addView(statusbar_layout, 3)
         if (ActivityManager.getInstance().allActivities.size == 1){
             toolbar.setBackButton({},"")
         }
         setContentView(container)
         initFloating()
+    }
+
+    fun showStatusbarLayoutBackground() {
+        statusbar_layout.setVisibility(View.VISIBLE)
+    }
+
+    fun hideStatusbarLayoutBackground() {
+        statusbar_layout.setVisibility(View.GONE)
     }
 
     fun getActionbar(): SimpleToolbar {

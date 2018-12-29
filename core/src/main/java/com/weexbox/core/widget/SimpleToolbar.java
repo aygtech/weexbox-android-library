@@ -17,6 +17,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.weexbox.core.R;
 import com.weexbox.core.util.BitmapUtil;
+import com.weexbox.core.util.DeviceUtil;
 
 public class SimpleToolbar extends LinearLayout {
 
@@ -39,21 +40,6 @@ public class SimpleToolbar extends LinearLayout {
         super(context, attrs);
     }
 
-    /**
-     * 获取状态栏高度
-     *
-     * @param context
-     * @return
-     */
-    public static int getStatusBarHeight(Context context) {
-        int result = 0;
-        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -68,7 +54,7 @@ public class SimpleToolbar extends LinearLayout {
         bottom_line = findViewById(R.id.bottom_line);
 
         ViewGroup.LayoutParams layoutParams = statusbar_layout.getLayoutParams();
-        layoutParams.height = getStatusBarHeight(getContext());
+        layoutParams.height = DeviceUtil.getStatusBarHeight(getContext());
         statusbar_layout.setLayoutParams(layoutParams);
     }
 
@@ -77,15 +63,11 @@ public class SimpleToolbar extends LinearLayout {
     }
 
     public void showStatusbarLayoutBackground(){
-        statusbar_layout.setBackgroundColor(Color.parseColor("#80333333"));
+        statusbar_layout.setBackgroundResource(R.color.color_black_50);
     }
 
     public void hideStatusbarLayoutBackground(){
-        statusbar_layout.setBackgroundColor(Color.parseColor("#00000000"));
-    }
-
-    public void setStatusbarLayoutBackground(int resId){
-        statusbar_layout.setBackgroundResource(resId);
+        statusbar_layout.setBackgroundResource(R.color.transparent);
     }
 
     @Override
