@@ -76,6 +76,14 @@ public class SimpleToolbar extends LinearLayout {
         statusbar_layout.setVisibility(GONE);
     }
 
+    public void showStatusbarLayoutBackground(){
+        statusbar_layout.setBackgroundResource(R.color.color_black_50);
+    }
+
+    public void showStatusbarLayoutBackground(int resId){
+        statusbar_layout.setBackgroundResource(resId);
+    }
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
