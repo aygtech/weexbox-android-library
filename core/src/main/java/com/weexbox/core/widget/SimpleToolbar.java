@@ -80,6 +80,10 @@ public class SimpleToolbar extends LinearLayout {
         statusbar_layout.setBackgroundResource(R.color.color_black_50);
     }
 
+    public void hideStatusbarLayoutBackground(){
+        statusbar_layout.setBackgroundResource(R.color.transparent);
+    }
+
     public void showStatusbarLayoutBackground(int resId){
         statusbar_layout.setBackgroundResource(resId);
     }
