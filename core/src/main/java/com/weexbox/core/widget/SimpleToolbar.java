@@ -77,11 +77,11 @@ public class SimpleToolbar extends LinearLayout {
     }
 
     public void showStatusbarLayoutBackground(){
-        statusbar_layout.setBackgroundResource(R.color.color_black_50);
+        statusbar_layout.setBackgroundColor(Color.parseColor("#80333333"));
     }
 
     public void hideStatusbarLayoutBackground(){
-        statusbar_layout.setBackgroundResource(R.color.transparent);
+        statusbar_layout.setBackgroundColor(Color.parseColor("#00000000"));
     }
 
     public void setStatusbarLayoutBackground(int resId){
