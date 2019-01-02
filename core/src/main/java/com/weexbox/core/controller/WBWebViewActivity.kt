@@ -14,6 +14,7 @@ import com.tencent.sonic.sdk.SonicEngine
 import com.tencent.sonic.sdk.SonicSession
 import com.tencent.sonic.sdk.SonicSessionConfig
 import com.weexbox.core.R
+import com.weexbox.core.interfaces.WebViewSetInterface
 import com.weexbox.core.webview.SonicJavaScriptInterface
 import com.weexbox.core.webview.SonicRuntimeImpl
 import com.weexbox.core.webview.SonicSessionClientImpl
@@ -27,6 +28,12 @@ import kotlinx.android.synthetic.main.activity_web_view.*
 open class WBWebViewActivity : WBBaseActivity() {
 
     private var sonicSession: SonicSession? = null
+
+
+    companion object {
+        var webViewSetInterface: WebViewSetInterface? = null //自定义webview设置接口
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +90,6 @@ open class WBWebViewActivity : WBBaseActivity() {
         webSettings.javaScriptEnabled = true
         webView.removeJavascriptInterface("searchBoxJavaBridge_")
         webView.addJavascriptInterface(SonicJavaScriptInterface(sonicSessionClient, Intent()), "sonic")
-
         // init webview settings
         webSettings.allowContentAccess = true
         webSettings.databaseEnabled = true
@@ -94,7 +100,9 @@ open class WBWebViewActivity : WBBaseActivity() {
         webSettings.useWideViewPort = true
         webSettings.loadWithOverviewMode = true
 
-
+        if (webViewSetInterface != null){
+            webViewSetInterface!!.setWebViwe(webView)
+        }
         // step 5: webview is ready now, just tell session client to bind
         if (sonicSessionClient != null) {
             sonicSessionClient.bindWebView(webView)
