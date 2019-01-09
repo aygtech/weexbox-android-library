@@ -73,7 +73,7 @@ public class PhotoActivity extends WBBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
+        getRouter().setNavBarHidden(true);
         setContentView(R.layout.activity_photoview);
         page = findViewById(R.id.page);
         top = findViewById(R.id.top);
