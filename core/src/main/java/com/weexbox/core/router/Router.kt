@@ -110,8 +110,8 @@ class Router : Serializable {
 
         val activities = ActivityManager.getInstance().allActivities
 
-        if (activities.size < count) {
-            count = activities.size
+        if (activities.size <= count) {
+            count = activities.size - 1
         }
 
         for (i in 0 until count) {
