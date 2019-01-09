@@ -44,7 +44,7 @@
             android:focusable="true" />
     </RelativeLayout>
 
-    <com.aiyuangong.bitcoin.adapter.PhotoViewPager
+    <com.weexbox.core.adapter.PhotoViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
