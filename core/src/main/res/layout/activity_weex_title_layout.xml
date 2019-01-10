@@ -27,10 +27,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
+                tools:text="adfaadf"
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,6 +43,30 @@
                 android:textColor="#3F3453"
                 android:textSize="18sp" />
 
+            <LinearLayout
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:id="@+id/sample_title_layout"
+                android:layout_marginTop="1dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/sample_title_icon"
+                    android:layout_marginRight="2dp"
+                    android:src="@drawable/arrows_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/sample_title_title"
+                    tools:text="adfaadfaadfaadfaadfaadfa"
+                    android:textSize="11sp"
+                    android:textColor="#9E9E9E"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
 
         <com.weexbox.core.widget.DrawableTextView

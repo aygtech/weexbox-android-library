@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,9 +27,11 @@ public class SimpleToolbar extends LinearLayout {
     private TextView mNextBtn2;
     private TextView mNextBtn;
     private TextView mTitle;
-    private LinearLayout action_bar_center_layout;
+    private LinearLayout action_bar_center_layout,sample_title_layout;
     private RelativeLayout actionbar_layout;
     private View statusbar_layout, bottom_line;
+    private ImageView sample_title_icon;
+    private TextView sample_title_title;
 
     private boolean refreshPadding = false;
 
@@ -52,6 +55,9 @@ public class SimpleToolbar extends LinearLayout {
         actionbar_layout = findViewById(R.id.actionbar_layout);
         statusbar_layout = findViewById(R.id.statusbar_layout);
         bottom_line = findViewById(R.id.bottom_line);
+        sample_title_layout = findViewById(R.id.sample_title_layout);
+        sample_title_icon = findViewById(R.id.sample_title_icon);
+        sample_title_title = findViewById(R.id.sample_title_title);
 
         ViewGroup.LayoutParams layoutParams = statusbar_layout.getLayoutParams();
         layoutParams.height = DeviceUtil.getStatusBarHeight(getContext());
@@ -60,6 +66,39 @@ public class SimpleToolbar extends LinearLayout {
 
     public void setStatusbarLayoutGone() {
         statusbar_layout.setVisibility(GONE);
+    }
+
+    public void setBottomLineVisibility(int visibility) {
+        if (bottom_line != null){
+            bottom_line.setVisibility(visibility);
+        }
+    }
+
+    public void setSampleTitleLayoutVisibility(int visibility) {
+        if (sample_title_layout != null){
+            sample_title_layout.setVisibility(visibility);
+        }
+    }
+
+    public void setSampleTitleLayout(int drawableId, String text, OnClickListener listener) {
+        if (sample_title_icon != null){
+            sample_title_icon.setImageResource(drawableId);
+        }
+        if (sample_title_title != null){
+            sample_title_title.setText(text);
+        }
+        if (sample_title_layout != null){
+            sample_title_layout.setOnClickListener(listener);
+        }
+    }
+
+    public void setSampleTitleLayout(int drawableId, String text) {
+        if (sample_title_icon != null){
+            sample_title_icon.setImageResource(drawableId);
+        }
+        if (sample_title_title != null){
+            sample_title_title.setText(text);
+        }
     }
 
     public void showStatusbarLayoutBackground(){
