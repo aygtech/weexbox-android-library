@@ -46,6 +46,7 @@
             <LinearLayout
                 android:visibility="gone"
                 tools:visibility="visible"
+                android:gravity="center_vertical"
                 android:id="@+id/sample_title_layout"
                 android:layout_marginTop="1dp"
                 android:orientation="horizontal"
@@ -55,7 +56,7 @@
                 <ImageView
                     android:id="@+id/sample_title_icon"
                     android:layout_marginRight="2dp"
-                    android:src="@drawable/arrows_right"
+                    tools:src="@drawable/arrows_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
