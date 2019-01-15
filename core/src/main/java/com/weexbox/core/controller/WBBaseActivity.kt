@@ -110,15 +110,18 @@ open class WBBaseActivity : AppCompatActivity() {
             toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
         }
         toolbar.setTitleText(router.title)
-        if (WeexBoxEngine.isDebug) {
-            val btnView = layoutInflater.inflate(R.layout.layout_floating_button, container, false)
-            container.addView(btnView, 2)
-        }
+
         statusbar_layout = layoutInflater.inflate(R.layout.activity_statusbar_layout, container, false)
         val layoutParams = statusbar_layout.getLayoutParams()
         layoutParams.height = DeviceUtil.getStatusBarHeight(this)
         statusbar_layout.setLayoutParams(layoutParams)
-        container.addView(statusbar_layout, 3)
+        container.addView(statusbar_layout, 2)
+
+        if (WeexBoxEngine.isDebug) {
+            val btnView = layoutInflater.inflate(R.layout.layout_floating_button, container, false)
+            container.addView(btnView, 3)
+        }
+
         if (ActivityManager.getInstance().allActivities.size == 1){
             toolbar.setBackButton({},"")
         }
