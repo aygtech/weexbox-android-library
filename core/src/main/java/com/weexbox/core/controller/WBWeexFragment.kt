@@ -13,7 +13,6 @@ import com.orhanobut.logger.Logger
 import com.taobao.weex.IWXRenderListener
 import com.taobao.weex.RenderContainer
 import com.taobao.weex.WXSDKInstance
-import com.taobao.weex.common.IWXDebugProxy
 import com.taobao.weex.common.WXRenderStrategy
 import com.weexbox.core.R
 import com.weexbox.core.WeexBoxEngine
@@ -125,8 +124,8 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
     private fun registerWeexDebugBroadcast() {
         broadcastReceiver = RefreshBroadcastReceiver()
         val filter = IntentFilter()
-        filter.addAction(IWXDebugProxy.ACTION_DEBUG_INSTANCE_REFRESH)
-        filter.addAction(IWXDebugProxy.ACTION_INSTANCE_RELOAD)
+        filter.addAction(WXSDKInstance.ACTION_DEBUG_INSTANCE_REFRESH)
+        filter.addAction(WXSDKInstance.ACTION_INSTANCE_RELOAD)
         activity!!.registerReceiver(broadcastReceiver, filter)
     }
 
