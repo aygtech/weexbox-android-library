@@ -7,16 +7,15 @@ import android.widget.TextView
 import com.taobao.weex.WXSDKInstance
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.ui.action.BasicComponentData
-import com.taobao.weex.ui.component.WXComponent
 import com.taobao.weex.ui.component.WXComponentProp
 import com.taobao.weex.ui.component.WXVContainer
 import com.weexbox.core.util.DisplayUtil
 import java.math.BigDecimal
 
-open class RichTextComponent(instance: WXSDKInstance, parent: WXVContainer<*>, basicComponentData: BasicComponentData<*>) : WXComponent<TextView>(instance, parent, basicComponentData) {
+open class RichTextComponent(instance: WXSDKInstance, parent: WXVContainer<*>, basicComponentData: BasicComponentData<*>) : BaseComponent<TextView>(instance, parent, basicComponentData) {
 
     override fun initComponentHostView(context: Context): TextView {
-        return TextView(getContext())
+        return TextView(context)
     }
 
     @WXComponentProp(name = "params")
