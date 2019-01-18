@@ -7,6 +7,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.taobao.weex.WXSDKInstance
 import com.taobao.weex.annotation.JSMethod
+import com.taobao.weex.bridge.JSCallback
 import com.taobao.weex.ui.action.BasicComponentData
 import com.taobao.weex.ui.component.WXVContainer
 import com.taobao.weex.utils.WXUtils
@@ -20,12 +21,7 @@ import com.weexbox.core.model.Result
 
 class LottieComponent(instance: WXSDKInstance?, parent: WXVContainer<*>?, basicComponentData: BasicComponentData<*>?) : BaseComponent<LottieAnimationView>(instance, parent, basicComponentData) {
 
-    companion object {
-        const val eventNameEnd = "end"
-    }
-
-    var isSendEnd = false
-    var pauseProgress = 0F
+    var callback: JSCallback? = null
 
     override fun initComponentHostView(context: Context): LottieAnimationView {
         return LottieAnimationView(context)
@@ -40,11 +36,15 @@ class LottieComponent(instance: WXSDKInstance?, parent: WXVContainer<*>?, basicC
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                sendEnd(true)
+                val result = Result()
+                result.data["complete"] = true
+                callback?.invoke(result)
             }
 
             override fun onAnimationCancel(animation: Animator?) {
-                sendEnd(false)
+                val result = Result()
+                result.data["complete"] = false
+                callback?.invoke(result)
             }
 
             override fun onAnimationRepeat(animation: Animator?) {
@@ -62,12 +62,6 @@ class LottieComponent(instance: WXSDKInstance?, parent: WXVContainer<*>?, basicC
             applyProperties(this.attrs)
         } else {
             applyProperties(attrs)
-        }
-    }
-
-    override fun addEvent(type: String?) {
-        when (type) {
-            LottieComponent.eventNameEnd -> isSendEnd = true
         }
     }
 
@@ -104,51 +98,40 @@ class LottieComponent(instance: WXSDKInstance?, parent: WXVContainer<*>?, basicC
         }
     }
 
-    fun sendEnd(complete: Boolean) {
-        if (isSendEnd) {
-            val result = Result()
-            result.data["complete"] = complete
-            fireEvent(LottieComponent.eventNameEnd, result.toJsResult())
-        }
-    }
-
     @JSMethod(uiThread = true)
     fun isAnimationPlaying(): Boolean {
         return hostView.isAnimating
     }
 
     @JSMethod(uiThread = true)
-    fun playFromProgress(fromProgress: Any, toProgress: Any) {
+    fun playFromProgress(fromProgress: Any, toProgress: Any, callback: JSCallback?) {
+        this.callback = callback
         hostView.setMinAndMaxProgress(WXUtils.getFloat(fromProgress), WXUtils.getFloat(toProgress))
         hostView.playAnimation()
     }
 
     @JSMethod(uiThread = true)
-    fun playFromFrame(fromFrame: Any, toFrame: Any) {
+    fun playFromFrame(fromFrame: Any, toFrame: Any, callback: JSCallback?) {
+        this.callback = callback
         hostView.setMinFrame(WXUtils.getInt(fromFrame))
         hostView.setMaxFrame(WXUtils.getInt(toFrame))
         hostView.playAnimation()
     }
 
     @JSMethod(uiThread = true)
-    fun play() {
-        if (!hostView.isAnimating) {
-            hostView.playAnimation()
-            hostView.progress = pauseProgress
-            pauseProgress = 0F
-        }
+    fun play(callback: JSCallback?) {
+        this.callback = callback
+        hostView.resumeAnimation()
     }
 
     @JSMethod(uiThread = true)
     fun pause() {
         hostView.pauseAnimation()
-        pauseProgress = hostView.progress
     }
 
     @JSMethod(uiThread = true)
     fun stop() {
         hostView.cancelAnimation()
         hostView.progress = 0F
-        pauseProgress = 0F
     }
 }
