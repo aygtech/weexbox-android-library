@@ -36,15 +36,11 @@ class LottieComponent(instance: WXSDKInstance?, parent: WXVContainer<*>?, basicC
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                val result = Result()
-                result.data["complete"] = true
-                callback?.invoke(result)
+                complete(true)
             }
 
             override fun onAnimationCancel(animation: Animator?) {
-                val result = Result()
-                result.data["complete"] = false
-                callback?.invoke(result)
+                complete(false)
             }
 
             override fun onAnimationRepeat(animation: Animator?) {
@@ -96,6 +92,12 @@ class LottieComponent(instance: WXSDKInstance?, parent: WXVContainer<*>?, basicC
         if (scaleType != null) {
             hostView.scaleType = scaleType
         }
+    }
+
+    fun complete(complete: Boolean) {
+        val result = Result()
+        result.data["complete"] = complete
+        callback?.invoke(result)
     }
 
     @JSMethod(uiThread = true)
