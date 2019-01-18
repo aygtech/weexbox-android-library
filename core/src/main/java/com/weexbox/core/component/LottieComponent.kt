@@ -25,6 +25,7 @@ class LottieComponent(instance: WXSDKInstance?, parent: WXVContainer<*>?, basicC
     }
 
     var isSendEnd = false
+    var pauseProgress = 0F
 
     override fun initComponentHostView(context: Context): LottieAnimationView {
         return LottieAnimationView(context)
@@ -39,10 +40,11 @@ class LottieComponent(instance: WXSDKInstance?, parent: WXVContainer<*>?, basicC
             }
 
             override fun onAnimationEnd(animation: Animator?) {
+                sendEnd(true)
             }
 
             override fun onAnimationCancel(animation: Animator?) {
-
+                sendEnd(false)
             }
 
             override fun onAnimationRepeat(animation: Animator?) {
@@ -110,36 +112,43 @@ class LottieComponent(instance: WXSDKInstance?, parent: WXVContainer<*>?, basicC
         }
     }
 
-    @JSMethod(uiThread = false)
+    @JSMethod(uiThread = true)
     fun isAnimationPlaying(): Boolean {
         return hostView.isAnimating
     }
 
-    @JSMethod(uiThread = false)
+    @JSMethod(uiThread = true)
     fun playFromProgress(fromProgress: Any, toProgress: Any) {
         hostView.setMinAndMaxProgress(WXUtils.getFloat(fromProgress), WXUtils.getFloat(toProgress))
         hostView.playAnimation()
     }
 
-    @JSMethod(uiThread = false)
+    @JSMethod(uiThread = true)
     fun playFromFrame(fromFrame: Any, toFrame: Any) {
         hostView.setMinFrame(WXUtils.getInt(fromFrame))
         hostView.setMaxFrame(WXUtils.getInt(toFrame))
         hostView.playAnimation()
     }
 
-    @JSMethod(uiThread = false)
+    @JSMethod(uiThread = true)
     fun play() {
-        playFromProgress(0, 1)
+        if (!hostView.isAnimating) {
+            hostView.playAnimation()
+            hostView.progress = pauseProgress
+            pauseProgress = 0F
+        }
     }
 
-    @JSMethod(uiThread = false)
+    @JSMethod(uiThread = true)
     fun pause() {
         hostView.pauseAnimation()
+        pauseProgress = hostView.progress
     }
 
-    @JSMethod(uiThread = false)
+    @JSMethod(uiThread = true)
     fun stop() {
         hostView.cancelAnimation()
+        hostView.progress = 0F
+        pauseProgress = 0F
     }
 }
