@@ -107,23 +107,25 @@ class LottieComponent(instance: WXSDKInstance?, parent: WXVContainer<*>?, basicC
 
     @JSMethod(uiThread = true)
     fun playFromProgress(fromProgress: Any, toProgress: Any, callback: JSCallback?) {
-        this.callback = callback
+        stop()
         hostView.setMinAndMaxProgress(WXUtils.getFloat(fromProgress), WXUtils.getFloat(toProgress))
         hostView.playAnimation()
+        this.callback = callback
     }
 
     @JSMethod(uiThread = true)
     fun playFromFrame(fromFrame: Any, toFrame: Any, callback: JSCallback?) {
-        this.callback = callback
+        stop()
         hostView.setMinFrame(WXUtils.getInt(fromFrame))
         hostView.setMaxFrame(WXUtils.getInt(toFrame))
         hostView.playAnimation()
+        this.callback = callback
     }
 
     @JSMethod(uiThread = true)
     fun play(callback: JSCallback?) {
-        this.callback = callback
         hostView.resumeAnimation()
+        this.callback = callback
     }
 
     @JSMethod(uiThread = true)
