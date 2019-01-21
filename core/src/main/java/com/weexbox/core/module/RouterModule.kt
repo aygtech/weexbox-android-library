@@ -1,6 +1,7 @@
 package com.weexbox.core.module
 
 import com.taobao.weex.annotation.JSMethod
+import com.taobao.weex.utils.WXUtils
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.router.Router
 
@@ -24,8 +25,8 @@ open class RouterModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    open fun close(levels: Int?) {
-        getFragment()!!.router.close(levels)
+    open fun close(levels: Any?) {
+        getFragment()!!.router.close(WXUtils.getInt(levels))
     }
 
     @JSMethod(uiThread = true)

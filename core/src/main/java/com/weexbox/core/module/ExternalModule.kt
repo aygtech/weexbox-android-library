@@ -5,6 +5,7 @@ import android.net.Uri
 import com.alibaba.fastjson.JSONObject
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
+import com.taobao.weex.utils.WXUtils
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
 import com.weexbox.core.model.Result
@@ -63,8 +64,8 @@ open class ExternalModule : BaseModule() {
 
     //打开浏览器
     @JSMethod(uiThread = true)
-    open fun openBrowser(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    open fun openBrowser(url: Any) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(WXUtils.getString(url, null)))
         if (intent.resolveActivity(getActivity().packageManager) != null) {
             getActivity().startActivity(Intent.createChooser(intent, "请选择浏览器"))
         }
@@ -72,8 +73,8 @@ open class ExternalModule : BaseModule() {
 
     //打电话
     @JSMethod(uiThread = true)
-    open fun callPhone(phone: String, callback: JSCallback?) {
-        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone))
+    open fun callPhone(phone: Any, callback: JSCallback?) {
+        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         getActivity().startActivity(intent)
         callback?.invoke(Result())

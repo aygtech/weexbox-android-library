@@ -3,6 +3,7 @@ package com.weexbox.core.module
 import android.text.TextUtils
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
+import com.taobao.weex.utils.WXUtils
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
@@ -143,8 +144,12 @@ open class NavigatorModule : BaseModule() {
 
     //导航栏颜色
     @JSMethod(uiThread = true)
-    open fun setNavColor(color: String) {
-        getActionbar().setAcitionbarAndStatusbarBackground("#" + color)
+    open fun setNavColor(color: Any) {
+        var hex = WXUtils.getString(color, null)
+        if (!hex.startsWith("#")) {
+            hex = "#$hex"
+        }
+        getActionbar().setAcitionbarAndStatusbarBackground(hex)
     }
 
     //物理返回键

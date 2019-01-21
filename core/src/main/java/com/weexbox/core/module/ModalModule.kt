@@ -5,6 +5,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
+import com.taobao.weex.utils.WXUtils
 import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
@@ -92,8 +93,8 @@ open class ModalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    open fun showLoading(text: String) {
-        getActivity().loadDialogHelper.showLoadWithText(getActivity(), text)
+    open fun showLoading(text: Any) {
+        getActivity().loadDialogHelper.showLoadWithText(getActivity(), WXUtils.getString(text, null))
     }
 
     @JSMethod(uiThread = true)
