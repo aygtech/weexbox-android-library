@@ -75,7 +75,7 @@ object WeexBoxEngine {
     }
 
     private fun registerComponent() {
-        WXSDKEngine.registerComponent("wb-richtext", RichTextComponent::class.java)
+//        WXSDKEngine.registerComponent("wb-richtext", RichTextComponent::class.java)
         WXSDKEngine.registerComponent("wb-lottie", LottieComponent::class.java)
     }
 }
