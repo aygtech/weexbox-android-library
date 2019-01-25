@@ -10,6 +10,7 @@ import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.adapter.ImageAdapter
 import com.weexbox.core.component.LottieComponent
 import com.weexbox.core.component.RichTextComponent
+import com.weexbox.core.component.richtext.WXRichText
 import com.weexbox.core.controller.WBWebViewActivity
 import com.weexbox.core.controller.WBWeexActivity
 import com.weexbox.core.module.*
@@ -76,6 +77,7 @@ object WeexBoxEngine {
 
     private fun registerComponent() {
 //        WXSDKEngine.registerComponent("wb-richtext", RichTextComponent::class.java)
+        WXSDKEngine.registerComponent("richtext", WXRichText::class.java)
         WXSDKEngine.registerComponent("wb-lottie", LottieComponent::class.java)
     }
 }
