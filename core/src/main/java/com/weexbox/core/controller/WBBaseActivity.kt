@@ -112,9 +112,9 @@ open class WBBaseActivity : AppCompatActivity() {
         toolbar.setTitleText(router.title)
 
         statusbar_layout = layoutInflater.inflate(R.layout.activity_statusbar_layout, container, false)
-        val layoutParams = statusbar_layout.getLayoutParams()
+        val layoutParams = statusbar_layout.layoutParams
         layoutParams.height = DeviceUtil.getStatusBarHeight(this)
-        statusbar_layout.setLayoutParams(layoutParams)
+        statusbar_layout.layoutParams = layoutParams
         container.addView(statusbar_layout, 2)
 
         if (WeexBoxEngine.isDebug) {
