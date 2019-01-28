@@ -74,7 +74,7 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
     }
 
     private SimpleTarget getTarget(final String url, final ImageView view, final WXImageStrategy strategy) {
-        SimpleTarget target = new SimpleTarget<Drawable>(view.getLayoutParams().width, view.getLayoutParams().height) {
+        SimpleTarget target = new SimpleTarget<Drawable>() {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                 if (strategy.getImageListener() != null) {
