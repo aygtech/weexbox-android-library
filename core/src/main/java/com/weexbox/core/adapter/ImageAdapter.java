@@ -77,10 +77,10 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
         SimpleTarget target = new SimpleTarget<Drawable>() {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                view.setImageDrawable(resource);
                 if (strategy.getImageListener() != null) {
                     strategy.getImageListener().onImageFinish(url, view, true, null);
                 }
-                view.setImageDrawable(resource);
             }
 
             @Override
