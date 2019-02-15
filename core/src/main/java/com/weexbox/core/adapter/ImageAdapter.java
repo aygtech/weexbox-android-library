@@ -5,8 +5,10 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.taobao.weex.WXSDKManager;
@@ -45,11 +47,26 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                 }
                 if (url.startsWith("http")) {
                     // 网络加载
-                    if (strategy.getImageListener() == null) {
-                        BitmapUtil.displayImage(view, url, null);
-                    } else {
-                        BitmapUtil.displayImage(getTarget(url, view, strategy), url, null);
-                    }
+                    Glide.with(view).load(url).into(new SimpleTarget<Drawable>() {
+                        @Override
+                        public void onResourceReady(Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                            if (resource.getIntrinsicWidth() >= 4096 || resource.getIntrinsicHeight() >= 4096) {
+                                view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                            }
+                            view.setImageDrawable(resource);
+                            if (strategy.getImageListener() != null) {
+                                strategy.getImageListener().onImageFinish(url, view, true, null);
+                            }
+                        }
+
+                        @Override
+                        public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                            super.onLoadFailed(errorDrawable);
+                            if (strategy.getImageListener() != null) {
+                                strategy.getImageListener().onImageFinish(url, view, false, null);
+                            }
+                        }
+                    });
                 } else if (url.startsWith("bundle://")) {
                     // 本地bundle加载
                     Uri uri = Uri.parse(url);
