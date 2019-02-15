@@ -31,6 +31,7 @@ dependencies {
 
     // weexSDk依赖
     api 'com.taobao.android:weex_sdk:0.20.0.2'
+    api 'com.alibaba:fastjson:1.1.70.android'
 
     //weex debugger
     api 'com.squareup.okhttp:okhttp-ws:2.3.0'
