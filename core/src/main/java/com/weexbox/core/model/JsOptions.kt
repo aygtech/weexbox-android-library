@@ -27,6 +27,7 @@ open class JsOptions {
     var isSecure: Boolean? = null
     var actions: Array<ActionSheet>? = null
     var duration: Double? = null
+    var millisecond: Int? = null
 
     class ActionSheet {
         var title: String? = null
