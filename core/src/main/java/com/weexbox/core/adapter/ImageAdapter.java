@@ -1,6 +1,7 @@
 package com.weexbox.core.adapter;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -17,6 +18,8 @@ import com.taobao.weex.dom.WXImageQuality;
 import com.weexbox.core.util.BitmapUtil;
 
 import java.io.File;
+import java.net.URI;
+import java.util.List;
 
 public class ImageAdapter implements IWXImgLoaderAdapter {
 
@@ -42,7 +45,6 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                 if (!TextUtils.isEmpty(strategy.placeHolder)) {
                     BitmapUtil.displayImage(view, strategy.placeHolder);
                 }
-
                 if (url.startsWith("http")) {
                     // 网络加载
                     Glide.with(view).load(url).into(new SimpleTarget<Drawable>() {
@@ -67,7 +69,9 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                     });
                 } else if (url.startsWith("bundle://")) {
                     // 本地bundle加载
-                    String path = url.substring(9);
+                    Uri uri = Uri.parse(url);
+                    List<String> pathSegList = uri.getPathSegments();
+                    String path = pathSegList.get(pathSegList.size() - 1);
                     int id = BitmapUtil.sContext.getResources().getIdentifier(path, "drawable", BitmapUtil.sContext.getPackageName());
                     if (strategy.getImageListener() == null) {
                         BitmapUtil.displayImage(view, id, null);
