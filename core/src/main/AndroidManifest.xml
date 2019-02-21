@@ -21,6 +21,7 @@
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden"
+            android:networkSecurityConfig="@xml/network_security_config"
             tools:replace="android:screenOrientation" />
 
         <activity android:name=".controller.WBBaseActivity" />
