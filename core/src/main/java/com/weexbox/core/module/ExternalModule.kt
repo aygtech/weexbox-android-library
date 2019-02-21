@@ -1,7 +1,9 @@
 package com.weexbox.core.module
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Vibrator
 import com.alibaba.fastjson.JSONObject
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
@@ -78,5 +80,15 @@ open class ExternalModule : BaseModule() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         getActivity().startActivity(intent)
         callback?.invoke(Result())
+    }
+
+    //振动
+    @JSMethod(uiThread = true)
+    open fun vibration(options: Map<String, Any>){
+        val info = options.toObject(JsOptions::class.java)
+        if (info.millisecond != null && info.millisecond!! >= 0){
+            val vibrator = getActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            vibrator.vibrate(info.millisecond!!.toLong())
+        }
     }
 }
