@@ -8,6 +8,7 @@ import com.taobao.weex.InitConfig
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
 import com.weexbox.core.adapter.ImageAdapter
+import com.weexbox.core.adapter.WebSocketAdapterFactory
 import com.weexbox.core.component.LottieComponent
 import com.weexbox.core.component.RichTextComponent
 import com.weexbox.core.component.richtext.WXRichText
@@ -53,7 +54,7 @@ object WeexBoxEngine {
 
     private fun initWeex(config: InitConfig?) {
         WXSDKEngine.initialize(application, config
-                ?: InitConfig.Builder().setImgAdapter(ImageAdapter()).build())
+                ?: InitConfig.Builder().setImgAdapter(ImageAdapter()).setWebSocketAdapterFactory(WebSocketAdapterFactory()).build())
         BindingX.register()
         registerModule()
         registerRouter()
