@@ -63,6 +63,7 @@ open class WBWebViewActivity : WBBaseActivity() {
         // in the real world, the init flow may cost a long time as startup
         // runtime、init configs....
         setContentView(R.layout.activity_web_view)
+        getActionbar().setStatusbarLayoutGone()
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
