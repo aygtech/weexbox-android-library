@@ -1,5 +1,9 @@
 package com.weexbox.core.adapter;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -18,6 +22,8 @@ import com.taobao.weex.dom.WXImageQuality;
 import com.weexbox.core.util.BitmapUtil;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 
@@ -69,14 +75,23 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                     });
                 } else if (url.startsWith("bundle://")) {
                     // 本地bundle加载
-                    Uri uri = Uri.parse(url);
-                    List<String> pathSegList = uri.getPathSegments();
-                    String path = pathSegList.get(pathSegList.size() - 1);
-                    int id = BitmapUtil.sContext.getResources().getIdentifier(path, "drawable", BitmapUtil.sContext.getPackageName());
-                    if (strategy.getImageListener() == null) {
-                        BitmapUtil.displayImage(view, id, null);
+                    if (url.contains("/static/")){
+                        Uri uri = Uri.parse(url);
+                        String path = uri.getAuthority() + uri.getPath();
+                        AssetManager am = view.getContext().getResources().getAssets();
+                        try {
+                            InputStream is = am.open(path);
+                            Bitmap bitmap = BitmapFactory.decodeStream(is);
+                            Glide.with(view).load(bitmap).into(getTarget(url, view, strategy));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     } else {
-                        BitmapUtil.displayImage(getTarget(url, view, strategy), id, null);
+                        Uri uri = Uri.parse(url);
+                        List<String> pathSegList = uri.getPathSegments();
+                        String path = pathSegList.get(pathSegList.size() - 1);
+                        int id = BitmapUtil.sContext.getResources().getIdentifier(path, "drawable", BitmapUtil.sContext.getPackageName());
+                        view.setImageResource(id);
                     }
                 } else {
                     // 本地加载
