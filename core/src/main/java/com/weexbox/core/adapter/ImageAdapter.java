@@ -82,6 +82,7 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                         if (path.startsWith("/")){
                             path = path.substring(1);
                         }
+                        path = "weexbox-update/" + path;
                         try {
                             InputStream is = am.open(path);
                             Bitmap bitmap = BitmapFactory.decodeStream(is);
