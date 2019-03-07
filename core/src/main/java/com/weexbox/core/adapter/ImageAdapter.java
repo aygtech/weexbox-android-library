@@ -79,6 +79,9 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                         Uri uri = Uri.parse(url);
                         String path = uri.getAuthority() + uri.getPath();
                         AssetManager am = view.getContext().getResources().getAssets();
+                        if (path.startsWith("/")){
+                            path = path.substring(1);
+                        }
                         try {
                             InputStream is = am.open(path);
                             Bitmap bitmap = BitmapFactory.decodeStream(is);
