@@ -102,19 +102,20 @@ class Router : Serializable {
         }
     }
 
-    fun close(levels: Int? = null) {
+    fun close(levels: Int? = null, activity: WBBaseActivity) {
         var count = 0
         if (levels != null) {
             count = levels
         }
 
         val activities = ActivityManager.getInstance().allActivities
+        val index = activities.search(activity)
 
         if (activities.size <= count) {
             count = activities.size - 1
         }
 
-        for (i in 0 until count) {
+        for (i in index - 1 until count) {
             val activity = activities[(activities.size - i - 1)]
             activity.finish()
         }
