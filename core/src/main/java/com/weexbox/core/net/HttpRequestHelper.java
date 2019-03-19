@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Created by freeson on 16/9/9.
  */
-public final class HttpRequestHelper implements IFrameHttpRequest, HttpCallback.IFinishListener {
+public class HttpRequestHelper implements IFrameHttpRequest, HttpCallback.IFinishListener {
 
     private HashMap<String, Boolean> mIsRequesting = new HashMap<>();
     private HttpCallback.IFinishListener mFinishListener;
