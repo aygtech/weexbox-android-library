@@ -42,13 +42,13 @@ public class PageAdapter extends PagerAdapter {
                 .load(url)
                 .into(photoView);
         container.addView(photoView);
-        photoView.setOnPhotoTapListener(new OnPhotoTapListener() {
-            @Override
-            public void onPhotoTap(ImageView view, float v, float v1) {
-                context.finish();
-                context.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
+//        photoView.setOnPhotoTapListener(new OnPhotoTapListener() {
+//            @Override
+//            public void onPhotoTap(ImageView view, float v, float v1) {
+//                context.finish();
+//                context.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//            }
+//        });
         return photoView;
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,9 @@ public class PhotoActivity extends WBBaseActivity {
     ArrayList<String> imagesUrl;
     int current;
     PageAdapter pagerAdapter;
+    public static OnItemClickListener onItemClickListener;
+    public static View rightView;
+
 
     public void initData() {
         if (getIntent() != null) {
@@ -78,20 +82,49 @@ public class PhotoActivity extends WBBaseActivity {
         page = findViewById(R.id.page);
         top = findViewById(R.id.top);
         viewPager = findViewById(R.id.viewPager);
-//        back = findViewById(R.id.back);
+        back = findViewById(R.id.back);
         save = findViewById(R.id.save);
+        LinearLayout right_view = findViewById(R.id.right_view);
+        if(rightView!=null){
+            save.setVisibility(View.GONE);
+            right_view.addView(rightView);
+            rightView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.rightBtnClick(v);
+                    } else {
+                        saveImage();
+                    }
+                }
+            });
+        }
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveImage();
+                if (onItemClickListener != null) {
+                    onItemClickListener.rightBtnClick(v);
+                } else {
+                    saveImage();
+                }
             }
         });
-//        back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.leftBtnClick(v);
+                }
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
         initData();
+    }
+
+    public interface OnItemClickListener {
+        void leftBtnClick(View v);
+
+        void rightBtnClick(View v);
     }
 }

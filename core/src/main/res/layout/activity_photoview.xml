@@ -12,14 +12,14 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <!--<ImageView-->
-        <!--android:id="@+id/back"-->
-        <!--android:layout_width="15dp"-->
-        <!--android:layout_height="15dp"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:onClick="back"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:src="@drawable/top_path_icon1" />-->
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:onClick="back"
+            android:scaleType="centerCrop"
+            android:src="@drawable/close_page_icon" />
 
         <TextView
             android:id="@+id/page"
@@ -37,11 +37,21 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:clickable="true"
+            android:focusable="true"
             android:paddingRight="16dp"
             android:text="保存"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:focusable="true" />
+            android:textSize="16sp" />
+        <LinearLayout
+            android:id="@+id/right_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:paddingRight="16dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
     </RelativeLayout>
 
     <com.weexbox.core.adapter.PhotoViewPager
