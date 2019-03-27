@@ -155,7 +155,7 @@ public final class HttpUtil {
             getBuilder.params(new HttpParams().getUrlParams());
         }
         if (header != null) {
-            getBuilder.headers(params.getUrlParams());
+            getBuilder.headers(header);
         }
         requestAction(getBuilder, tag, callback);
     }
@@ -171,7 +171,7 @@ public final class HttpUtil {
             formBuilder.params(new HttpParams().getUrlParams());
         }
         if (header != null) {
-            formBuilder.headers(params.getUrlParams());
+            formBuilder.headers(header);
         }
         requestAction(formBuilder, tag, callback);
     }
