@@ -129,15 +129,15 @@ open class WBBaseActivity : AppCompatActivity() {
         initFloating()
     }
 
-    fun showStatusbarLayoutBackground() {
+    open fun showStatusbarLayoutBackground() {
         statusbar_layout.setVisibility(View.VISIBLE)
     }
 
-    fun hideStatusbarLayoutBackground() {
+    open fun hideStatusbarLayoutBackground() {
         statusbar_layout.setVisibility(View.GONE)
     }
 
-    fun getActionbar(): SimpleToolbar {
+    open fun getActionbar(): SimpleToolbar {
         return toolbar
     }
 
