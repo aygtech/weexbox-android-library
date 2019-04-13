@@ -39,9 +39,11 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
     }
 
     fun refreshWeex() {
-        if (WeexBoxEngine.isDebug && Date().time - refreshTime < 1000) {
+        val currentTime = Date().time
+        if (WeexBoxEngine.isDebug && currentTime - refreshTime < 1000) {
             return
         }
+        refreshTime = currentTime
         createWeexInstance()
         render()
     }
