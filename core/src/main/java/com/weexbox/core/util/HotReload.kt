@@ -28,6 +28,10 @@ object HotReload {
                 ToastUtil.showLongToast(WeexBoxEngine.application, "已连接：$ws")
             }
 
+            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                ToastUtil.showLongToast(WeexBoxEngine.application, "连接失败：${t.localizedMessage}")
+            }
+
             override fun onMessage(webSocket: WebSocket, text: String) {
                 val option = text.toJsonMap()
                 val method = option["method"] as String
