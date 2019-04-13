@@ -76,23 +76,26 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
         if (WeexBoxEngine.isDebug) {
             hotReloadManager = HotReloadManager(object : HotReloadManager.ActionListener {
                 override fun reload() {
-                    refreshWeex()
+                    activity?.runOnUiThread {
+                        refreshWeex()
+                    }
                 }
 
                 override fun render(bundleUrl: String) {
-                    if (url != null && isVisibleToUser) {
-                        var name = url!!
-                        if (url!!.startsWith("http")) {
-                            val before = url!!.substringBeforeLast("/")
-                            val after = url!!.substringAfterLast("/")
-                            name = before.substringAfterLast("/").appendingPathComponent(after)
-                        }
-                        if (bundleUrl.endsWith(name)) {
-                            url = bundleUrl
-                            refreshWeex()
+                    activity?.runOnUiThread {
+                        if (url != null && isVisibleToUser) {
+                            var name = url!!
+                            if (url!!.startsWith("http")) {
+                                val before = url!!.substringBeforeLast("/")
+                                val after = url!!.substringAfterLast("/")
+                                name = before.substringAfterLast("/").appendingPathComponent(after)
+                            }
+                            if (bundleUrl.endsWith(name)) {
+                                url = bundleUrl
+                                refreshWeex()
+                            }
                         }
                     }
-
                 }
             })
         }
