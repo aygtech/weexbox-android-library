@@ -27,7 +27,7 @@ object HotReload {
             }
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                Logger.d("连接失败：${t.localizedMessage}")
+                Logger.e("连接失败：${t.localizedMessage}")
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
