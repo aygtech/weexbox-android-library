@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import com.litesuits.common.io.FileUtils
 import com.orhanobut.logger.Logger
 import com.taobao.weex.IWXRenderListener
-import com.taobao.weex.RenderContainer
 import com.taobao.weex.WXSDKInstance
 import com.taobao.weex.common.WXRenderStrategy
 import com.weexbox.core.R
@@ -19,7 +18,6 @@ import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.appendingPathComponent
 import com.weexbox.core.update.UpdateManager
-import com.weexbox.core.util.HotReloadManager
 import java.io.IOException
 
 /**
@@ -33,23 +31,17 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
     private var broadcastReceiver: BroadcastReceiver? = null
     private var isFirstSendDidAppear = true
     private var url: String? = null
-    private var hotReloadManager: HotReloadManager? = null
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_weex
     }
 
     fun refreshWeex() {
+        createWeexInstance()
         render()
     }
 
     private fun render() {
-        instance?.destroy()
-        val renderContainer = RenderContainer(activity)
-        instance = WXSDKInstance(activity)
-        instance?.setRenderContainer(renderContainer)
-        instance?.registerRenderListener(this)
-        instance?.isTrackComponent = false
         if (url != null) {
             if (url!!.startsWith("http")) {
                 // 下载
@@ -68,37 +60,24 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
         }
     }
 
+    private fun createWeexInstance() {
+        destoryWeexInstance()
+        instance = WXSDKInstance(activity)
+        instance?.registerRenderListener(this)
+    }
+
+    private fun destoryWeexInstance() {
+        instance?.registerRenderListener(null)
+        instance?.destroy()
+        instance = null
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         url = router.url
-
-        if (WeexBoxEngine.isDebug) {
-            hotReloadManager = HotReloadManager(object : HotReloadManager.ActionListener {
-                override fun reload() {
-                    activity?.runOnUiThread {
-                        refreshWeex()
-                    }
-                }
-
-                override fun render(bundleUrl: String) {
-                    activity?.runOnUiThread {
-                        if (url != null && isVisibleToUser) {
-                            var name = url!!
-                            if (url!!.startsWith("http")) {
-                                val before = url!!.substringBeforeLast("/")
-                                val after = url!!.substringAfterLast("/")
-                                name = before.substringAfterLast("/").appendingPathComponent(after)
-                            }
-                            if (bundleUrl.endsWith(name)) {
-                                url = bundleUrl
-                                refreshWeex()
-                            }
-                        }
-                    }
-                }
-            })
-        }
+        createWeexInstance()
+        instance?.onActivityCreate()
 
         render()
     }
@@ -106,7 +85,7 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
     override fun onDestroy() {
         super.onDestroy()
 
-        hotReloadManager?.destroy()
+        instance?.onActivityDestroy()
         instance?.destroy()
     }
 
@@ -126,6 +105,7 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
         }
     }
 
+    // IWXRenderListener
     override fun onException(instance: WXSDKInstance?, errCode: String?, msg: String?) {
         if (WeexBoxEngine.isDebug) {
             val errMsg = "errorCode:$errCode\n message:$msg"
@@ -142,13 +122,12 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
     }
 
     override fun onViewCreated(instance: WXSDKInstance?, view: View?) {
-        if (view!!.parent == null) {
-            (rootView as ViewGroup).addView(view)
-        }
-        rootView.requestLayout()
+        val container = rootView as? ViewGroup
+        container?.removeAllViews()
+        container?.addView(view)
     }
 
-    //调试广播
+    // 调试广播
     inner class RefreshBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             refreshWeex()
@@ -161,6 +140,22 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
         filter.addAction(WXSDKInstance.ACTION_DEBUG_INSTANCE_REFRESH)
         filter.addAction(WXSDKInstance.ACTION_INSTANCE_RELOAD)
         activity!!.registerReceiver(broadcastReceiver, filter)
+
+        Event.register(this, "WXReloadBundle") {
+            if (url != null) {
+                var name = url!!
+                if (url!!.startsWith("http")) {
+                    val before = url!!.substringBeforeLast("/")
+                    val after = url!!.substringAfterLast("/")
+                    name = before.substringAfterLast("/").appendingPathComponent(after)
+                }
+                val params = it!!["params"] as String
+                if (params.endsWith(name)) {
+                    url = params
+                    refreshWeex()
+                }
+            }
+        }
     }
 
     private fun unregisterWeexDebugBroadcast() {
@@ -168,6 +163,8 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
             activity!!.unregisterReceiver(broadcastReceiver)
             broadcastReceiver = null
         }
+
+        Event.unregister(this, "WXReloadBundle")
     }
 
     private fun sendViewDidAppear() {
@@ -192,6 +189,30 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
         super.onBackPressed()
 
         Event.emit(backName, null)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        instance?.onActivityStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        instance?.onActivityResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        instance?.onActivityPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        instance?.onActivityStop()
     }
 
 }
