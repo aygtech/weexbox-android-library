@@ -1,5 +1,6 @@
 package com.weexbox.core.util
 
+import com.orhanobut.logger.Logger
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.toJsonMap
 import okhttp3.*

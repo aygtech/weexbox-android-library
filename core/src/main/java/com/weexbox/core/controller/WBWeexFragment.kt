@@ -19,6 +19,7 @@ import com.weexbox.core.event.Event
 import com.weexbox.core.extension.appendingPathComponent
 import com.weexbox.core.update.UpdateManager
 import java.io.IOException
+import java.util.*
 
 /**
  * Author: Mario
@@ -31,12 +32,16 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
     private var broadcastReceiver: BroadcastReceiver? = null
     private var isFirstSendDidAppear = true
     private var url: String? = null
+    private var refreshTime = Date().time
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_weex
     }
 
     fun refreshWeex() {
+        if (WeexBoxEngine.isDebug && Date().time - refreshTime < 1000) {
+            return
+        }
         createWeexInstance()
         render()
     }
