@@ -1,6 +1,7 @@
 package com.weexbox.core.util
 
 import com.orhanobut.logger.Logger
+import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.toJsonMap
 import okhttp3.*
@@ -24,6 +25,7 @@ object HotReload {
 
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 isStart = true
+                ToastUtil.showLongToast(WeexBoxEngine.application, "已连接：$ws")
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
