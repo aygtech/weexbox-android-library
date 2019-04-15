@@ -3,6 +3,9 @@ package com.weexbox.core.util
 import com.orhanobut.logger.Logger
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.toJsonMap
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import okhttp3.*
 
 
@@ -14,29 +17,44 @@ import okhttp3.*
 
 object HotReload {
 
-    var isStart: Boolean = false
+    private val hotReloadSocket = OkHttpClient()
+    private lateinit var request: Request
+    private var isReconnect = false
+    private val listener = object : WebSocketListener() {
+
+        override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+            Logger.d("连接关闭：$reason")
+            reconnect()
+        }
+
+        override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+            Logger.e("连接失败：${t.localizedMessage}")
+            reconnect()
+        }
+
+        override fun onMessage(webSocket: WebSocket, text: String) {
+            val option = text.toJsonMap()
+            val method = option["method"] as String
+            if (method == "WXReloadBundle") {
+                Event.emit(method, option)
+            }
+        }
+    }
 
     fun start(ws: String) {
-        val client = OkHttpClient()
-        val request = Request.Builder().url(ws).build()
-        client.newWebSocket(request, object : WebSocketListener() {
+        request = Request.Builder().url(ws).build()
+        hotReloadSocket.newWebSocket(request, listener)
+    }
 
-            override fun onOpen(webSocket: WebSocket, response: Response) {
-                isStart = true
-                Logger.d("已连接：$ws")
-            }
-
-            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                Logger.e("连接失败：${t.localizedMessage}")
-            }
-
-            override fun onMessage(webSocket: WebSocket, text: String) {
-                val option = text.toJsonMap()
-                val method = option["method"] as String
-                if (method == "WXReloadBundle") {
-                    Event.emit(method, option)
-                }
-            }
-        })
+    fun reconnect() {
+        if (isReconnect) {
+            return
+        }
+        isReconnect = true
+        GlobalScope.launch {
+            delay(2000)
+            hotReloadSocket.newWebSocket(request, listener)
+            isReconnect = false
+        }
     }
 }
