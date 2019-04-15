@@ -53,8 +53,8 @@ object HotReload {
         isReconnect = true
         GlobalScope.launch {
             delay(2000)
-            hotReloadSocket.newWebSocket(request, listener)
             isReconnect = false
+            hotReloadSocket.newWebSocket(request, listener)
         }
     }
 }
