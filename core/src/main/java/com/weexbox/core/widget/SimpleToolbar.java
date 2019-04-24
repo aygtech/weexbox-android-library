@@ -64,6 +64,10 @@ public class SimpleToolbar extends LinearLayout {
         statusbar_layout.setLayoutParams(layoutParams);
     }
 
+    public TextView getTitleView(){
+        return mTitle;
+    }
+
     public void setStatusbarLayoutGone() {
         statusbar_layout.setVisibility(GONE);
     }
