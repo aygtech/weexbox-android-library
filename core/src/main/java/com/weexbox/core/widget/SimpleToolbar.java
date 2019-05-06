@@ -27,7 +27,7 @@ public class SimpleToolbar extends LinearLayout {
     private TextView mNextBtn2;
     private TextView mNextBtn;
     private TextView mTitle;
-    private LinearLayout action_bar_center_layout,sample_title_layout;
+    private LinearLayout action_bar_center_layout, sample_title_layout;
     private RelativeLayout actionbar_layout;
     private View statusbar_layout, bottom_line;
     private ImageView sample_title_icon;
@@ -73,43 +73,63 @@ public class SimpleToolbar extends LinearLayout {
     }
 
     public void setBottomLineVisibility(int visibility) {
-        if (bottom_line != null){
+        if (bottom_line != null) {
             bottom_line.setVisibility(visibility);
         }
     }
 
     public void setSampleTitleLayoutVisibility(int visibility) {
-        if (sample_title_layout != null){
+        if (sample_title_layout != null) {
             sample_title_layout.setVisibility(visibility);
         }
     }
 
+    public void setBottomLineHeight(int height) {
+        if (bottom_line != null) {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) bottom_line.getLayoutParams();
+            layoutParams.height = height;
+            bottom_line.setLayoutParams(layoutParams);
+        }
+    }
+
+    public void setBottomLineColor(int color) {
+        if (bottom_line != null) {
+            bottom_line.setBackgroundColor(color);
+        }
+    }
+
+    public void setBottomLineBackground(int resId) {
+        if (bottom_line != null) {
+            bottom_line.setBackgroundResource(resId);
+        }
+    }
+
     public void setSampleTitleLayout(int drawableId, String text, OnClickListener listener) {
-        if (sample_title_icon != null){
+        if (sample_title_icon != null) {
             sample_title_icon.setImageResource(drawableId);
         }
-        if (sample_title_title != null){
+        if (sample_title_title != null) {
             sample_title_title.setText(text);
         }
-        if (sample_title_layout != null){
+        if (sample_title_layout != null) {
             sample_title_layout.setOnClickListener(listener);
         }
     }
 
     public void setSampleTitleLayout(int drawableId, String text) {
-        if (sample_title_icon != null){
+        if (sample_title_icon != null) {
             sample_title_icon.setImageResource(drawableId);
         }
-        if (sample_title_title != null){
+        if (sample_title_title != null) {
             sample_title_title.setText(text);
         }
     }
 
-    public void showStatusbarLayoutBackground(){
+    public void showStatusbarLayoutBackground() {
         statusbar_layout.setBackgroundResource(R.color.color_black_50);
     }
 
-    public void hideStatusbarLayoutBackground(){
+    public void hideStatusbarLayoutBackground() {
         statusbar_layout.setBackgroundResource(R.color.transparent);
     }
 

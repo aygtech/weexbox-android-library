@@ -144,8 +144,8 @@
     <View
         android:id="@+id/bottom_line"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/actionbar_bottom_line"
+        android:layout_height="1dp"
+        android:background="#10000000"
         android:visibility="visible"
         tools:visibility="visible" />
 
