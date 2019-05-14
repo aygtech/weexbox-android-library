@@ -39,7 +39,7 @@ open class WBBaseActivity : AppCompatActivity() {
     //导航栏
     lateinit var toolbar: SimpleToolbar
     //没有导航栏时候的状态栏阴影
-    lateinit var statusbar_layout: View
+    var statusbar_layout: View? = null
     //hud
     var loadDialogHelper: LoadDialogHelper = LoadDialogHelper(this)
 
@@ -112,10 +112,12 @@ open class WBBaseActivity : AppCompatActivity() {
         toolbar.setTitleText(router.title)
 
         statusbar_layout = layoutInflater.inflate(R.layout.activity_statusbar_layout, container, false)
-        val layoutParams = statusbar_layout.layoutParams
-        layoutParams.height = DeviceUtil.getStatusBarHeight(this)
-        statusbar_layout.layoutParams = layoutParams
-        container.addView(statusbar_layout, 2)
+        if (statusbar_layout != null){
+            val layoutParams = statusbar_layout!!.layoutParams
+            layoutParams.height = DeviceUtil.getStatusBarHeight(this)
+            statusbar_layout!!.layoutParams = layoutParams
+            container.addView(statusbar_layout, 2)
+        }
 
         if (WeexBoxEngine.isDebug) {
             val btnView = layoutInflater.inflate(R.layout.layout_floating_button, container, false)
@@ -130,11 +132,11 @@ open class WBBaseActivity : AppCompatActivity() {
     }
 
     open fun showStatusbarLayoutBackground() {
-        statusbar_layout.setVisibility(View.VISIBLE)
+        statusbar_layout?.setVisibility(View.VISIBLE)
     }
 
     open fun hideStatusbarLayoutBackground() {
-        statusbar_layout.setVisibility(View.GONE)
+        statusbar_layout?.setVisibility(View.GONE)
     }
 
     open fun getActionbar(): SimpleToolbar {
