@@ -2,15 +2,23 @@ package com.weexbox.core.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.request.target.Target;
 import com.weexbox.core.adapter.GlideApp;
 import com.weexbox.core.adapter.GlideRequest;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * Created by freeson on 16/8/1.
@@ -408,27 +416,35 @@ public class BitmapUtil {
     private static void display(final Context context, final Target target, final String url, File file, final int defaultLoadId, final int
             defaultErrorId,
                                 final int displayType, final Transformation transformation) {
-        GlideRequest request = configDisplay(context, url, file, 0, displayType, transformation);
-        if (defaultLoadId != NON_EXISTENT_ID) {
-            request = request.placeholder(defaultLoadId);
+        if (url.startsWith("bundle://")) {
+            setImage(context,url,target);
+        }else {
+            GlideRequest request = configDisplay(context, url, file, 0, displayType, transformation);
+            if (defaultLoadId != NON_EXISTENT_ID) {
+                request = request.placeholder(defaultLoadId);
+            }
+            if (defaultErrorId != NON_EXISTENT_ID) {
+                request = request.error(defaultErrorId);
+            }
+            request.into(target);
         }
-        if (defaultErrorId != NON_EXISTENT_ID) {
-            request = request.error(defaultErrorId);
-        }
-        request.into(target);
     }
 
     private static void display(final Context context, final ImageView target, final String url, File file, final int defaultLoadId, final int
             defaultErrorId,
                                 final int displayType, final Transformation transformation) {
-        GlideRequest request = configDisplay(context, url, file, 0, displayType, transformation);
-        if (defaultLoadId != NON_EXISTENT_ID) {
-            request = request.placeholder(defaultLoadId);
+        if (url.startsWith("bundle://")) {
+            setImage(url,target);
+        }else {
+            GlideRequest request = configDisplay(context, url, file, 0, displayType, transformation);
+            if (defaultLoadId != NON_EXISTENT_ID) {
+                request = request.placeholder(defaultLoadId);
+            }
+            if (defaultErrorId != NON_EXISTENT_ID) {
+                request = request.error(defaultErrorId);
+            }
+            request.into(target);
         }
-        if (defaultErrorId != NON_EXISTENT_ID) {
-            request = request.error(defaultErrorId);
-        }
-        request.into(target);
     }
 
     private static void display(final Context context, final ImageView target, final int id, final int defaultLoadId, final int
@@ -532,4 +548,57 @@ public class BitmapUtil {
             return GlideApp.with((Context) context).load(id);
         }
     }
+
+    private static void setImage(final Context context,String url,final Target target){
+        // 本地bundle加载
+        if (url.contains("/static/")){
+            Uri uri = Uri.parse(url);
+            String path = uri.getAuthority() + uri.getPath();
+            AssetManager am = context.getResources().getAssets();
+            if (path.startsWith("/")){
+                path = path.substring(1);
+            }
+            path = "weexbox-update/" + path;
+            try {
+                InputStream is = am.open(path);
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                Glide.with(context).load(bitmap).into(target);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Uri uri = Uri.parse(url);
+            List<String> pathSegList = uri.getPathSegments();
+            String path = pathSegList.get(pathSegList.size() - 1);
+            int id = BitmapUtil.sContext.getResources().getIdentifier(path, "drawable", BitmapUtil.sContext.getPackageName());
+            Glide.with(context).load(context.getResources().getDrawable(id)).into(target);
+        }
+    }
+
+    private static void setImage(String url,final ImageView target){
+        // 本地bundle加载
+        if (url.contains("/static/")){
+            Uri uri = Uri.parse(url);
+            String path = uri.getAuthority() + uri.getPath();
+            AssetManager am = target.getContext().getResources().getAssets();
+            if (path.startsWith("/")){
+                path = path.substring(1);
+            }
+            path = "weexbox-update/" + path;
+            try {
+                InputStream is = am.open(path);
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                Glide.with(target).load(bitmap).into(target);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Uri uri = Uri.parse(url);
+            List<String> pathSegList = uri.getPathSegments();
+            String path = pathSegList.get(pathSegList.size() - 1);
+            int id = BitmapUtil.sContext.getResources().getIdentifier(path, "drawable", BitmapUtil.sContext.getPackageName());
+            target.setImageResource(id);
+        }
+    }
+
 }
