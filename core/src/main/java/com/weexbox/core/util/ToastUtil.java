@@ -1,6 +1,7 @@
 package com.weexbox.core.util;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.widget.Toast;
 
 /**
@@ -9,18 +10,26 @@ import android.widget.Toast;
 public final class ToastUtil {
 
     public static void showShortToast(final Context context, final String text) {
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     public static void showShortToast(final Context context, final int textId) {
-        Toast.makeText(context, textId, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(context, textId, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     public static void showLongToast(final Context context, final String text) {
-        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     public static void showLongToast(final Context context, final int textId) {
-        Toast.makeText(context, textId, Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(context, textId, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }

@@ -1,6 +1,7 @@
 package com.weexbox.core.module
 
 import android.support.v7.app.AlertDialog
+import android.view.Gravity
 import android.widget.EditText
 import android.widget.Toast
 import com.taobao.weex.annotation.JSMethod
@@ -88,7 +89,9 @@ open class ModalModule : BaseModule() {
             time = Toast.LENGTH_LONG
         }
         if (!info.text.isNullOrEmpty()) {
-            Toast.makeText(WeexBoxEngine.application, info.text, time).show()
+            var toast = Toast.makeText(WeexBoxEngine.application, info.text, time)
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.show()
         }
     }
 
