@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/arrows_left2"
+            android:drawableLeft="@drawable/icon_go_back"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
