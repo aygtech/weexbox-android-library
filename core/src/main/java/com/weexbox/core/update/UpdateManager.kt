@@ -90,9 +90,9 @@ object UpdateManager {
             serverMd5Url = serverWwwUrl.appendingPathComponent(md5Name)
         }
 
-    private val workingRealmConfig = RealmConfiguration.Builder().name("$workingName.realm").build()
+    private val workingRealmConfig = RealmConfiguration.Builder().name("$workingName.realm").deleteRealmIfMigrationNeeded().build()
     private val workingRealm = Realm.getInstance(workingRealmConfig)
-    private var backupRealmConfig = RealmConfiguration.Builder().name("$backupName.realm").build()
+    private var backupRealmConfig = RealmConfiguration.Builder().name("$backupName.realm").deleteRealmIfMigrationNeeded().build()
     private var backupRealm = Realm.getInstance(backupRealmConfig)
 
     private lateinit var resourceConfig: UpdateConfig
