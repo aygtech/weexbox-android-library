@@ -16,6 +16,7 @@ import com.weexbox.core.network.Network
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
+import io.realm.annotations.RealmModule
 import okhttp3.ResponseBody
 import org.zeroturnaround.zip.ZipUtil
 import retrofit2.Call
@@ -90,9 +91,9 @@ object UpdateManager {
             serverMd5Url = serverWwwUrl.appendingPathComponent(md5Name)
         }
 
-    private val workingRealmConfig = RealmConfiguration.Builder().name("$workingName.realm").deleteRealmIfMigrationNeeded().build()
+    private val workingRealmConfig = RealmConfiguration.Builder().name("$workingName.realm").addModule(WbLibraryModule()).build()
     private val workingRealm = Realm.getInstance(workingRealmConfig)
-    private var backupRealmConfig = RealmConfiguration.Builder().name("$backupName.realm").deleteRealmIfMigrationNeeded().build()
+    private var backupRealmConfig = RealmConfiguration.Builder().name("$backupName.realm").addModule(WbLibraryModule()).build()
     private var backupRealm = Realm.getInstance(backupRealmConfig)
 
     private lateinit var resourceConfig: UpdateConfig
@@ -469,4 +470,8 @@ object UpdateManager {
         }
     }
 
+}
+
+@RealmModule(library = true, allClasses = true)
+public class WbLibraryModule {
 }
