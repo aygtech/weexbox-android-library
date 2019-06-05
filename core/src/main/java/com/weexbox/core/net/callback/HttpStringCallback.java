@@ -6,7 +6,7 @@ package com.weexbox.core.net.callback;
 public abstract class HttpStringCallback extends HttpCallback<String> {
 
     @Override
-    protected String parseEntity(String data, int requestId) {
+    public String parseEntity(String data, int requestId) {
         return data;
     }
 }

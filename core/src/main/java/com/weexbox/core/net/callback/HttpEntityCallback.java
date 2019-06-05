@@ -25,7 +25,7 @@ import java.lang.reflect.Type;
 public abstract class HttpEntityCallback<T> extends HttpCallback<T> {
 
     @Override
-    protected T parseEntity(String data, int requestId) {
+    public T parseEntity(String data, int requestId) {
         T object = null;
         Type t = getClass().getGenericSuperclass();
         if (t instanceof ParameterizedType) {

@@ -151,7 +151,7 @@ public abstract class HttpCallback<T> extends Callback<T> {
         return false;
     }
 
-    protected T parseEntity(String data, int requestId) throws Exception {
+    public T parseEntity(String data, int requestId) throws Exception {
         return null;
     }
 
