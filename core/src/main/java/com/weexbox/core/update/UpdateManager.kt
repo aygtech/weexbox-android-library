@@ -12,11 +12,11 @@ import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.Md5Realm
 import com.weexbox.core.model.UpdateConfig
 import com.weexbox.core.model.UpdateMd5
+import com.weexbox.core.model.WbLibraryModule
 import com.weexbox.core.network.Network
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
-import io.realm.annotations.RealmModule
 import okhttp3.ResponseBody
 import org.zeroturnaround.zip.ZipUtil
 import retrofit2.Call
@@ -470,8 +470,4 @@ object UpdateManager {
         }
     }
 
-}
-
-@RealmModule(library = true, allClasses = true)
-public class WbLibraryModule {
 }
