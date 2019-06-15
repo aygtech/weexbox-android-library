@@ -7,6 +7,6 @@ import io.realm.annotations.RealmModule;
  * Time:2019/6/15   11:08
  * Description:This is WbLibraryModule
  */
-@RealmModule(library = true, classes = {UpdateMd5.class})
+@RealmModule(library = true, classes = {Md5Realm.class})
 public class WbLibraryModule {
 }
