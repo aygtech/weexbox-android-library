@@ -78,6 +78,7 @@ open class ModalModule : BaseModule() {
             completionCallback.invoke(result)
         }
         builder.setTitle(info.title)
+        builder.setMessage(info.message)
         builder.create().show()
     }
 
