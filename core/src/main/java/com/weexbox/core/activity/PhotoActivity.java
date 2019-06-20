@@ -15,6 +15,7 @@ import com.weexbox.core.adapter.PhotoViewPager;
 import com.weexbox.core.controller.WBBaseActivity;
 import com.weexbox.core.util.ImageUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -71,7 +72,18 @@ public class PhotoActivity extends WBBaseActivity {
      */
     private void saveImage() {
         final String url = imagesUrl.get(current);
-        ImageUtil.insertImageToSystemGallery(this, url);
+        getLoadDialogHelper().showLoad(PhotoActivity.this, true);
+        ImageUtil.insertImageToSystemGallery(this, url, new ImageUtil.OnSaveImageListener() {
+            @Override
+            public void onSuccess(File file, int requestId) {
+                getLoadDialogHelper().clear();
+            }
+
+            @Override
+            public void onFail(int requestId, int errorMyCode, int errorBackCode, String errorMessage, String data) {
+                getLoadDialogHelper().clear();
+            }
+        });
     }
 
     @Override

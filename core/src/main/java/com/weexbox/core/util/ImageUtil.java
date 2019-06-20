@@ -570,7 +570,7 @@ public final class ImageUtil {
         return (bitmap);
     }
 
-    public static void insertImageToSystemGallery(final Context context, final String url) {
+    public static void insertImageToSystemGallery(final Context context, final String url, OnSaveImageListener onSaveImageListener) {
         if (TextUtils.isEmpty(url)) {
             ToastUtil.showLongToast(context, "图片地址不能为空");
             return;
@@ -582,11 +582,17 @@ public final class ImageUtil {
             public void onSuccess(File file, int requestId) {
                 AndroidUtil.insertImageToSystemGallery(context, file);
                 ToastUtil.showLongToast(context, "保存成功");
+                if (onSaveImageListener != null){
+                    onSaveImageListener.onSuccess(file, requestId);
+                }
             }
 
             @Override
             public void onFail(int requestId, int errorMyCode, int errorBackCode, String errorMessage, String data) {
                 ToastUtil.showLongToast(context, "保存失败，请重试～");
+                if (onSaveImageListener != null){
+                    onSaveImageListener.onFail(requestId, errorMyCode, errorBackCode, errorMessage, data);
+                }
             }
         });
     }
@@ -599,6 +605,13 @@ public final class ImageUtil {
          */
         void onBlurComplete(@NonNull Bitmap bitmap);
     }
+
+    public interface OnSaveImageListener {
+        void onSuccess(File file, int requestId);
+
+        void onFail(int requestId, int errorMyCode, int errorBackCode, String errorMessage, String data);
+    }
+
 
 //    public static void insertImageToSystemGallery(Context context, final Bitmap bitmap, String fileName) {
 //        final String dir = FileUtil.getSystemGalleryPath();

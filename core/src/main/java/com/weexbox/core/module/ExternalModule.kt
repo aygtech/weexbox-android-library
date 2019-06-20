@@ -2,6 +2,7 @@ package com.weexbox.core.module
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Vibrator
 import com.alibaba.fastjson.JSONObject
@@ -11,6 +12,7 @@ import com.taobao.weex.utils.WXUtils
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
 import com.weexbox.core.model.Result
+import com.weexbox.core.net.entity.HttpBaseEntity
 import com.weexbox.core.util.SelectImageUtil
 import java.util.*
 
@@ -27,9 +29,13 @@ open class ExternalModule : BaseModule() {
             val result = Result()
             val map = TreeMap<String, Any>()
             if (imgs!![0].isNotEmpty()) {
-                val array = arrayListOf<String>()
-                array.add(imgs[0])
-                map["urls"] = array
+                var myImgs = arrayListOf<BitmapAttribute>()
+                var bitmapAttribute = BitmapAttribute()
+                bitmapAttribute.url = imgs[0]
+                bitmapAttribute.width = getBitmapWidth(imgs[0])
+                bitmapAttribute.height = getBitmapHeight(imgs[0])
+                myImgs.add(bitmapAttribute)
+                map["urls"] = myImgs
             }
             result.data = map
             callback.invoke(result.toJsResult())
@@ -37,7 +43,7 @@ open class ExternalModule : BaseModule() {
     }
 
     @JSMethod(uiThread = true)
-    open fun openPhoto(options: JSONObject, callback: JSCallback) {
+    fun openPhoto(options: JSONObject, callback: JSCallback) {
         val info = options.toObject(JsOptions::class.java)
         val count = info.count
         val enableCrop = info.enableCrop
@@ -46,7 +52,16 @@ open class ExternalModule : BaseModule() {
                 val result = Result()
                 val map = TreeMap<String, Any>()
                 if (imgs != null) {
-                    map["urls"] = imgs
+                    var myImgs = arrayListOf<BitmapAttribute>();
+                    var bitmapAttribute: BitmapAttribute
+                    for (img in imgs) {
+                        bitmapAttribute = BitmapAttribute()
+                        bitmapAttribute.url = img
+                        bitmapAttribute.width = getBitmapWidth(img)
+                        bitmapAttribute.height = getBitmapHeight(img)
+                        myImgs.add(bitmapAttribute)
+                    }
+                    map["urls"] = myImgs
                 }
                 result.data = map
                 callback.invoke(result)
@@ -56,7 +71,16 @@ open class ExternalModule : BaseModule() {
                 val result = Result()
                 val map = TreeMap<String, Any>()
                 if (imgs != null) {
-                    map["urls"] = imgs
+                    var myImgs = arrayListOf<BitmapAttribute>();
+                    var bitmapAttribute: BitmapAttribute
+                    for (img in imgs) {
+                        bitmapAttribute = BitmapAttribute()
+                        bitmapAttribute.url = img
+                        bitmapAttribute.width = getBitmapWidth(img)
+                        bitmapAttribute.height = getBitmapHeight(img)
+                        myImgs.add(bitmapAttribute)
+                    }
+                    map["urls"] = myImgs
                 }
                 result.data = map
                 callback.invoke(result)
@@ -90,5 +114,31 @@ open class ExternalModule : BaseModule() {
             val vibrator = getActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             vibrator.vibrate(info.millisecond!!.toLong())
         }
+    }
+
+    class BitmapAttribute: HttpBaseEntity() {
+        var width: Int = 0
+        var height: Int = 0
+        lateinit var url: String
+    }
+
+    fun getBitmapWidth(path: String): Int {
+        //获取Options对象
+        val options = BitmapFactory.Options()
+        //仅做解码处理，不加载到内存
+        options.inJustDecodeBounds = true
+        //解析文件
+        BitmapFactory.decodeFile(path, options)
+        return options.outWidth
+    }
+
+    fun getBitmapHeight(path: String): Int {
+        //获取Options对象
+        val options = BitmapFactory.Options()
+        //仅做解码处理，不加载到内存
+        options.inJustDecodeBounds = true
+        //解析文件
+        BitmapFactory.decodeFile(path, options)
+        return options.outHeight
     }
 }
