@@ -1,9 +1,10 @@
 package com.weexbox.core.util
 
-import com.orhanobut.logger.Logger
+import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.toJsonMap
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.*
@@ -17,19 +18,16 @@ import okhttp3.*
 
 object HotReload {
 
-    private val hotReloadSocket = OkHttpClient()
-    private lateinit var request: Request
-    private var isReconnect = false
+    private var isConnect = false
+    private lateinit var url: String
     private val listener = object : WebSocketListener() {
 
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-            Logger.d("连接关闭：$reason")
-            reconnect()
+            connect()
         }
 
         override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-            Logger.e("连接失败：${t.localizedMessage}")
-            reconnect()
+            connect()
         }
 
         override fun onMessage(webSocket: WebSocket, text: String) {
@@ -39,22 +37,30 @@ object HotReload {
                 Event.emit(method, option)
             }
         }
+
+        override fun onOpen(webSocket: WebSocket, response: Response) {
+            MainScope().launch {
+                ToastUtil.showLongToast(WeexBoxEngine.application, "热重载开启")
+            }
+        }
     }
 
-    fun start(ws: String) {
-        request = Request.Builder().url(ws).build()
-        hotReloadSocket.newWebSocket(request, listener)
+    fun open(url: String) {
+        HotReload.url = url
+        connect()
     }
 
-    fun reconnect() {
-        if (isReconnect) {
+    fun connect() {
+        if (isConnect) {
             return
         }
-        isReconnect = true
+        isConnect = true
         GlobalScope.launch {
             delay(2000)
-            isReconnect = false
-            hotReloadSocket.newWebSocket(request, listener)
+            isConnect = false
+            val okHttpClient = OkHttpClient.Builder().build()
+            val request = Request.Builder().url(url).build()
+            okHttpClient.newWebSocket(request, listener)
         }
     }
 }

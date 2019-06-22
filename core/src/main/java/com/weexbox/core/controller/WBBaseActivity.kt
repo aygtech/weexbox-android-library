@@ -161,20 +161,21 @@ open class WBBaseActivity : AppCompatActivity() {
      * @param code
      */
     private fun openWeex(url: String) {
-        // 处理windows上的dev路径带有"\\"
-        val parameters = url.replace("\\", "/").getParameters()
+        val parameters = url.getParameters()
         val devtoolUrl = parameters["_wx_devtool"]
-        val tplUrl = parameters["_wx_tpl"]
         if (devtoolUrl != null) {
             // 连服务
             WXEnvironment.sRemoteDebugProxyUrl = devtoolUrl
             WXEnvironment.sDebugServerConnectable = true
             WXSDKEngine.reload()
-        } else if (tplUrl != null) {
+        } else if (url.startsWith("ws:")) {
+            // 连热重载
+            HotReload.open(url)
+        } else {
             // 连页面
             val router = Router()
             router.name = Router.NAME_WEEX
-            router.url = tplUrl
+            router.url = url
             router.open(this)
         }
     }
