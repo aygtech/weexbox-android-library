@@ -3,8 +3,10 @@ package com.weexbox.core.controller
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.EditText
 import android.widget.RelativeLayout
 import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
@@ -23,11 +25,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
-import android.widget.Toast
-import android.content.DialogInterface
-import android.widget.EditText
-import android.R
-import android.support.v7.app.AlertDialog
+
 
 
 /**
@@ -118,7 +116,7 @@ open class WBBaseActivity : AppCompatActivity() {
         toolbar.setTitleText(router.title)
 
         statusbar_layout = layoutInflater.inflate(R.layout.activity_statusbar_layout, container, false)
-        if (statusbar_layout != null){
+        if (statusbar_layout != null) {
             val layoutParams = statusbar_layout!!.layoutParams
             layoutParams.height = DeviceUtil.getStatusBarHeight(this)
             statusbar_layout!!.layoutParams = layoutParams
@@ -130,8 +128,8 @@ open class WBBaseActivity : AppCompatActivity() {
             container.addView(btnView, 3)
         }
 
-        if (ActivityManager.getInstance().allActivities.size == 1){
-            toolbar.setBackButton({},"")
+        if (ActivityManager.getInstance().allActivities.size == 1) {
+            toolbar.setBackButton({}, "")
         }
         setContentView(container)
         initFloating()
@@ -179,11 +177,15 @@ open class WBBaseActivity : AppCompatActivity() {
             HotReload.open(url)
         } else {
             // 连页面
-            val router = Router()
-            router.name = Router.NAME_WEEX
-            router.url = url
-            router.open(this)
+            openDebugWeex(url)
         }
+    }
+
+    private fun openDebugWeex(url: String) {
+        val router = Router()
+        router.name = Router.NAME_WEEX
+        router.url = url
+        router.open(this)
     }
 
     fun initFloating() {
@@ -220,18 +222,18 @@ open class WBBaseActivity : AppCompatActivity() {
         }
         open_edit_btn.setOnClickListener {
             AnimationUtil.slideButtons(this, floatingDraftButton)
-            openDialog();
+            openDialog()
         }
     }
 
-    fun openDialog(){
+    private fun openDialog() {
         val editText = EditText(this)
         val inputDialog = AlertDialog.Builder(this)
-        editText.setHint("page/home.js")
+        editText.hint = "page/home.js"
         inputDialog.setTitle("请输入weex路径").setView(editText)
-        inputDialog.setPositiveButton("确定",
-                DialogInterface.OnClickListener { dialog, which ->
-                    var path = editText.text.toString();
-                }).show()
+        inputDialog.setPositiveButton("确定") { _, _ ->
+            val url = editText.text.toString()
+            openDebugWeex(url)
+        }.show()
     }
 }
