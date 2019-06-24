@@ -1,5 +1,6 @@
 package com.weexbox.core.module
 
+import com.alibaba.fastjson.JSONObject
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
 import com.weexbox.core.extension.toJsonMap
@@ -54,11 +55,12 @@ open class NetworkModule : BaseModule() {
 
 
         val mOkHttpClient = OkHttpClient()
-        var formEncodingBuilder = FormBody.Builder()
+
+        var formEncodingBuilder: RequestBody ?= null
         if (info.params != null && info?.params?.size!! > 0) {
-            for (param in info?.params!!) {
-                formEncodingBuilder.add(param.key, param.value.toString())
-            }
+            formEncodingBuilder = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), JSONObject.toJSONString(info.params))
+        } else{
+            formEncodingBuilder = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), "")
         }
 
         var requestBuilder = Request.Builder()
@@ -71,7 +73,7 @@ open class NetworkModule : BaseModule() {
         var request: Request? = null
         if (info.method?.toUpperCase() == "POST") {
             request = requestBuilder.url(info.url!!)
-                    .post(formEncodingBuilder.build())
+                    .post(formEncodingBuilder)
                     .build()
         } else{
             request = requestBuilder.url(info.url!!)
