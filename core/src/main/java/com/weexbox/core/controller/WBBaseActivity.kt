@@ -23,6 +23,12 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
+import android.widget.Toast
+import android.content.DialogInterface
+import android.widget.EditText
+import android.R
+import android.support.v7.app.AlertDialog
+
 
 /**
  * Author: Mario
@@ -187,6 +193,7 @@ open class WBBaseActivity : AppCompatActivity() {
         floatingDraftButton = floatingButton
         floatingDraftButton.registerButton(camara_btn)
         floatingDraftButton.registerButton(refesh_btn)
+        floatingDraftButton.registerButton(open_edit_btn)
         floatingDraftButton.setOnClickListener {
             //弹出动态Button
             AnimationUtil.slideButtons(this, floatingDraftButton)
@@ -211,5 +218,20 @@ open class WBBaseActivity : AppCompatActivity() {
                 fragment.refreshWeex()
             }
         }
+        open_edit_btn.setOnClickListener {
+            AnimationUtil.slideButtons(this, floatingDraftButton)
+            openDialog();
+        }
+    }
+
+    fun openDialog(){
+        val editText = EditText(this)
+        val inputDialog = AlertDialog.Builder(this)
+        editText.setHint("page/home.js")
+        inputDialog.setTitle("请输入weex路径").setView(editText)
+        inputDialog.setPositiveButton("确定",
+                DialogInterface.OnClickListener { dialog, which ->
+                    var path = editText.text.toString();
+                }).show()
     }
 }
