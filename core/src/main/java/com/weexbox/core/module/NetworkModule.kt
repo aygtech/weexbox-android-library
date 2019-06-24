@@ -7,19 +7,7 @@ import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
 import com.weexbox.core.model.Result
 import com.weexbox.core.network.Network
-import okhttp3.ResponseBody
-import retrofit2.Response
-import android.widget.Toast
-import android.R.string
-import android.R.attr.tag
-import android.util.Log
-import com.litesuits.common.utils.HandlerUtil.runOnUiThread
-import com.squareup.okhttp.Callback
-import com.weexbox.core.okhttp.OkHttpUtils.post
-import com.squareup.okhttp.FormEncodingBuilder
-import com.squareup.okhttp.OkHttpClient
-import com.squareup.okhttp.Request
-import com.weexbox.core.util.TaskManager
+import okhttp3.*
 import java.io.IOException
 
 
@@ -65,40 +53,53 @@ open class NetworkModule : BaseModule() {
 //        info.url!!, method, info.params, info.headers
 
 
-        TaskManager.execAsynTask {
-            val mOkHttpClient = OkHttpClient()
-            var formEncodingBuilder = FormEncodingBuilder()
-            if(info.params != null && info?.params?.size!! > 0){
-                for (param in info?.params!!){
-                    formEncodingBuilder.add(param.key, param.value.toString())
-                }
+        val mOkHttpClient = OkHttpClient()
+        var formEncodingBuilder = FormBody.Builder()
+        if (info.params != null && info?.params?.size!! > 0) {
+            for (param in info?.params!!) {
+                formEncodingBuilder.add(param.key, param.value.toString())
             }
+        }
 
-            var requestBuilder = Request.Builder()
-            if(info.headers != null && info?.headers?.size!! > 0){
-                for (param in info?.headers!!){
-                    requestBuilder.addHeader(param.key, param.value)
-                }
+        var requestBuilder = Request.Builder()
+        if (info.headers != null && info?.headers?.size!! > 0) {
+            for (param in info?.headers!!) {
+                requestBuilder.addHeader(param.key, param.value)
             }
-            var request = requestBuilder.url(info.url!!)
+        }
+
+        var request: Request? = null
+        if (info.method?.toUpperCase() == "POST") {
+            request = requestBuilder.url(info.url!!)
                     .post(formEncodingBuilder.build())
                     .build()
-
-
-            val call = mOkHttpClient.newCall(request)
-            call.enqueue(object : Callback {
-
-                override fun onResponse(response: com.squareup.okhttp.Response?) {
-                    val str = response?.body()!!.toString()
-                    Log.i("yzw", str)
-                    runOnUiThread(Runnable { Toast.makeText(getActivity(), "请求成功", Toast.LENGTH_SHORT).show() })
-                }
-
-                override fun onFailure(request: Request, e: IOException) {
-                    Log.d("输出:", "onFailure: " + e.message);
-                }
-            })
-
+        } else{
+            request = requestBuilder.url(info.url!!)
+                    .get()
+                    .build()
         }
+
+        val call = mOkHttpClient.newCall(request)
+        call.enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                result.status = Result.error
+                result.error = e.message
+                callback(result)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                result.status = response.code()
+                val data = response.body()?.string()
+                if (data != null) {
+                    if (info.responseType?.toUpperCase() == "TEXT") {
+                        result.data["data"] = data
+                    } else {
+                        result.data = data.toJsonMap()
+                    }
+                }
+                result.error = response.message()
+                callback(result)
+            }
+        })
     }
 }
