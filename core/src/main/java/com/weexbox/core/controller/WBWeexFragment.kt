@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import com.litesuits.common.io.FileUtils
-import com.orhanobut.logger.Logger
 import com.taobao.weex.IWXRenderListener
 import com.taobao.weex.WXSDKInstance
 import com.taobao.weex.common.WXRenderStrategy
@@ -18,6 +17,7 @@ import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.appendingPathComponent
 import com.weexbox.core.update.UpdateManager
+import com.weexbox.core.util.ToastUtil
 import java.io.IOException
 import java.util.*
 
@@ -52,18 +52,19 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
         if (url != null) {
             if (url!!.startsWith("http")) {
                 // 下载
-                instance?.renderByUrl(url, url, null, null, WXRenderStrategy.APPEND_ASYNC)
+                val vueUrl = "$url?bundleType=Vue"
+                instance?.renderByUrl(vueUrl, vueUrl, null, null, WXRenderStrategy.APPEND_ASYNC)
             } else {
                 try {
                     val file = UpdateManager.getFullUrl(url!!)
                     val template = FileUtils.readFileToString(file)
                     instance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
                 } catch (e: IOException) {
-                    Logger.e(e, "文件不存在")
+                    ToastUtil.showLongToast(activity, "文件不存在")
                 }
             }
         } else {
-            Logger.e("url不能为空")
+            ToastUtil.showLongToast(activity, "url不能为空")
         }
     }
 
