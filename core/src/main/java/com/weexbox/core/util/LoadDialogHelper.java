@@ -1,6 +1,7 @@
 package com.weexbox.core.util;
 
 import android.content.Context;
+import android.view.View;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -52,6 +53,17 @@ public class LoadDialogHelper {
                 .setLabel(text)
                 .setCancellable(isCancel)
                 .setAnimationSpeed(2);
+        hud.show();
+    }
+
+    public void showLoadWithText(Context context, String text, View view) {
+        close();
+        hud = KProgressHUD.create(context)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel(text)
+                .setCancellable(isCancel)
+                .setAnimationSpeed(2)
+                .setCustomView(view);
         hud.show();
     }
 

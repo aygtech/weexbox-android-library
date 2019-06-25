@@ -3,7 +3,9 @@ package com.weexbox.core.module
 import android.support.v7.app.AlertDialog
 import android.view.Gravity
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
 import com.taobao.weex.utils.WXUtils
@@ -11,6 +13,7 @@ import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
 import com.weexbox.core.model.Result
+import com.weexbox.core.util.BitmapUtil
 
 open class ModalModule : BaseModule() {
 
@@ -98,7 +101,13 @@ open class ModalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     open fun showLoading(text: Any) {
-        getActivity().loadDialogHelper.showLoadWithText(getActivity(), WXUtils.getString(text, null))
+        if(WeexBoxEngine.loadingIconResId!=0){
+            var imageView = ImageView(getActivity())
+            Glide.with(getActivity()).asGif().load(WeexBoxEngine.loadingIconResId).into(imageView)
+            getActivity().loadDialogHelper.showLoadWithText(getActivity(), WXUtils.getString(text, null),imageView)
+        }else{
+            getActivity().loadDialogHelper.showLoadWithText(getActivity(), WXUtils.getString(text, null))
+        }
     }
 
     @JSMethod(uiThread = true)
