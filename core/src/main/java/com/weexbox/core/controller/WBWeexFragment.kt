@@ -17,6 +17,7 @@ import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.appendingPathComponent
 import com.weexbox.core.update.UpdateManager
+import com.weexbox.core.util.HotReload
 import com.weexbox.core.util.ToastUtil
 import java.io.IOException
 import java.util.*
@@ -50,10 +51,13 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
 
     private fun render() {
         if (url != null) {
+            val host = HotReload.url
             if (url!!.startsWith("http")) {
                 // 下载
                 val vueUrl = "$url?bundleType=Vue"
                 instance?.renderByUrl(vueUrl, vueUrl, null, null, WXRenderStrategy.APPEND_ASYNC)
+            } else if (host != null) {
+                url = host.replace("ws", "http") + "/www/" + url
             } else {
                 try {
                     val file = UpdateManager.getFullUrl(url!!)
