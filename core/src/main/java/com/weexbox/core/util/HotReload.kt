@@ -19,7 +19,7 @@ import okhttp3.*
 object HotReload {
 
     private var isConnect = false
-    private lateinit var url: String
+    var url: String? = null
     private val listener = object : WebSocketListener() {
 
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
@@ -59,7 +59,7 @@ object HotReload {
             delay(2000)
             isConnect = false
             val okHttpClient = OkHttpClient.Builder().build()
-            val request = Request.Builder().url(url).build()
+            val request = Request.Builder().url(url!!).build()
             okHttpClient.newWebSocket(request, listener)
         }
     }
