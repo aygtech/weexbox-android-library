@@ -2,8 +2,12 @@ package com.weexbox.core.util;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.weexbox.core.WeexBoxEngine;
 
 public class LoadDialogHelper {
 
@@ -43,6 +47,7 @@ public class LoadDialogHelper {
                 .setCancellable(isCancel)
                 .setAnimationSpeed(2)
                 .setDimAmount(setTransparent ? 0 : 0.5f);
+        setCustomView(context);
         hud.show();
     }
 
@@ -53,6 +58,7 @@ public class LoadDialogHelper {
                 .setLabel(text)
                 .setCancellable(isCancel)
                 .setAnimationSpeed(2);
+        setCustomView(context);
         hud.show();
     }
 
@@ -65,6 +71,17 @@ public class LoadDialogHelper {
                 .setAnimationSpeed(2)
                 .setCustomView(view);
         hud.show();
+    }
+
+    private void setCustomView(Context context){
+        if (WeexBoxEngine.INSTANCE.getLoadingIconResId() != 0) {
+            ImageView imageView = new ImageView(context);
+            RequestOptions requestOptions = new RequestOptions();
+            int size = DisplayUtil.dip2px(context, 33f);
+            requestOptions.override(size, size).fitCenter();
+            Glide.with(context).asGif().apply(requestOptions).load(WeexBoxEngine.INSTANCE.getLoadingIconResId()).into(imageView);
+            hud.setCustomView(imageView);
+        }
     }
 
     public void showLoadWithText(Context context, String text, boolean setTransparent) {

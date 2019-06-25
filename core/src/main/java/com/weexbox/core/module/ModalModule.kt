@@ -104,16 +104,7 @@ open class ModalModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     open fun showLoading(text: Any) {
-        if(WeexBoxEngine.loadingIconResId!=0){
-            val imageView = ImageView(getActivity())
-            val requestOptions =  RequestOptions();
-            val size = DisplayUtil.dip2px(getActivity(),33f)
-            requestOptions.override(size,size).fitCenter();
-            Glide.with(getActivity()).asGif().apply(requestOptions).load(WeexBoxEngine.loadingIconResId).into(imageView)
-            getActivity().loadDialogHelper.showLoadWithText(getActivity(), WXUtils.getString(text, null),imageView)
-        }else{
-            getActivity().loadDialogHelper.showLoadWithText(getActivity(), WXUtils.getString(text, null))
-        }
+        getActivity().loadDialogHelper.showLoadWithText(getActivity(), WXUtils.getString(text, null))
     }
 
     @JSMethod(uiThread = true)
