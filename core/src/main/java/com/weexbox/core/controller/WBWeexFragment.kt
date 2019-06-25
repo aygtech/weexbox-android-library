@@ -52,12 +52,13 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
     private fun render() {
         if (url != null) {
             val host = HotReload.url
+            if (host != null) {
+                url = host.replace("ws", "http") + "/www/" + url
+            }
             if (url!!.startsWith("http")) {
                 // 下载
                 val vueUrl = "$url?bundleType=Vue"
                 instance?.renderByUrl(vueUrl, vueUrl, null, null, WXRenderStrategy.APPEND_ASYNC)
-            } else if (host != null) {
-                url = host.replace("ws", "http") + "/www/" + url
             } else {
                 try {
                     val file = UpdateManager.getFullUrl(url!!)
