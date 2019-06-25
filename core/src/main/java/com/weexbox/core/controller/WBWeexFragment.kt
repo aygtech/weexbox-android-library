@@ -87,11 +87,13 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
         instance?.onActivityCreate()
 
         render()
+        registerWXReloadBundle()
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
+        unregisterWXReloadBundle()
         instance?.onActivityDestroy()
         instance?.destroy()
     }
@@ -100,14 +102,12 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
         super.onVisibleToUserChanged(isVisibleToUser)
 
         if (isVisibleToUser) {
-            if (WeexBoxEngine.isDebug) {
-                registerWeexDebugBroadcast()
-            }
+            registerRefreshInstance()
             if (!isFirstSendDidAppear) {
                 sendViewDidAppear()
             }
         } else {
-            unregisterWeexDebugBroadcast()
+            unregisterRefreshInstance()
             sendViewDidDisappear()
         }
     }
@@ -141,36 +141,44 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
         }
     }
 
-    private fun registerWeexDebugBroadcast() {
-        broadcastReceiver = RefreshBroadcastReceiver()
-        val filter = IntentFilter()
-        filter.addAction(WXSDKInstance.ACTION_DEBUG_INSTANCE_REFRESH)
-        filter.addAction(WXSDKInstance.ACTION_INSTANCE_RELOAD)
-        activity!!.registerReceiver(broadcastReceiver, filter)
+    private fun registerRefreshInstance() {
+        if (WeexBoxEngine.isDebug) {
+            broadcastReceiver = RefreshBroadcastReceiver()
+            val filter = IntentFilter()
+            filter.addAction(WXSDKInstance.ACTION_DEBUG_INSTANCE_REFRESH)
+            filter.addAction(WXSDKInstance.ACTION_INSTANCE_RELOAD)
+            activity!!.registerReceiver(broadcastReceiver, filter)
+        }
+    }
 
-        Event.register(this, "WXReloadBundle") {
-            if (url != null) {
-                var name = url!!
-                if (url!!.startsWith("http")) {
-                    val before = url!!.substringBeforeLast("/")
-                    val after = url!!.substringAfterLast("/")
-                    name = before.substringAfterLast("/").appendingPathComponent(after)
-                }
-                val params = it!!["params"] as String
-                if (params.endsWith(name)) {
-                    url = params
-                    refreshWeex()
+    private fun registerWXReloadBundle() {
+        if (WeexBoxEngine.isDebug) {
+            Event.register(this, "WXReloadBundle") {
+                if (url != null) {
+                    var name = url!!
+                    if (url!!.startsWith("http")) {
+                        val before = url!!.substringBeforeLast("/")
+                        val after = url!!.substringAfterLast("/")
+                        name = before.substringAfterLast("/").appendingPathComponent(after)
+                    }
+                    val params = it!!["params"] as String
+                    if (params.endsWith(name)) {
+                        url = params
+                        refreshWeex()
+                    }
                 }
             }
         }
     }
 
-    private fun unregisterWeexDebugBroadcast() {
+    private fun unregisterRefreshInstance() {
         if (broadcastReceiver != null) {
             activity!!.unregisterReceiver(broadcastReceiver)
             broadcastReceiver = null
         }
+    }
 
+    private fun unregisterWXReloadBundle() {
         Event.unregister(this, "WXReloadBundle")
     }
 
