@@ -6,6 +6,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
 import com.taobao.weex.utils.WXUtils
@@ -14,6 +15,8 @@ import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
 import com.weexbox.core.model.Result
 import com.weexbox.core.util.BitmapUtil
+import com.weexbox.core.util.DeviceUtil
+import com.weexbox.core.util.DisplayUtil
 
 open class ModalModule : BaseModule() {
 
@@ -102,8 +105,11 @@ open class ModalModule : BaseModule() {
     @JSMethod(uiThread = true)
     open fun showLoading(text: Any) {
         if(WeexBoxEngine.loadingIconResId!=0){
-            var imageView = ImageView(getActivity())
-            Glide.with(getActivity()).asGif().load(WeexBoxEngine.loadingIconResId).into(imageView)
+            val imageView = ImageView(getActivity())
+            val requestOptions =  RequestOptions();
+            val size = DisplayUtil.dip2px(getActivity(),33f)
+            requestOptions.override(size,size).fitCenter();
+            Glide.with(getActivity()).asGif().apply(requestOptions).load(WeexBoxEngine.loadingIconResId).into(imageView)
             getActivity().loadDialogHelper.showLoadWithText(getActivity(), WXUtils.getString(text, null),imageView)
         }else{
             getActivity().loadDialogHelper.showLoadWithText(getActivity(), WXUtils.getString(text, null))
