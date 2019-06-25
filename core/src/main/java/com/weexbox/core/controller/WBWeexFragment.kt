@@ -52,7 +52,7 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
     private fun render() {
         if (url != null) {
             val host = HotReload.url
-            if (host != null) {
+            if (host != null && !url!!.startsWith("http")) {
                 url = host.replace("ws", "http") + "/www/" + url
             }
             if (url!!.startsWith("http")) {
