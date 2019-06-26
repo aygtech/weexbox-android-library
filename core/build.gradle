@@ -66,6 +66,7 @@ dependencies {
     api 'com.kaopiz:kprogresshud:1.2.0'
     api "com.tencent.sonic:sdk:3.1.0"
     api 'com.airbnb.android:lottie:2.7.0'//别升级，新版依赖androidx
+    api 'com.contrarywind:Android-PickerView:4.1.8'
 }
 
 // build a jar with source files
