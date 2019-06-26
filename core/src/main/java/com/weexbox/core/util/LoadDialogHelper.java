@@ -1,9 +1,13 @@
 package com.weexbox.core.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -73,14 +77,20 @@ public class LoadDialogHelper {
         hud.show();
     }
 
-    private void setCustomView(Context context){
-        if (WeexBoxEngine.INSTANCE.getLoadingIconResId() != 0) {
-            ImageView imageView = new ImageView(context);
-            RequestOptions requestOptions = new RequestOptions();
-            int size = DisplayUtil.dip2px(context, 33f);
-            requestOptions.override(size, size).fitCenter();
-            Glide.with(context).asGif().apply(requestOptions).load(WeexBoxEngine.INSTANCE.getLoadingIconResId()).into(imageView);
-            hud.setCustomView(imageView);
+    private void setCustomView(Context context) {
+        if (!TextUtils.isEmpty(WeexBoxEngine.INSTANCE.getLoadingIconRes())) {
+            LottieAnimationView lottieAnimationView = new LottieAnimationView(context);
+            lottieAnimationView.setAnimation(WeexBoxEngine.INSTANCE.getLoadingIconRes());
+            lottieAnimationView.loop(true);
+            lottieAnimationView.playAnimation();
+            int width = DisplayUtil.dip2px(context, 36f);
+            int height = DisplayUtil.dip2px(context, 26f);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width,height);
+            lottieAnimationView.setLayoutParams(layoutParams);
+            layoutParams.setMargins(0,10,0,0);
+            LinearLayout linearLayout = new LinearLayout(context);
+            linearLayout.addView(lottieAnimationView);
+            hud.setCustomView(linearLayout);
         }
     }
 

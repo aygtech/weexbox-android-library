@@ -27,7 +27,7 @@ import io.realm.Realm
 object WeexBoxEngine {
 
     lateinit var application: Application
-    var loadingIconResId = 0;
+    var loadingIconRes = "";
 
     var isDebug = false
         set(value) {
@@ -80,7 +80,7 @@ object WeexBoxEngine {
         WXSDKEngine.registerComponent("wb-lottie", LottieComponent::class.java)
     }
 
-    open fun disposeLoadingIcon(resId: Int) {
-        loadingIconResId = resId
+    open fun disposeLoadingIcon(res: String) {
+        loadingIconRes = res
     }
 }
