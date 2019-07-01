@@ -133,6 +133,11 @@ open class ModalModule : BaseModule() {
     @JSMethod(uiThread = true)
     open fun openTimePicker(options: Map<String, Any>, callback: JSCallback) {
         //时间选择器
+        val selectTime = options.get("selectTime")
+        val selectedDate = Calendar.getInstance()
+        if (selectTime != null) {
+            selectedDate.time = Date((selectTime.toString() as Long))
+        }
         val timePicker = TimePickerBuilder(getActivity(), object : OnTimeSelectListener {
             override fun onTimeSelect(date: Date, v: View?) {
                 val result = Result()
@@ -147,7 +152,8 @@ open class ModalModule : BaseModule() {
                 .isCenterLabel(true) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setBgColor(Color.WHITE)//背景
                 .setTitleBgColor(Color.WHITE)
-                .setLabel("","","","","","")
+                .setDate(selectedDate)
+                .setLabel("", "", "", "", "", "")
                 .build()
         timePicker.show()
     }
