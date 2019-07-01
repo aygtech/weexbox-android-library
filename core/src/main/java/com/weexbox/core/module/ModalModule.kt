@@ -137,7 +137,7 @@ open class ModalModule : BaseModule() {
         val selectTime = options.get("selectTime")
         val selectedDate = Calendar.getInstance()
         if (selectTime != null && !TextUtils.isEmpty(selectTime.toString())) {
-            selectedDate.time = Date((selectTime.toString() as Long))
+            selectedDate.time = Date(java.lang.Long.parseLong(selectTime.toString()))
         }
         val timePicker = TimePickerBuilder(getActivity(), object : OnTimeSelectListener {
             override fun onTimeSelect(date: Date, v: View?) {
