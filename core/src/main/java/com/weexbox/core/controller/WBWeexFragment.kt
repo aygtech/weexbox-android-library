@@ -58,12 +58,12 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
             if (url!!.startsWith("http")) {
                 // 下载
                 val vueUrl = "$url?bundleType=Vue"
-                instance?.renderByUrl(vueUrl, vueUrl, null, null, WXRenderStrategy.APPEND_ASYNC)
+                instance?.renderByUrl(null, vueUrl, null, null, WXRenderStrategy.APPEND_ASYNC)
             } else {
                 try {
                     val file = UpdateManager.getFullUrl(url!!)
                     val template = FileUtils.readFileToString(file)
-                    instance?.render(url, template, null, null, WXRenderStrategy.APPEND_ASYNC)
+                    instance?.render(null, template, null, null, WXRenderStrategy.APPEND_ASYNC)
                 } catch (e: IOException) {
                     ToastUtil.showLongToast(activity, "文件不存在")
                 }

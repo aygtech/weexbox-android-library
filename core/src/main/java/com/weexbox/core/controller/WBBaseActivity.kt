@@ -11,6 +11,7 @@ import android.widget.RelativeLayout
 import com.google.zxing.integration.android.IntentIntegrator
 import com.taobao.weex.WXEnvironment
 import com.taobao.weex.WXSDKEngine
+import com.taobao.weex.utils.LogLevel
 import com.weexbox.core.R
 import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.event.Event
@@ -169,8 +170,8 @@ open class WBBaseActivity : AppCompatActivity() {
         val devtoolUrl = parameters["_wx_devtool"]
         if (devtoolUrl != null) {
             // 连服务
+            WXEnvironment.sRemoteDebugMode = true
             WXEnvironment.sRemoteDebugProxyUrl = devtoolUrl
-            WXEnvironment.sDebugServerConnectable = true
             WXSDKEngine.reload()
         } else if (url.startsWith("ws:")) {
             // 连热重载

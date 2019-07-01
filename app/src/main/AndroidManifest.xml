@@ -15,18 +15,13 @@
         android:theme="@style/NoActionbarTheme"
         tools:replace="android:allowBackup,android:theme">
 
-        <activity android:name=".NormalActivity">
+        <activity android:name=".WeexActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".WeexActivity">
-
-        </activity>
-
 
     </application>
 
