@@ -142,7 +142,7 @@ open class ModalModule : BaseModule() {
         val timePicker = TimePickerBuilder(getActivity(), object : OnTimeSelectListener {
             override fun onTimeSelect(date: Date, v: View?) {
                 val result = Result()
-                result.data["time"] = date
+                result.data["timeEnd"] = date
                 callback.invoke(result)
             }
         }).setType(booleanArrayOf(true, true, true, true, true, false))// 年月日时分秒
