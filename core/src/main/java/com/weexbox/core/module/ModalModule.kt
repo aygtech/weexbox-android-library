@@ -3,6 +3,7 @@ package com.weexbox.core.module
 import android.app.Activity
 import android.graphics.Color
 import android.support.v7.app.AlertDialog
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.widget.EditText
@@ -135,7 +136,7 @@ open class ModalModule : BaseModule() {
         //时间选择器
         val selectTime = options.get("selectTime")
         val selectedDate = Calendar.getInstance()
-        if (selectTime != null) {
+        if (selectTime != null && !TextUtils.isEmpty(selectTime.toString())) {
             selectedDate.time = Date((selectTime.toString() as Long))
         }
         val timePicker = TimePickerBuilder(getActivity(), object : OnTimeSelectListener {
