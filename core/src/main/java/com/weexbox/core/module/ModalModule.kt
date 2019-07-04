@@ -3,6 +3,7 @@ package com.weexbox.core.module
 import android.app.Activity
 import android.graphics.Color
 import android.support.v7.app.AlertDialog
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.widget.EditText
@@ -133,10 +134,15 @@ open class ModalModule : BaseModule() {
     @JSMethod(uiThread = true)
     open fun openTimePicker(options: Map<String, Any>, callback: JSCallback) {
         //时间选择器
+        val selectTime = options.get("selectTime")
+        val selectedDate = Calendar.getInstance()
+        if (selectTime != null && !TextUtils.isEmpty(selectTime.toString())) {
+            selectedDate.time = Date(java.lang.Long.parseLong(selectTime.toString()))
+        }
         val timePicker = TimePickerBuilder(getActivity(), object : OnTimeSelectListener {
             override fun onTimeSelect(date: Date, v: View?) {
                 val result = Result()
-                result.data["time"] = date
+                result.data["timeEnd"] = date
                 callback.invoke(result)
             }
         }).setType(booleanArrayOf(true, true, true, true, true, false))// 年月日时分秒
@@ -147,7 +153,8 @@ open class ModalModule : BaseModule() {
                 .isCenterLabel(true) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setBgColor(Color.WHITE)//背景
                 .setTitleBgColor(Color.WHITE)
-                .setLabel("","","","","","")
+                .setDate(selectedDate)
+                .setLabel("", "", "", "", "", "")
                 .build()
         timePicker.show()
     }
