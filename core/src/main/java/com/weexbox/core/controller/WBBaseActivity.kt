@@ -170,7 +170,7 @@ open class WBBaseActivity : AppCompatActivity() {
         val devtoolUrl = parameters["_wx_devtool"]
         if (devtoolUrl != null) {
             // 连服务
-            WXEnvironment.sDebugServerConnectable = true
+            WXEnvironment.sRemoteDebugMode = true
             WXEnvironment.sRemoteDebugProxyUrl = devtoolUrl
             WXSDKEngine.reload()
         } else if (url.startsWith("ws:")) {
