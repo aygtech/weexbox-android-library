@@ -51,25 +51,34 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
 
     private fun render() {
         if (url != null) {
-            val host = HotReload.url
-            if (host != null && !url!!.startsWith("http")) {
-                url = host.replace("ws", "http") + "/www/" + url
-            }
             if (url!!.startsWith("http")) {
-                // 下载
-                val vueUrl = "$url?bundleType=Vue"
-                instance?.renderByUrl(null, vueUrl, null, null, WXRenderStrategy.APPEND_ASYNC)
+                renderByUrl()
             } else {
-                try {
-                    val file = UpdateManager.getFullUrl(url!!)
-                    val template = FileUtils.readFileToString(file)
-                    instance?.render(null, template, null, null, WXRenderStrategy.APPEND_ASYNC)
-                } catch (e: IOException) {
-                    ToastUtil.showLongToast(activity, "文件不存在")
+                val host = HotReload.url
+                if (host != null) {
+                    url = host.replace("ws", "http") + "/www/" + url
+                    renderByUrl()
+                } else {
+                    renderByFile()
                 }
             }
         } else {
             ToastUtil.showLongToast(activity, "url不能为空")
+        }
+    }
+
+    private fun renderByUrl() {
+        val vueUrl = "$url?bundleType=Vue"
+        instance?.renderByUrl(null, vueUrl, null, null, WXRenderStrategy.APPEND_ASYNC)
+    }
+
+    private fun renderByFile() {
+        try {
+            val file = UpdateManager.getFullUrl(url!!)
+            val template = FileUtils.readFileToString(file)
+            instance?.render(null, template, null, null, WXRenderStrategy.APPEND_ASYNC)
+        } catch (e: IOException) {
+            ToastUtil.showLongToast(activity, "文件不存在")
         }
     }
 
