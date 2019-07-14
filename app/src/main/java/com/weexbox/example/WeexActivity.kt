@@ -13,7 +13,7 @@ class WeexActivity : WBWeexActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        router.url = "page/home.js"
+        router.url = "page/module.js"
 
         super.onCreate(savedInstanceState)
     }
