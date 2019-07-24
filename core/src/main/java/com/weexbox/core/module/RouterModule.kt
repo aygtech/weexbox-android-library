@@ -1,7 +1,10 @@
 package com.weexbox.core.module
 
+import com.alibaba.fastjson.JSON
+import com.alibaba.fastjson.JSONObject
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.utils.WXUtils
+import com.weexbox.core.extension.toJsonMap
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.router.Router
 
@@ -19,9 +22,10 @@ open class RouterModule : BaseModule() {
         getRouter(options).open(getActivity())
     }
 
-    @JSMethod(uiThread = true)
-    open fun getParams(): Map<String, Any>? {
-        return getFragment()!!.router.params
+    @JSMethod(uiThread = false)
+    open fun getParams(): JSONObject {
+       
+        return  JSONObject(getFragment()!!.router.params)
     }
 
     @JSMethod(uiThread = true)
