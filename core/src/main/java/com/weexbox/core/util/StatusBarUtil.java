@@ -1,6 +1,5 @@
 package com.weexbox.core.util;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
@@ -8,19 +7,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.luck.picture.lib.immersive.RomUtils;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
-import iquest.aiyuangong.com.common.base.SystemBarTintManager;
-
 /**
  * Author:leon.wen
  * Time:2018/8/2   15:54
  * Description:This is StatusBarUtil
  */
-
 public class StatusBarUtil {
 
     /**
