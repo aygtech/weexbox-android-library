@@ -19,7 +19,7 @@ open class RouterModule : BaseModule() {
         getRouter(options).open(getActivity())
     }
 
-    @JSMethod(uiThread = false)
+    @JSMethod(uiThread = true)
     open fun getParams(): Map<String, Any>? {
         return getFragment()!!.router.params
     }
