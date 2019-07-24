@@ -23,6 +23,7 @@ class Router : Serializable {
 
         const val TYPE_PUSH = "push"   //仅对iOS有效
         const val TYPE_PRESENT = "present" //仅对iOS有效
+        const val TYPE_MODALMASK = "modalMask" //透明
 
         const val NAME_WEEX = "weex"  //name的类型
         const val NAME_WEB = "web"    //name的类型

@@ -132,6 +132,13 @@ open class WBBaseActivity : AppCompatActivity() {
         if (ActivityManager.getInstance().allActivities.size == 1) {
             toolbar.setBackButton({}, "")
         }
+
+        if (router.type.equals(Router.Companion.TYPE_MODALMASK)){
+            StatusBarUtil.fullScreen(this)
+            container.setBackgroundResource(R.color.transparent)
+        } else{
+            container.setBackgroundResource(R.color.white)
+        }
         setContentView(container)
         initFloating()
     }

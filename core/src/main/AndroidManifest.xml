@@ -24,11 +24,13 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             tools:replace="android:screenOrientation" />
 
-        <activity android:name=".controller.WBBaseActivity" />
+        <activity android:name=".controller.WBBaseActivity"
+            android:theme="@style/ITranslucentTheme"/>
 
         <activity android:name=".controller.WBWebViewActivity" />
 
-        <activity android:name=".controller.WBWeexActivity" />
+        <activity android:name=".controller.WBWeexActivity"
+            android:theme="@style/ITranslucentTheme"/>
     </application>
 
 </manifest>
