@@ -60,7 +60,7 @@ class Router : Serializable {
         if (to == null) {
             Logger.e("该路由名未注册")
         } else {
-            var activities: List<Activity>? = null
+            var activities: MutableList<Activity>? = null
             if (closeFrom != null) {
                 val allActivities = ActivityManager.getInstance().allActivities
                 if (closeFromBottomToTop) {
@@ -87,13 +87,37 @@ class Router : Serializable {
                 }
             }
 
+            // 透明主题要销毁，为了跟ios统一
+            if (from.router.type.equals(Router.Companion.TYPE_MODALMASK)){
+                for (i in 0 until ActivityManager.getInstance().allActivities.size) {
+                    var bigAct = ActivityManager.getInstance().allActivities[i]
+                    if (bigAct is WBBaseActivity && bigAct.router.type.equals(Router.Companion.TYPE_MODALMASK)){
+                        if (activities != null){
+                            var isAdd = true
+                            for (j in activities.size downTo i + 1) {
+                                var smallAct = activities.get(j)
+                                if (smallAct.equals(bigAct)) {
+                                    isAdd = false
+                                    break;
+                                }
+                            }
+                            if (isAdd){
+                                activities.add(bigAct);
+                            }
+                        } else{
+                            activities = ArrayList();
+                            activities.add(bigAct);
+                        }
+                    }
+                }
+            }
+
             val intent = Intent(from, to)
             intent.putExtra(Router.EXTRA_NAME, this)
             from.startActivity(intent)
             if (activities != null) {
                 removeActivitys(activities)
             }
-
         }
     }
 
