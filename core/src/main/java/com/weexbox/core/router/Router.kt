@@ -88,7 +88,7 @@ class Router : Serializable {
             }
 
             // 透明主题要销毁，为了跟ios统一
-            if (from.router.type.equals(Router.Companion.TYPE_MODALMASK)){
+            if (from.router.type.equals(Router.Companion.TYPE_MODALMASK) && !type.equals(Router.Companion.TYPE_MODALMASK)){
                 for (i in 0 until ActivityManager.getInstance().allActivities.size) {
                     var bigAct = ActivityManager.getInstance().allActivities[i]
                     if (bigAct is WBBaseActivity && bigAct.router.type.equals(Router.Companion.TYPE_MODALMASK)){
