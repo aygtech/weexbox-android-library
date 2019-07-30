@@ -100,29 +100,34 @@ open class WBBaseActivity : AppCompatActivity() {
     }
 
     override fun setContentView(layoutResID: Int) {
+        StatusBarUtil.fullScreen(this)
         val container = layoutInflater.inflate(R.layout.activity_base, null) as RelativeLayout
         val view = layoutInflater.inflate(layoutResID, container, false)
         toolbar = layoutInflater.inflate(R.layout.activity_weex_title_layout, container, false) as SimpleToolbar
         val params = view.layoutParams as RelativeLayout.LayoutParams
         params.addRule(RelativeLayout.BELOW, R.id.toolbar)
         view.layoutParams = params
-        container.addView(toolbar, 0)
-        container.addView(view, 1)
-        toolbar.setBackButton { finish() }
-        if (!(router.navBarHidden)) {
-            toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
-        } else {
-            toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
-        }
-        toolbar.setTitleText(router.title)
 
         statusbar_layout = layoutInflater.inflate(R.layout.activity_statusbar_layout, container, false)
         if (statusbar_layout != null) {
             val layoutParams = statusbar_layout!!.layoutParams
             layoutParams.height = DeviceUtil.getStatusBarHeight(this)
             statusbar_layout!!.layoutParams = layoutParams
-            container.addView(statusbar_layout, 2)
         }
+
+        container.addView(toolbar, 0)
+        container.addView(view, 1)
+        container.addView(statusbar_layout, 2)
+
+        toolbar.setBackButton { finish() }
+        if (!(router.navBarHidden)) {
+            toolbar.setAcitionbarAndStatusbarVisibility(View.VISIBLE)
+            showStatusbarLayoutBackground()
+        } else {
+            toolbar.setAcitionbarAndStatusbarVisibility(View.GONE)
+            hideStatusbarLayoutBackground()
+        }
+        toolbar.setTitleText(router.title)
 
         if (WeexBoxEngine.isDebug) {
             val btnView = layoutInflater.inflate(R.layout.layout_floating_button, container, false)
