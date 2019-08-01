@@ -64,6 +64,10 @@ class Router : Serializable {
             if (closeFrom != null) {
                 val allActivities = ActivityManager.getInstance().allActivities
                 if (closeFromBottomToTop) {
+                    var extraCloseFrom = closeFrom;
+                    if (extraCloseFrom != null) {
+                        closeFrom = extraCloseFrom + 1
+                    };
                     var closeTo = if (closeCount != null) {
                         closeCount!! + closeFrom!!
                     } else {
