@@ -96,7 +96,11 @@ open class NetworkModule : BaseModule() {
                     if (info.responseType?.toUpperCase() == "TEXT") {
                         result.data["data"] = data
                     } else {
-                        result.data = data.toJsonMap()
+                        try {
+                            result.data = data.toJsonMap()
+                        } catch (e: Exception){
+                            result.status = Result.error
+                        }
                     }
                 }
                 result.error = response.message()
