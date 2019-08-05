@@ -27,7 +27,7 @@ import io.realm.Realm
 object WeexBoxEngine {
 
     lateinit var application: Application
-    var loadingIconRes = "";
+    var loadingIconRes = ""
 
     var isDebug = false
         set(value) {
@@ -69,6 +69,7 @@ object WeexBoxEngine {
         WXSDKEngine.registerModule("wb-modal", ModalModule::class.java)
         WXSDKEngine.registerModule("wb-external", ExternalModule::class.java)
         WXSDKEngine.registerModule("wb-event", EventModule::class.java)
+        WXSDKEngine.registerModule("navigator", WXNavigatorModule::class.java)
     }
 
     private fun registerRouter() {

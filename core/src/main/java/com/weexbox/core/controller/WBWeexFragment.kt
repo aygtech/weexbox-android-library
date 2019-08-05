@@ -16,6 +16,7 @@ import com.weexbox.core.R
 import com.weexbox.core.WeexBoxEngine
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.appendingPathComponent
+import com.weexbox.core.extension.getParameters
 import com.weexbox.core.update.UpdateManager
 import com.weexbox.core.util.HotReload
 import com.weexbox.core.util.ToastUtil
@@ -68,6 +69,10 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
     }
 
     private fun renderByUrl() {
+        val tpl = url?.getParameters()?.get("_wx_tpl")
+        if (tpl != null) {
+            url = tpl
+        }
         val vueUrl = "$url?bundleType=Vue"
         instance?.renderByUrl(null, vueUrl, null, null, WXRenderStrategy.APPEND_ASYNC)
     }

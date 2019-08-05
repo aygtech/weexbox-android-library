@@ -8,11 +8,11 @@
     "path": "page/globalEvent.js"
   },
   {
-    "md5": "1714595a296aa3383c293c575db54ab6",
+    "md5": "0fa0b3039e62656f996ee0b7a397e6be",
     "path": "page/home.js"
   },
   {
-    "md5": "3b12f7628d94e90379ab2e6d7ab9e83e",
+    "md5": "86d1c6d2cb8373c1cf8cb94203080671",
     "path": "page/module.js"
   },
   {
@@ -20,51 +20,55 @@
     "path": "page/page1.js"
   },
   {
-    "md5": "ec470b25091649619505f20ff73842d3",
+    "md5": "1f6882bb3cb1a50ed0878898bc162530",
+    "path": "page/ts.js"
+  },
+  {
+    "md5": "4ec31effe29dd538d115f80ef994e356",
     "path": "page/use.js"
   },
   {
-    "md5": "2e6b9a3428939a2bf5fa73312904b917",
+    "md5": "aca13aa61970ec536eac116fc915a0f2",
     "path": "page/wb-event.js"
   },
   {
-    "md5": "d4a8511a88a19ff9d6125a8afb088602",
+    "md5": "086fcb7895bbd0d77889b58425c5bdcc",
     "path": "page/wb-external.js"
   },
   {
-    "md5": "0c6089d6ad10f0ec3196dd8442dd5a91",
+    "md5": "e3820735a55f08c7a497c82c8a225511",
     "path": "page/wb-location.js"
   },
   {
-    "md5": "327ff4ceeaab73d9001b1b96f9b460ea",
+    "md5": "1b3c86313cdd570826a055fa9bc8b054",
     "path": "page/wb-lottie.js"
   },
   {
-    "md5": "3cfed9f90fe9f4db2ff6ad5173f51a2c",
+    "md5": "cda30a7125dc518c808778d503f34b40",
     "path": "page/wb-modal.js"
   },
   {
-    "md5": "fd47f631f5da364b1c6067d12628dc26",
+    "md5": "86acbb3c12df3ecf488dd1426d982d60",
     "path": "page/wb-navigator.js"
   },
   {
-    "md5": "aa4ed95a770e7bc589cecd75854d791f",
+    "md5": "bfe1167e725c1cde17aa096699eddff6",
     "path": "page/wb-network.js"
   },
   {
-    "md5": "9f665ec460026b5f08c72eb9e6910375",
+    "md5": "cdb78ad52475149deef48d0e6d5f401e",
     "path": "page/wb-router-close.js"
   },
   {
-    "md5": "d4a0e2dfb57f1a82c4629de6d3f3e973",
+    "md5": "2a65c6072b2fdd18ac8039597d3a3f5d",
     "path": "page/wb-router.js"
   },
   {
-    "md5": "b60070bd0e08e53d09b95134e6f2fa6d",
+    "md5": "1c248ebd18bc3d697515c794a0863071",
     "path": "page/wb-webSocket.js"
   },
   {
-    "md5": "e956ac2e6008bc264d0583aa15a1dd2b",
+    "md5": "a767092977a691eb09d9ec9f1b479803",
     "path": "page/web.js"
   }
 ]
