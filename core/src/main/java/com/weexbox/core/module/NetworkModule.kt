@@ -85,7 +85,8 @@ open class NetworkModule : BaseModule() {
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 result.status = Result.error
-                result.error = e.message
+//                result.error = e.message
+                result.error = "似乎已断开与互联网的链接"
                 callback(result)
             }
 
