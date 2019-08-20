@@ -132,14 +132,14 @@ class Router : Serializable {
         }
     }
 
-    fun close(levels: Int? = null, activity: WBBaseActivity) {
+    fun close(from: WBBaseActivity, levels: Int? = null) {
         var count = 0
         if (levels != null) {
             count = levels
         }
 
         val activities = ActivityManager.getInstance().allActivities
-        val index = activities.search(activity)
+        val index = activities.search(from)
 
         if (activities.size <= count) {
             count = activities.size - 1

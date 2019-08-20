@@ -26,7 +26,7 @@ open class RouterModule : BaseModule() {
 
     @JSMethod(uiThread = true)
     open fun close(levels: Any?) {
-        getFragment()!!.router.close(WXUtils.getInt(levels), getActivity())
+        getFragment()!!.router.close(getActivity(), WXUtils.getInt(levels))
     }
 
     @JSMethod(uiThread = true)
