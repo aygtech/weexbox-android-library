@@ -40,12 +40,16 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
         return R.layout.fragment_weex
     }
 
-    fun refreshWeex() {
+    fun refreshWeexForDebug() {
         val currentTime = Date().time
         if (WeexBoxEngine.isDebug && currentTime - refreshTime < 1000) {
             return
         }
         refreshTime = currentTime
+        refreshWeex()
+    }
+
+    fun refreshWeex() {
         createWeexInstance()
         render()
     }
@@ -157,7 +161,7 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
     // 调试广播
     inner class RefreshBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            refreshWeex()
+            refreshWeexForDebug()
         }
     }
 
@@ -184,7 +188,7 @@ open class WBWeexFragment : WBBaseFragment(), IWXRenderListener {
                     val params = it!!["params"] as String
                     if (params.endsWith(name)) {
                         url = params
-                        refreshWeex()
+                        refreshWeexForDebug()
                     }
                 }
             }
