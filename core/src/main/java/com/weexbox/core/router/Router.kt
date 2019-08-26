@@ -57,7 +57,7 @@ class Router : Serializable {
 
 
     fun open(from: WBBaseActivity) {
-        val to = Router.routes[name]
+        val to = routes[name]
         if (to == null) {
             Logger.e("该路由名未注册")
         } else {
@@ -65,7 +65,7 @@ class Router : Serializable {
             if (closeFrom != null) {
                 val allActivities = ActivityManager.getInstance().allActivities
                 if (closeFromBottomToTop) {
-                    var extraCloseFrom = closeFrom;
+                    var extraCloseFrom = closeFrom
                     if (extraCloseFrom != null) {
                         closeFrom = extraCloseFrom + 1
                     };
@@ -93,32 +93,32 @@ class Router : Serializable {
             }
 
             // 透明主题要销毁，为了跟ios统一
-            if (from.router.type.equals(Router.Companion.TYPE_MODALMASK) && !type.equals(Router.Companion.TYPE_MODALMASK)){
+            if (from.router.type == TYPE_MODALMASK && type != TYPE_MODALMASK) {
                 for (i in 0 until ActivityManager.getInstance().allActivities.size) {
-                    var bigAct = ActivityManager.getInstance().allActivities[i]
-                    if (bigAct is WBBaseActivity && bigAct.router.type.equals(Router.Companion.TYPE_MODALMASK)){
-                        if (activities != null){
+                    val bigAct = ActivityManager.getInstance().allActivities[i]
+                    if (bigAct is WBBaseActivity && bigAct.router.type == TYPE_MODALMASK) {
+                        if (activities != null) {
                             var isAdd = true
                             for (j in activities.size downTo i + 1) {
-                                var smallAct = activities.get(j)
-                                if (smallAct.equals(bigAct)) {
+                                val smallAct = activities[j]
+                                if (smallAct == bigAct) {
                                     isAdd = false
-                                    break;
+                                    break
                                 }
                             }
-                            if (isAdd){
-                                activities.add(bigAct);
+                            if (isAdd) {
+                                activities.add(bigAct)
                             }
-                        } else{
-                            activities = ArrayList();
-                            activities.add(bigAct);
+                        } else {
+                            activities = ArrayList()
+                            activities.add(bigAct)
                         }
                     }
                 }
             }
 
             val intent = Intent(from, to)
-            intent.putExtra(Router.EXTRA_NAME, this)
+            intent.putExtra(EXTRA_NAME, this)
             from.startActivity(intent)
             if (activities != null) {
                 removeActivitys(activities)
