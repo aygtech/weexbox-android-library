@@ -132,8 +132,8 @@ class Router : Serializable {
         }
     }
 
-    fun close(from: WBBaseActivity, count: Int = 1) {
-        var closeCount = count
+    fun close(from: WBBaseActivity, count: Int? = null) {
+        var closeCount = count ?: 1
         if (closeCount < 1) {
             closeCount = 1
         }
