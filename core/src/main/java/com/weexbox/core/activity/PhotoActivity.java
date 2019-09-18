@@ -100,36 +100,27 @@ public class PhotoActivity extends WBBaseActivity {
         if(rightView!=null){
             save.setVisibility(View.GONE);
             right_view.addView(rightView);
-            rightView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.rightBtnClick(v);
-                    } else {
-                        saveImage();
-                    }
-                }
-            });
-        }
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            rightView.setOnClickListener(v -> {
                 if (onItemClickListener != null) {
                     onItemClickListener.rightBtnClick(v);
                 } else {
                     saveImage();
                 }
+            });
+        }
+        save.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.rightBtnClick(v);
+            } else {
+                saveImage();
             }
         });
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.leftBtnClick(v);
-                }
-                finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        back.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.leftBtnClick(v);
             }
+            finish();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
         initData();
     }
