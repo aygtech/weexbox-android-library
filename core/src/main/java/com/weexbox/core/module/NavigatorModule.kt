@@ -9,6 +9,7 @@ import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
 import com.weexbox.core.model.Result
 import com.weexbox.core.util.AndroidUtil
+import com.weexbox.core.util.DisplayUtil
 import com.weexbox.core.widget.SimpleToolbar
 
 open class NavigatorModule : BaseModule() {
@@ -164,7 +165,7 @@ open class NavigatorModule : BaseModule() {
 
     @JSMethod(uiThread = false)
     open fun getHeight(): Int {
-        return mWXSDKInstance.instanceViewPortWidth * AndroidUtil.getStateBarHeight(getActivity()) / AndroidUtil.getScreenWidth(getActivity())
+        return mWXSDKInstance.instanceViewPortWidth * AndroidUtil.getTitleHeight(getActivity()) / AndroidUtil.getScreenWidth(getActivity())
     }
 
     private fun getActionbar(): SimpleToolbar {

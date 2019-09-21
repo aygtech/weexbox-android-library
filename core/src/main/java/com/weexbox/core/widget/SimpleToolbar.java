@@ -174,6 +174,14 @@ public class SimpleToolbar extends LinearLayout {
         }
     }
 
+    //actionbar 高度 px
+    public int getActionbarHeight() {
+        if (actionbar_layout != null) {
+            return actionbar_layout.getHeight();
+        }
+        return 0;
+    }
+
     //actionbar和statusbar显示与否
     public void setAcitionbarAndStatusbarVisibility(int visibility) {
         setVisibility(visibility);

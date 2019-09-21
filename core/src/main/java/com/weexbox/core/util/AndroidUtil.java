@@ -28,6 +28,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.weexbox.core.controller.WBBaseActivity;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -48,20 +50,8 @@ public final class AndroidUtil {
      * @param activity
      * @return
      */
-    public static int getTitleHeight(Activity activity) {
-        final int actionBarHeight;
-        final TypedValue tv = new TypedValue();
-        if (activity.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(
-                    tv.data, activity.getResources().getDisplayMetrics());
-        } else {
-            Rect rect = new Rect();
-            Window window = activity.getWindow();
-            window.getDecorView().getWindowVisibleDisplayFrame(rect);
-            int statusBarHeight = rect.top;
-            int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
-            actionBarHeight = contentViewTop - statusBarHeight;
-        }
+    public static int getTitleHeight(WBBaseActivity activity) {
+        int actionBarHeight = activity.getActionbar().getActionbarHeight();
         return actionBarHeight;
     }
 
