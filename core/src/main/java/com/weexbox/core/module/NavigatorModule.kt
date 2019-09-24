@@ -4,6 +4,7 @@ import android.text.TextUtils
 import com.taobao.weex.annotation.JSMethod
 import com.taobao.weex.bridge.JSCallback
 import com.taobao.weex.utils.WXUtils
+import com.weexbox.core.R
 import com.weexbox.core.event.Event
 import com.weexbox.core.extension.toObject
 import com.weexbox.core.model.JsOptions
@@ -11,6 +12,7 @@ import com.weexbox.core.model.Result
 import com.weexbox.core.util.AndroidUtil
 import com.weexbox.core.util.DisplayUtil
 import com.weexbox.core.widget.SimpleToolbar
+
 
 open class NavigatorModule : BaseModule() {
 
@@ -165,7 +167,8 @@ open class NavigatorModule : BaseModule() {
 
     @JSMethod(uiThread = false)
     open fun getHeight(): Int {
-        return mWXSDKInstance.instanceViewPortWidth * AndroidUtil.getTitleHeight(getActivity()) / AndroidUtil.getScreenWidth(getActivity())
+        val title_height = getActivity().getResources().getDimensionPixelSize(R.dimen.title_height)
+        return mWXSDKInstance.instanceViewPortWidth * title_height / AndroidUtil.getScreenWidth(getActivity())
     }
 
     private fun getActionbar(): SimpleToolbar {
