@@ -2,7 +2,7 @@ package com.weexbox.core.module
 
 import android.app.Activity
 import android.graphics.Color
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View

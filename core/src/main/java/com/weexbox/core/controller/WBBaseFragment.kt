@@ -1,7 +1,7 @@
 package com.weexbox.core.controller
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +17,7 @@ import java.util.*
 /*
 * Fragment基类
 */
-abstract class WBBaseFragment : Fragment() {
+abstract class WBBaseFragment : androidx.fragment.app.Fragment() {
 
     // 路由
     var router = Router()

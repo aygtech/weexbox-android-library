@@ -17,13 +17,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.provider.Settings.Secure;
-import android.support.v4.app.ActivityCompat;
-import android.telephony.TelephonyManager;
+
+import androidx.core.app.ActivityCompat;
+
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;

@@ -1,7 +1,7 @@
 package com.weexbox.core.net.callback;
 
-import android.support.annotation.CallSuper;
-import android.support.annotation.IntDef;
+import androidx.annotation.CallSuper;
+import androidx.annotation.IntDef;
 import android.text.TextUtils;
 
 import com.weexbox.core.net.HttpUtil;

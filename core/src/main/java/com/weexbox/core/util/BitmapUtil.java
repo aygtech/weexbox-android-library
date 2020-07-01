@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.request.target.Target;
@@ -512,8 +514,8 @@ public class BitmapUtil {
     }
 
     private static GlideRequest buildGlideRequest(final Object context, final String url) {
-        if (context instanceof android.support.v4.app.Fragment) {
-            final android.support.v4.app.Fragment fragment = (android.support.v4.app.Fragment) context;
+        if (context instanceof Fragment) {
+            final Fragment fragment = (Fragment) context;
             return GlideApp.with(fragment).load(url);
         } else if (context instanceof Activity) {
             Activity activity = (Activity) context;
@@ -525,8 +527,8 @@ public class BitmapUtil {
 
 
     private static GlideRequest buildGlideRequest(final Object context, final File file) {
-        if (context instanceof android.support.v4.app.Fragment) {
-            final android.support.v4.app.Fragment fragment = (android.support.v4.app.Fragment) context;
+        if (context instanceof Fragment) {
+            final Fragment fragment = (Fragment) context;
             return GlideApp.with(fragment).load(file);
         } else if (context instanceof Activity) {
             Activity activity = (Activity) context;
@@ -538,8 +540,8 @@ public class BitmapUtil {
 
 
     private static GlideRequest buildGlideRequest(final Object context, final int id) {
-        if (context instanceof android.support.v4.app.Fragment) {
-            final android.support.v4.app.Fragment fragment = (android.support.v4.app.Fragment) context;
+        if (context instanceof Fragment) {
+            final Fragment fragment = (Fragment) context;
             return GlideApp.with(fragment).load(id);
         } else if (context instanceof Activity) {
             Activity activity = (Activity) context;

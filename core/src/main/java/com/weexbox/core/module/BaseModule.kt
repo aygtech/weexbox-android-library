@@ -1,6 +1,6 @@
 package com.weexbox.core.module
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.taobao.weex.common.WXModule
 import com.weexbox.core.controller.WBBaseActivity
 import com.weexbox.core.controller.WBWeexFragment
@@ -18,11 +18,11 @@ open class BaseModule : WXModule() {
     }
 
     fun getFragment(): WBWeexFragment? {
-        val fragments = getActivity().supportFragmentManager.fragments as List<Fragment>
+        val fragments = getActivity().supportFragmentManager.fragments as List<androidx.fragment.app.Fragment>
         return getRecursionFragment(fragments)
     }
 
-    private fun getRecursionFragment(fragments: List<Fragment>): WBWeexFragment? {
+    private fun getRecursionFragment(fragments: List<androidx.fragment.app.Fragment>): WBWeexFragment? {
         for (recursionFragment in fragments) {
             if (recursionFragment is WBWeexFragment && mWXSDKInstance == recursionFragment.instance) {
                 return recursionFragment
